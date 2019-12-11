@@ -76,6 +76,54 @@
 
 (column-number-mode 1)
 
+;; Theme
+
+(use-package mustang-theme
+  :straight t
+  :config
+  (custom-theme-set-faces
+   'mustang
+   '(company-scrollbar-bg ((t (:background "#6080a0"))))
+   '(company-scrollbar-fg ((t (:background "#7090ff"))))
+   '(company-tooltip ((t (:background "#2e5077"))))
+   '(company-tooltip-annotation ((t nil)))
+   '(company-tooltip-common ((t (:foreground "#d73c3f"))))
+   '(company-tooltip-common-selection ((t (:foreground "#921e20"))))
+   '(company-tooltip-selection ((t (:background "#ff9642" :foreground "#202020"))))
+   '(diff-added ((t (:inherit ediff-even-diff-B))))
+   '(diff-changed ((t (:inherit ediff-even-diff-C))))
+   '(diff-refine-added ((t (:inherit ediff-fine-diff-B))))
+   '(diff-refine-changed ((t (:inherit ediff-fine-diff-C))))
+   '(diff-refine-removed ((t (:inherit ediff-fine-diff-A))))
+   '(diff-removed ((t (:inherit ediff-even-diff-A))))
+   '(ediff-current-diff-C ((t (:background "#554433"))))
+   '(ediff-even-diff-A ((t (:background "#553333"))))
+   '(ediff-even-diff-Ancestor ((t (:background "#004151"))))
+   '(ediff-even-diff-B ((t (:background "#335533"))))
+   '(ediff-even-diff-C ((t (:background "#5a442e"))))
+   '(ediff-fine-diff-A ((t (:background "#46150f"))))
+   '(ediff-fine-diff-B ((t (:background "#0f4615"))))
+   '(ediff-fine-diff-C ((t (:background "#46310f"))))
+   '(ediff-odd-diff-A ((t (:background "#553333"))))
+   '(ediff-odd-diff-Ancestor ((t (:background "#004151"))))
+   '(ediff-odd-diff-B ((t (:background "#335533"))))
+   '(ediff-odd-diff-C ((t (:background "#5a442e"))))
+   '(eldoc-highlight-function-argument ((t (:inherit bold :underline t))))
+   '(eyebrowse-mode-line-active ((t (:inherit mode-line-emphasis :inverse-video t))))
+   '(font-lock-warning-face ((t (:background "#202020" :foreground "#ff6523"))))
+   '(git-gutter+-added ((t (:inherit font-lock-comment-face :weight bold))))
+   '(git-gutter+-deleted ((t (:inherit font-lock-comment-face :weight bold))))
+   '(git-gutter+-modified ((t (:inherit font-lock-comment-face :weight bold))))
+   '(magit-diff-context-highlight ((t (:background "#312C33" :foreground "grey70"))))
+   '(magit-diff-file-heading ((t (:background "#794214" :weight bold))))
+   '(magit-diff-file-heading-highlight ((t (:inherit magit-section-highlight :background "#a55a1c"))))
+   '(magit-diff-hunk-heading ((t (:background "#113f67" :foreground "grey90" :weight bold))))
+   '(magit-diff-hunk-heading-highlight ((t (:background "#38598b"))))
+   '(mu4e-view-body-face ((t (:background "gray10"))))
+   '(org-block-begin-line ((t (:inherit org-meta-line :background "#102D3F" :foreground "#3A86B4" :slant normal))))
+   '(org-meta-line ((t (:inherit font-lock-comment-face :slant italic))))
+   '(vertical-border ((t (:foreground "gray23"))))))
+
 
 ; Helper packages
 
