@@ -72,6 +72,8 @@
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode 0))
 
+(set-face-attribute 'default nil :font "Inconsolata-g-10")
+
 ;; Modeline
 
 (column-number-mode 1)
