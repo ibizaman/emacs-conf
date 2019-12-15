@@ -215,7 +215,37 @@
   (setq org-babel-tmux-session-prefix "ob-"))
 
 
+; Helper packages
+
+(use-package expand-region
+  :straight t
+  :bind (("C-c =" . er/expand-region)
+	 ("C-c -" . (lambda () (interactive) (call-with-prefix -1 'er/expand-region)))))
+
+(defun use-region-or-expand-region ()
+  "Use region if active or expand region at point."
+  (when (not (use-region-p))
+    (let ((inhibit-message t))
+      (call-interactively 'er/expand-region))))
+
+
 ; Language specific packages
+;; Elisp
+
+(defun eval-point-region-and-deactivate ()
+  "Evaluate region or expanded region and deactivates region when done."
+  (interactive)
+  (use-region-or-expand-region)
+  (condition-case-unless-debug err
+      (call-interactively 'eval-region)
+    (error (deactivate-mark)
+           (signal (car err) (cdr err))))
+  (deactivate-mark))
+
+
+(use-package elisp-mode
+  :bind (("C-c C-c" . eval-point-region-and-deactivate)))
+
 ;; Haskell
 
 (use-package haskell-mode
