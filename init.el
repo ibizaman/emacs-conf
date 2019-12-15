@@ -148,6 +148,73 @@
 	ediff-window-setup-function 'ediff-setup-windows-plain))
 
 
+; Org
+
+(use-package org
+  :straight t
+  :after (evil es-mode)
+  :init
+  (defun my/org-mode-hook-evil ()
+      (setq evil-auto-indent nil))
+  (add-hook 'org-mode-hook 'my/org-mode-hook-evil)
+  :config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (sql . t)
+     (python . t)
+     (shell . t)
+     (dot . t)))
+
+  (org-babel-lob-ingest "~/.emacs.d/emacs-lob.org")
+
+  (progn
+    (defun ibizaman/org-copy-element ()
+      (interactive)
+      (let* ((elem (org-element-at-point))
+             (beg (org-element-property :begin elem))
+             (end (org-element-property :end elem)))
+        (copy-region-as-kill beg end)
+        (goto-char end))))
+
+  (setq org-log-done 'time
+	org-babel-hash-show-time t
+	org-structure-template-alist)
+
+  (add-hook 'org-capture-prepare-finalize-hook 'org-id-store-link)
+
+  (evil-define-key 'normal org-mode-map (kbd "<tab>") 'org-cycle)
+  :bind (("C-c j" . outline-next-heading)
+         ("C-c k" . outline-previous-heading)
+         ("C-c h" . outline-up-heading)
+         ("C-c l" . outline-show-subtree)
+         ("C-c c" . org-capture)
+         ("C-c C-l" . org-store-link)
+         :map org-mode-map
+         ("C-c o d" . org-cut-element)
+         ("C-c o c" . ibizaman/org-copy-element)
+         ("<tab>" . org-cycle)))
+
+
+(use-package ob-async
+  :straight t
+  :after org)
+
+(use-package ob-python
+  :after org)
+
+(use-package ob-shell
+  :after org)
+
+(use-package ob-tmux
+  :straight (ob-tmux :type git :host nil :repo "https://github.com/ahendriksen/ob-tmux.git")
+  :config
+  (setq org-babel-default-header-args:tmux
+        '((:results . "silent")
+          (:terminal . "iterm")))
+  (setq org-babel-tmux-session-prefix "ob-"))
+
+
 ; Language specific packages
 ;; Haskell
 
