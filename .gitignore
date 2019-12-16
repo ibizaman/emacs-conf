@@ -1,6 +1,7 @@
 *~
 auto-save-list
 eshell
+forge-database.sqlite
 straight
 transient
 tramp

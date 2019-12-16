@@ -64,6 +64,10 @@
   :straight t
   :after (magit evil))
 
+(use-package forge
+  :straight t
+  :after magit)
+
 
 ; UI
 
