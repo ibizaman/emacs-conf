@@ -281,3 +281,8 @@
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
+
+;; Yaml
+
+(use-package yaml-mode
+  :straight t)
