@@ -271,3 +271,13 @@
   :straight t
   :config
   (intero-global-mode 1))
+
+;; Markdown
+
+(use-package markdown-mode
+  :straight t
+  :commands (markdown-mode gf-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
