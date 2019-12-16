@@ -68,6 +68,13 @@
   :straight t
   :after magit)
 
+(use-package auth-source)
+
+(use-package auth-source-pass
+  :straight t
+  :config
+  (auth-source-pass-enable))
+
 
 ; UI
 
