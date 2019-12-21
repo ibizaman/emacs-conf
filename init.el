@@ -250,12 +250,15 @@
 (use-package lsp-ui
   :straight t
   :hook (lsp-mode-hook . lsp-ui-mode)
-  :commands lsp-ui-mode)
+  :commands lsp-ui-mode
+  :config
+  (setq lsp-ui-flycheck-enable t))
 
 (use-package company-lsp
   :straight t
   :commands company-lsp
   :config
+  (setq lsp-prefer-flymake nil)
   (push 'company-lsp company-backends))
 
 ;; Elisp
