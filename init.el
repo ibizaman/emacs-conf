@@ -241,6 +241,23 @@
 
 
 ; Language specific packages
+;; Language Server Protocol
+
+(use-package lsp-mode
+  :straight t
+  :commands lsp)
+
+(use-package lsp-ui
+  :straight t
+  :hook (lsp-mode-hook . lsp-ui-mode)
+  :commands lsp-ui-mode)
+
+(use-package company-lsp
+  :straight t
+  :commands company-lsp
+  :config
+  (push 'company-lsp company-backends))
+
 ;; Elisp
 
 (defun eval-point-region-and-deactivate ()
@@ -263,14 +280,18 @@
   :straight t
   :config
   (setq haskell-hoogle-url "http://localhost:65000/?hoogle=%s"
-	haskell-mode-hook '(capitalized-words-mode haskell-decl-scan-mode haskell-indent-mode haskell-indentation-mode)
+	haskell-mode-hook '(capitalized-words-mode
+			    haskell-decl-scan-mode
+			    haskell-indent-mode
+			    haskell-indentation-mode)
 	haskell-mode-stylish-haskell-path "~/.local/bin/brittany"
 	haskell-stylish-on-save t))
 
-(use-package intero
+(use-package lsp-haskell
   :straight t
-  :config
-  (intero-global-mode 1))
+  :hook (haskell-mode . lsp)
+  :init
+  (require 'lsp-haskell))
 
 ;; Markdown
 
