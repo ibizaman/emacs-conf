@@ -85,6 +85,10 @@
 
 (set-face-attribute 'default nil :font "InconsolataG-10")
 
+(setq kill-do-not-save-duplicates t
+      ; From https://stackoverflow.com/a/29092845/1013628
+      x-select-enable-clipboard nil)
+
 ;; Modeline
 
 (column-number-mode 1)
