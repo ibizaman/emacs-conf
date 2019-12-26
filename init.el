@@ -296,7 +296,7 @@
 
 (use-package lsp-haskell
   :straight t
-  :hook (haskell-mode . lsp)
+  :hook (haskell-mode . lsp-deferred)
   :init
   (require 'lsp-haskell))
 
