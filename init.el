@@ -245,6 +245,9 @@
 
 
 ; Language specific packages
+
+(global-set-key (kbd "C-c C-j") 'find-function)
+
 ;; Language Server Protocol
 
 (use-package lsp-mode
