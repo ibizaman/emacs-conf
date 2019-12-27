@@ -317,3 +317,11 @@
 
 (use-package yaml-mode
   :straight t)
+
+;; Go
+
+(use-package go-mode
+  :straight t
+  :hook (go-mode . lsp-deferred)
+  :config
+  (setq gofmt-command "goimports"))
