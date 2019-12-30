@@ -225,6 +225,24 @@
   :bind (("C-x C-b" . 'ibuffer)))
 
 
+(use-package git-link
+  :straight t
+  :config
+  (defun git-link-master-branch ()
+    (interactive)
+    (let ((git-link-default-branch "master"))
+      (call-interactively 'git-link)))
+  (defun git-link-at-commit ()
+    (interactive)
+    (let ((git-link-use-commit t))
+      (call-interactively 'git-link)))
+  (defun git-link-master-branch-at-commit ()
+    (interactive)
+    (let ((git-link-default-branch "master")
+	  (git-link-use-commit t))
+      (call-interactively 'git-link))))
+
+
 ; Org
 
 (use-package org
