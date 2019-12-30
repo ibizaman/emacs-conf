@@ -21,7 +21,9 @@
 (use-package evil
   :straight t
   :config
-  (evil-mode 1))
+  (evil-mode 1)
+  (evil-define-key 'normal Info-mode-map (kbd "]") #'Info-forward-node)
+  (evil-define-key 'normal Info-mode-map (kbd "[") #'Info-backward-node))
 
 (use-package flycheck
   :straight t
