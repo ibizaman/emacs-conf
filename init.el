@@ -220,6 +220,11 @@
 	ediff-window-setup-function 'ediff-setup-windows-plain))
 
 
+(use-package ibuffer
+  :straight t
+  :bind (("C-x C-b" . 'ibuffer)))
+
+
 ; Org
 
 (use-package org
