@@ -142,9 +142,23 @@
    '(vertical-border ((t (:foreground "gray23"))))))
 
 
-; Helper packages
+; Miscellaneous
 
 (setq sentence-end-double-space nil)
+
+
+; Helper packages
+
+(use-package expand-region
+  :straight t
+  :bind (("C-c =" . er/expand-region)
+	 ("C-c -" . (lambda () (interactive) (call-with-prefix -1 'er/expand-region)))))
+
+(defun use-region-or-expand-region ()
+  "Use region if active or expand region at point."
+  (when (not (use-region-p))
+    (let ((inhibit-message t))
+      (call-interactively 'er/expand-region))))
 
 (use-package helpful
   :straight t
@@ -228,20 +242,6 @@
         '((:results . "silent")
           (:terminal . "iterm")))
   (setq org-babel-tmux-session-prefix "ob-"))
-
-
-; Helper packages
-
-(use-package expand-region
-  :straight t
-  :bind (("C-c =" . er/expand-region)
-	 ("C-c -" . (lambda () (interactive) (call-with-prefix -1 'er/expand-region)))))
-
-(defun use-region-or-expand-region ()
-  "Use region if active or expand region at point."
-  (when (not (use-region-p))
-    (let ((inhibit-message t))
-      (call-interactively 'er/expand-region))))
 
 
 ; Language specific packages
