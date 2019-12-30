@@ -3,6 +3,8 @@ auto-save-list
 eshell
 forge-database.sqlite
 .lsp-session*
+history
+recentf
 straight
 transient
 tramp

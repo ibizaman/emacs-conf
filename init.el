@@ -77,6 +77,23 @@
   :config
   (auth-source-pass-enable))
 
+(use-package ivy
+  :straight t
+  :after magit
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  (setq ivy-re-builders-alist
+        '((t . ivy--regex-ignore-order)))
+  (setq magit-completing-read-function 'ivy-completing-read))
+
+(use-package counsel
+  :straight t
+  :after ivy
+  :config
+  (counsel-mode 1))
+
 
 ; UI
 
