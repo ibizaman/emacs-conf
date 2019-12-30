@@ -180,6 +180,15 @@
 (add-hook 'kill-emacs-query-functions
 	  'custom-prompt-customize-unsaved-options)
 
+(progn
+  (defun ibizaman/process-menu-add-bindings()
+    "Add bindings to process-menu-mode."
+    (define-key process-menu-mode-map (kbd "g r") 'list-processes)
+    (define-key process-menu-mode-map (kbd "x") 'process-menu-delete-process)
+    (evil-define-key 'normal process-menu-mode-map (kbd "x") 'process-menu-delete-process))
+
+  (add-hook 'process-menu-mode-hook 'ibizaman/process-menu-add-bindings))
+
 
 ; Helper packages
 
