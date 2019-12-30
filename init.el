@@ -176,6 +176,10 @@
 ;; When saving a file that starts with `#!’, make it executable
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
+;; Prompt to save customization before quitting
+(add-hook 'kill-emacs-query-functions
+	  'custom-prompt-customize-unsaved-options)
+
 
 ; Helper packages
 
