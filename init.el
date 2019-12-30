@@ -163,8 +163,15 @@
 
 ; Miscellaneous
 
+;; Use only one space after a dot
 (setq sentence-end-double-space nil)
+
+;; Delete trailing whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Save some variables with savehist
+(setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
+(savehist-mode t)
 
 
 ; Helper packages
