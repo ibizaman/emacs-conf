@@ -173,6 +173,9 @@
 (setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
 (savehist-mode t)
 
+;; When saving a file that starts with `#!’, make it executable
+(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+
 
 ; Helper packages
 
