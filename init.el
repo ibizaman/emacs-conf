@@ -325,7 +325,8 @@
   :hook (lsp-mode-hook . lsp-ui-mode)
   :commands lsp-ui-mode
   :config
-  (setq lsp-ui-flycheck-enable t))
+  (setq lsp-ui-flycheck-enable t
+	lsp-ui-flycheck-live-reporting nil))
 
 (use-package company-lsp
   :straight t
