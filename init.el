@@ -318,7 +318,8 @@
 
 (use-package lsp-mode
   :straight t
-  :commands lsp)
+  :commands lsp
+  :hook (sh-mode . lsp-deferred))
 
 (use-package lsp-ui
   :straight t
