@@ -108,6 +108,8 @@
       ; From https://stackoverflow.com/a/29092845/1013628
       x-select-enable-clipboard nil)
 
+(setq-default tab-width 4)
+
 ;; Modeline
 
 (column-number-mode 1)
