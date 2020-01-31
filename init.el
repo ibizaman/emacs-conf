@@ -79,7 +79,6 @@
 
 (use-package ivy
   :straight t
-  :after magit
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
