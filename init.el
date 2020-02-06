@@ -108,6 +108,13 @@
       x-select-enable-clipboard nil)
 
 (setq-default tab-width 4)
+(defun my/disable-tabs ()
+  "Disable tabs and set them to 4 spaces."
+  (setq-default tab-width 4)
+  (setq tab-width 4)
+  (setq indent-tabs-mode nil))
+; Tabs are used to format buffer with `lsp-format-buffer'.
+(add-hook 'haskell-mode-hook 'my/disable-tabs)
 
 ;; Modeline
 
@@ -357,12 +364,12 @@
 
 (use-package haskell-mode
   :straight t
+  :hook ((haskell-mode . capitalized-words-mode)
+		 (haskell-mode . haskell-decl-scan-mode)
+		 (haskell-mode . haskell-indent-mode)
+		 (haskell-mode . haskell-indentation-mode))
   :config
   (setq haskell-hoogle-url "http://localhost:65000/?hoogle=%s"
-	haskell-mode-hook '(capitalized-words-mode
-			    haskell-decl-scan-mode
-			    haskell-indent-mode
-			    haskell-indentation-mode)
 	haskell-mode-stylish-haskell-path "~/.local/bin/brittany"
 	haskell-stylish-on-save t))
 
