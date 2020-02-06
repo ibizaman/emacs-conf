@@ -341,7 +341,6 @@
   :straight t
   :commands company-lsp
   :config
-  (setq lsp-prefer-flymake nil)
   (push 'company-lsp company-backends))
 
 ;; Elisp
@@ -377,6 +376,7 @@
   :straight t
   :hook (haskell-mode . lsp-deferred)
   :init
+  (setq lsp-prefer-flymake nil)
   (require 'lsp-haskell))
 
 ;; Markdown
