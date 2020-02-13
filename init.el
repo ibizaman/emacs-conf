@@ -93,6 +93,11 @@
   :config
   (counsel-mode 1))
 
+(use-package deadgrep
+  :straight t
+  :config
+  (global-set-key (kbd "C-c g") #'deadgrep))
+
 
 ; UI
 
