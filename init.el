@@ -329,10 +329,15 @@
 
 ;; Language Server Protocol
 
+(defun my/lsp-format-buffer-silent ()
+  "Silence errors from `lsp-format-buffer'."
+  (ignore-errors (lsp-format-buffer)))
+
 (use-package lsp-mode
   :straight t
   :commands lsp
-  :hook (sh-mode . lsp-deferred))
+  :hook ((sh-mode . lsp-deferred)
+		 (before-save . my/lsp-format-buffer-silent)))
 
 (use-package lsp-ui
   :straight t
