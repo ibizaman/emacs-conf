@@ -79,6 +79,7 @@
 
 (use-package ivy
   :straight t
+  :bind (("C-s" . 'swiper-thing-at-point))
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
@@ -86,6 +87,9 @@
   (setq ivy-re-builders-alist
         '((t . ivy--regex-ignore-order)))
   (setq magit-completing-read-function 'ivy-completing-read))
+
+(use-package wgrep
+  :straight t)
 
 (use-package counsel
   :straight t
