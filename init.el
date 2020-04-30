@@ -102,6 +102,16 @@
   :config
   (global-set-key (kbd "C-c g") #'deadgrep))
 
+(use-package projectile
+  :straight t
+  :config
+  (projectile-mode 1))
+
+(use-package counsel-projectile
+  :straight t
+  :config
+  (counsel-projectile-mode 1)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
 ; UI
 
