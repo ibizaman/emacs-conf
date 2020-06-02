@@ -428,3 +428,20 @@
   :hook (go-mode . lsp-deferred)
   :config
   (setq gofmt-command "goimports"))
+
+
+; Elfeed
+
+(use-package elfeed
+  :straight t)
+
+(use-package elfeed-protocol
+  :straight t
+
+  :config
+  (setq elfeed-use-curl t
+		elfeed-protocol-ttrss-maxsize 200
+		elfeed-feeds  `(("ttrss+https://admin@tt-rss.tiserbox.com"
+						 :use-authinfo t)))
+  (elfeed-set-timeout 36000)
+  (elfeed-protocol-enable))
