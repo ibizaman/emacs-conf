@@ -301,8 +301,9 @@
         (goto-char end))))
 
   (setq org-log-done 'time
-	org-babel-hash-show-time t
-	org-structure-template-alist)
+		org-babel-hash-show-time t
+		org-adapt-indentation nil
+		org-edit-src-content-indentation 0)
 
   (add-hook 'org-capture-prepare-finalize-hook 'org-id-store-link)
 
