@@ -271,6 +271,10 @@
       (call-interactively 'git-link))))
 
 
+(use-package emacs-org-babel-conf
+  :straight (emacs-org-babel-conf :type git :host github :repo "ibizaman/emacs-org-babel-conf" :branch "master"))
+
+
 ; Org
 
 (use-package org
