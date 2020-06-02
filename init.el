@@ -207,6 +207,7 @@
 (add-hook 'kill-emacs-query-functions
 	  'custom-prompt-customize-unsaved-options)
 
+;; Add keybindings to process-menu-mode
 (progn
   (defun ibizaman/process-menu-add-bindings()
     "Add bindings to process-menu-mode."
