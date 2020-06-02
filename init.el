@@ -351,6 +351,8 @@
   :straight t
   :commands lsp
   :hook ((sh-mode . lsp-deferred)
+		 (javascript-mode . lsp-deferred)
+		 (html-mode . lsp-deferred)
 		 (before-save . my/lsp-format-buffer-silent)))
 
 (use-package lsp-ui
