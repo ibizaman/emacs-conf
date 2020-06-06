@@ -369,7 +369,7 @@
   :commands lsp-ui-mode
   :config
   (setq lsp-ui-flycheck-enable t
-	lsp-ui-flycheck-live-reporting nil))
+		lsp-ui-flycheck-live-reporting nil))
 
 (use-package company-lsp
   :straight t
@@ -435,7 +435,10 @@
   :straight t
   :hook (go-mode . lsp-deferred)
   :config
-  (setq gofmt-command "goimports"))
+  (defun lsp-go-install-save-hooks ()
+	(add-hook 'before-save-hook #'lsp-format-buffer t t)
+	(add-hook 'before-save-hook #'lsp-organize-imports t t))
+  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks))
 
 
 ; Elfeed
