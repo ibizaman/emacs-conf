@@ -361,7 +361,10 @@
   :hook ((sh-mode . lsp-deferred)
 		 (javascript-mode . lsp-deferred)
 		 (html-mode . lsp-deferred)
-		 (before-save . my/lsp-format-buffer-silent)))
+		 (before-save . my/lsp-format-buffer-silent))
+  :config
+  (setq lsp-signature-auto-activate t)
+  (lsp-lens-mode t))
 
 (use-package lsp-ui
   :straight t
