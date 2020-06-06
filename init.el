@@ -120,7 +120,9 @@
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode 0))
 
-(set-face-attribute 'default nil :font "InconsolataG-10")
+(if (x-list-fonts "*-Inconsolata-*")
+    (set-face-attribute 'default nil :font "Inconsolata-13")
+  (set-face-attribute 'default nil :font "InconsolataG-10"))
 
 (setq kill-do-not-save-duplicates t
       ; From https://stackoverflow.com/a/29092845/1013628
