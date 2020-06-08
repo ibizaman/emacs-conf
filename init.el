@@ -85,7 +85,11 @@
   :bind (("C-x g" . magit))
   :config
   (setq magit-display-buffer-function 'magit-display-buffer-fullcolumn-most-v1
-	magit-published-branches nil))
+		magit-published-branches nil)
+  (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-pullreqs nil t)
+  (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-issues nil t)
+  (remove-hook 'magit-status-sections-hook 'forge-insert-pullreqs)
+  (remove-hook 'magit-status-sections-hook 'forge-insert-issues))
 
 (use-package evil-magit
   :straight t
