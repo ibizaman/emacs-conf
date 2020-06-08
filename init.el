@@ -20,10 +20,35 @@
 
 (use-package evil
   :straight t
+  :init
+  (setq evil-want-integration t)  ; needed for evil-collection
+  (setq evil-want-keybinding nil) ; needed for evil-collection
   :config
   (evil-mode 1)
   (evil-define-key 'normal Info-mode-map (kbd "]") #'Info-forward-node)
-  (evil-define-key 'normal Info-mode-map (kbd "[") #'Info-backward-node))
+  (evil-define-key 'normal Info-mode-map (kbd "[") #'Info-backward-node)
+  (evil-define-key 'normal 'global "gt" 'counsel-semantic-or-imenu))
+
+(use-package evil-collection
+  :straight t
+  :after evil
+  :config
+  (evil-collection-init
+   '(compile
+	 comint
+	 custom
+	 deadgrep
+	 debug
+	 dired
+	 ediff
+	 elfeed
+	 flycheck
+	 log-edit
+	 log-view
+	 mu4e
+	 occur
+	 simple
+	 which-key)))
 
 (use-package flycheck
   :straight t
