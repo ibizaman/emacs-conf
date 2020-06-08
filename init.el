@@ -467,6 +467,7 @@
 (use-package go-mode
   :straight t
   :hook (go-mode . lsp-deferred)
+  :bind (([remap find-function] . 'lsp-find-definition))
   :config
   (defun lsp-go-install-save-hooks ()
 	(add-hook 'before-save-hook #'lsp-format-buffer t t)
