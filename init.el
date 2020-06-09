@@ -311,6 +311,10 @@
   :straight (emacs-org-babel-conf :type git :host github :repo "ibizaman/emacs-org-babel-conf" :branch "master"))
 
 
+(use-package hydra
+  :straight t)
+
+
 ; Org
 
 (use-package org
@@ -477,6 +481,232 @@
 	(add-hook 'before-save-hook #'lsp-format-buffer t t)
 	(add-hook 'before-save-hook #'lsp-organize-imports t t))
   (add-hook 'go-mode-hook #'lsp-go-install-save-hooks))
+
+(use-package gotest
+  :straight t
+  :after company go-mode)
+
+(use-package ob-go
+  :straight t)
+
+(eval-after-load 'hydra
+  '(progn
+     (defgroup go-test-args nil
+       "Go test args specific customization."
+       :group 'go-test)
+
+
+     (defcustom go-test-args-base-tags '("unit")
+       "Available tags that can be toggled."
+       :group 'go-test-args
+       :type '(repeat string))
+
+     (defvar go-test-args-tags nil
+       "Go test arg --tags=")
+
+     (defun go-test-args-tags-toggle ()
+       "Toggle tags argument."
+       (go-test-args--toggle-list 'go-test-args-tags 'go-test-args-base-tags))
+
+     (defun go-test-args-tags-arg ()
+       "Get tags argument."
+       (if (null go-test-args-tags) ""
+         (format "--tags=\"%s\"" (mapconcat 'identity (symbol-value 'go-test-args-tags) " "))))
+
+
+     (defcustom go-test-args-base-cpu '("1" "2" "3" "4" "5" "6" "7" "8")
+       "Available tags that can be toggled."
+       :group 'go-test-args
+       :type '(repeat string))
+
+     (defvar go-test-args-cpu nil
+       "Go test arg --cpu=")
+
+     (defun go-test-args-cpu-toggle ()
+       "Toggle cpu argument."
+       (go-test-args--toggle-list 'go-test-args-cpu 'go-test-args-base-cpu))
+
+     (defun go-test-args-cpu-arg ()
+       "Get cpu argument."
+       (if (null go-test-args-cpu) ""
+         (format "--cpu=%s" (mapconcat 'identity (symbol-value 'go-test-args-cpu) ","))))
+
+
+     (defvar go-test-args-verbose nil
+       "Go test arg -v")
+
+     (defun go-test-args-verbose-toggle ()
+       "Toggle verbose argument."
+       (go-test-args--toggle-bool 'go-test-args-verbose))
+
+     (defun go-test-args-verbose-arg ()
+       "Get verbose argument."
+       (if go-test-args-verbose "-v" ""))
+
+
+     (defvar go-test-args-race nil
+       "Go test arg --race")
+
+     (defun go-test-args-race-toggle ()
+       "Toggle race argument."
+       (go-test-args--toggle-bool 'go-test-args-race))
+
+     (defun go-test-args-race-arg ()
+       "Get race argument."
+       (if go-test-args-race "--race" ""))
+
+
+     (defvar go-test-args-count nil
+       "Go test arg --count")
+
+     (defun go-test-args-count-toggle ()
+       "Toggle count argument."
+       (go-test-args--toggle-number 'go-test-args-count))
+
+     (defun go-test-args-count-arg ()
+       "Get count argument."
+       (if (null go-test-args-count) ""
+         (format "--count=\"%s\"" go-test-args-count)))
+
+
+     (defvar go-test-args-parallel nil
+       "Go test arg --parallel")
+
+     (defun go-test-args-parallel-toggle ()
+       "Toggle parallel argument."
+       (go-test-args--toggle-number 'go-test-args-parallel))
+
+     (defun go-test-args-parallel-arg ()
+       "Get parallel argument."
+       (if (null go-test-args-parallel) ""
+         (format "--parallel=\"%s\"" go-test-args-parallel)))
+
+
+     (defvar go-test-args-coverprofile nil
+       "Go test arg --coverprofile")
+
+     (defun go-test-args-coverprofile-toggle ()
+       "Toggle coverprofile argument."
+       (go-test-args--toggle-str 'go-test-args-coverprofile))
+
+     (defun go-test-args-coverprofile-arg ()
+       "Get coverprofile argument."
+       (if (null go-test-args-coverprofile) ""
+         (format "--coverprofile=\"%s\"" go-test-args-coverprofile)))
+
+
+     (defvar go-test-args-coverpkg nil
+       "Go test arg --coverpkg=")
+
+     (defun go-test-args-coverpkg-toggle ()
+       "Toggle coverpkg argument."
+       (go-test-args--toggle-list 'go-test-args-coverpkg ()))
+
+     (defun go-test-args-coverpkg-arg ()
+       "Get coverpkg argument."
+       (if (null go-test-args-coverpkg) ""
+         (format "--coverpkg=\"%s\"" (mapconcat 'identity (symbol-value 'go-test-args-coverpkg) ","))))
+
+
+     (defvar go-test-args-custom nil
+       "Custom test arguments")
+
+     (defun go-test-args-custom-toggle ()
+       "Toggle custom test argument."
+       (go-test-args--toggle-str 'go-test-args-custom))
+
+     (defun go-test-args-custom-arg ()
+       "Get custom test argument."
+       (if (null go-test-args-custom) ""
+         (symbol-value 'go-test-args-custom)))
+
+
+     (defun go-test-args--set-global-var ()
+       "Set go-test-args from variables toggled in this module."
+       (let* ((allvalues `(,(go-test-args-tags-arg)
+                           ,(go-test-args-count-arg)
+                           ,(go-test-args-parallel-arg)
+                           ,(go-test-args-verbose-arg)
+                           ,(go-test-args-race-arg)
+                           ,(go-test-args-cpu-arg)
+                           ,(go-test-args-coverprofile-arg)
+                           ,(go-test-args-coverpkg-arg)
+                           ,(go-test-args-custom-arg)))
+              (nonnil (seq-filter (lambda (elem) (not (or (null elem) (equal elem ""))))
+                                  allvalues)))
+         (setq go-test-args (mapconcat 'identity nonnil " "))))
+
+
+     (defun go-test-args--toggle-in-list (list element)
+       "Toggles an ELEMENT in a LIST."
+       (if (member element (symbol-value list))
+           (set list (delete element (symbol-value list)))
+         (sort (add-to-list list element) 'string<)))
+
+     (defun go-test-args--toggle-list (var base-var)
+       "Toggle an element from BASE-VAR in VAR."
+       (let* ((toggle-list (sort (delete-dups (append (symbol-value base-var) (copy-sequence (symbol-value var)))) 'string<))
+              (element (completing-read "Pick an element to toggle: " toggle-list)))
+         (go-test-args--toggle-in-list var element))
+       (go-test-args--set-global-var))
+
+     (defun go-test-args--toggle-bool (var)
+       (if (symbol-value var)
+           (set var nil)
+         (set var t))
+       (go-test-args--set-global-var))
+
+     (defun go-test-args--toggle-number (var)
+       (let ((number (read-string "Enter a number (leave empty to unset the argument): ")))
+         (if (equal number "")
+             (set var nil)
+           (set var number)))
+       (go-test-args--set-global-var))
+
+     (defun go-test-args--toggle-str (var)
+       (let ((value (read-string "Enter a value (leave empty to unset the argument): ")))
+         (if (equal value "")
+             (set var nil)
+           (set var value)))
+       (go-test-args--set-global-var))
+
+     (defhydra go-test-args-hydra (:hint nil)
+       "
+_T_ags:            %`go-test-args-tags
+_C_ount:           %`go-test-args-count
+_P_arallel:        %`go-test-args-parallel
+_v_erbose:         %`go-test-args-verbose
+_r_ace:            %`go-test-args-race
+cp_u_:             %`go-test-args-cpu
+c_o_verprofile:    %`go-test-args-coverprofile
+coverp_k_g:        %`go-test-args-coverpkg
+_c_ustom:          %`go-test-args-custom
+
+go-test-args: %s(symbol-value 'go-test-args)
+
+_t_: run current _t_est   _b_: run current _b_enchmark   _O_: show coverage
+_f_:      ... in _f_ile   _B_:           ^^... in file
+_p_:   ... in _p_ackage   _N_:        ^^... in package
+"
+       ("T" (go-test-args-tags-toggle))
+       ("C" (go-test-args-count-toggle))
+       ("P" (go-test-args-parallel-toggle))
+       ("v" (go-test-args-verbose-toggle))
+       ("r" (go-test-args-race-toggle))
+       ("u" (go-test-args-cpu-toggle))
+       ("o" (go-test-args-coverprofile-toggle))
+       ("k" (go-test-args-coverpkg-toggle))
+       ("c" (go-test-args-custom-toggle))
+
+       ("t" (go-test-current-test) :color blue)
+       ("f" (go-test-current-file) :color blue)
+       ("p" (go-test-current-project) :color blue)
+       ("b" (go-test-current-benchmark) :color blue)
+       ("B" (go-test-current-file-benchmarks) :color blue)
+       ("N" (go-test-current-project-benchmarks) :color blue)
+       ("O" (go-coverage) :color blue))
+
+     (define-key go-mode-map (kbd "C-c t") 'go-test-args-hydra/body)))
 
 
 ; Elfeed
