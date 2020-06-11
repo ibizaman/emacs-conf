@@ -54,7 +54,9 @@
 	 mu4e
 	 occur
 	 simple
-	 which-key)))
+	 which-key))
+  (evil-collection-occur-setup)
+  )
 
 (use-package flycheck
   :straight t
