@@ -263,8 +263,8 @@
 
 (use-package expand-region
   :straight t
-  :bind (("C-c =" . er/expand-region)
-	 ("C-c -" . (lambda () (interactive) (call-with-prefix -1 'er/expand-region)))))
+  :bind (("C-c =" . (lambda () (interactive) (er--expand-region-1)))
+	 ("C-c -" . (lambda () (interactive) (er/contract-region 1)))))
 
 (defun use-region-or-expand-region ()
   "Use region if active or expand region at point."
