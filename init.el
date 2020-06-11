@@ -24,6 +24,17 @@
   :config
 	(exec-path-from-shell-initialize)))
 
+(use-package delight
+  :straight t
+  :config
+  (delight-major-mode))
+
+(use-package undo-tree
+  :delight undo-tree-mode)
+
+(use-package autorevert
+  :delight auto-revert-mode)
+
 (use-package evil
   :straight t
   :init
@@ -68,6 +79,7 @@
 
 (use-package flyspell
   :straight t
+  :delight flyspell-mode
   :config
   ; Do not emit message when checking word
   (setq flyspell-issue-message-flag nil)
@@ -85,6 +97,7 @@
 
 (use-package company
   :straight t
+  :delight company-mode
   :config
   (add-hook 'after-init-hook 'global-company-mode))
 
@@ -117,6 +130,7 @@
 
 (use-package ivy
   :straight t
+  :delight ivy-mode
   :bind (("C-s" . 'swiper-thing-at-point))
   :config
   (ivy-mode 1)
@@ -131,6 +145,7 @@
 
 (use-package counsel
   :straight t
+  :delight counsel-mode
   :after ivy
   :config
   (counsel-mode 1))
@@ -142,6 +157,7 @@
 
 (use-package projectile
   :straight t
+  :delight '(:eval (format " [%s]" (projectile-project-name)))
   :config
   (projectile-mode 1))
 
@@ -153,8 +169,12 @@
 
 (use-package which-key
   :straight t
+  :delight which-key-mode
   :config
   (which-key-mode 1))
+
+(use-package eldoc
+  :delight eldoc-mode)
 
 ; UI
 
