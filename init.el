@@ -18,6 +18,12 @@
 
 ; Base packages
 
+(when (memq window-system '(mac ns x))
+  (use-package exec-path-from-shell
+  :straight t
+  :config
+	(exec-path-from-shell-initialize)))
+
 (use-package evil
   :straight t
   :init
