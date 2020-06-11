@@ -93,9 +93,7 @@
   (setq magit-display-buffer-function 'magit-display-buffer-fullcolumn-most-v1
 		magit-published-branches nil)
   (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-pullreqs nil t)
-  (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-issues nil t)
-  (remove-hook 'magit-status-sections-hook 'forge-insert-pullreqs)
-  (remove-hook 'magit-status-sections-hook 'forge-insert-issues))
+  (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-issues nil t))
 
 (use-package evil-magit
   :straight t
@@ -103,7 +101,10 @@
 
 (use-package forge
   :straight t
-  :after magit)
+  :after magit
+  :config
+  (remove-hook 'magit-status-sections-hook 'forge-insert-pullreqs)
+  (remove-hook 'magit-status-sections-hook 'forge-insert-issues))
 
 (use-package auth-source)
 
