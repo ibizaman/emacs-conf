@@ -254,6 +254,11 @@
   (add-hook 'process-menu-mode-hook 'ibizaman/process-menu-add-bindings))
 
 
+; Helper functions
+(defun get-secret (host user)
+  (funcall (plist-get (nth 0 (auth-source-search :host host :user user :max 1)) :secret)))
+
+
 ; Helper packages
 
 (use-package expand-region
