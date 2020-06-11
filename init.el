@@ -242,6 +242,7 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; Save some variables with savehist
+(require 'savehist)
 (setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
 (savehist-mode t)
 
