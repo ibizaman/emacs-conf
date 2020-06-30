@@ -283,6 +283,14 @@
 
   (add-hook 'process-menu-mode-hook 'ibizaman/process-menu-add-bindings))
 
+;; Show ascii characters in compile mode
+(ignore-errors
+  (require 'ansi-color)
+  (defun my-colorize-compilation-buffer ()
+    (when (eq major-mode 'compilation-mode)
+      (ansi-color-apply-on-region compilation-filter-start (point-max))))
+  (add-hook 'compilation-filter-hook 'my-colorize-compilation-buffer))
+
 
 ; Helper functions
 (defun get-secret (host user)
