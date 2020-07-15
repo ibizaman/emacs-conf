@@ -393,7 +393,9 @@
   (setq org-log-done 'time
 		org-babel-hash-show-time t
 		org-adapt-indentation nil
-		org-edit-src-content-indentation 0)
+		org-edit-src-content-indentation 0
+		org-babel-uppercase-example-markers t
+		org-src-tab-acts-natively t)
 
   (add-hook 'org-capture-prepare-finalize-hook 'org-id-store-link)
 
