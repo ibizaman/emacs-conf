@@ -77,6 +77,9 @@
   (setq flycheck-check-syntax-automatically '(save idle-change)
 	flycheck-relevant-error-other-file-show nil))
 
+(use-package yasnippet
+  :straight t)
+
 (use-package flyspell
   :straight t
   :delight flyspell-mode
