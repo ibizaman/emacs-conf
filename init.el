@@ -299,6 +299,15 @@
 (defun get-secret (host user)
   (funcall (plist-get (nth 0 (auth-source-search :host host :user user :max 1)) :secret)))
 
+;; Shortcuts for jumping around functions
+(progn
+  (defun ibizaman/jump-functions()
+	"Add bindings to move around functions."
+    (define-key prog-mode-map (kbd "C-k") 'beginning-of-defun)
+    (define-key prog-mode-map (kbd "C-j") 'end-of-defun))
+
+  (add-hook 'prog-mode-hook 'ibizaman/jump-functions))
+
 
 ; Helper packages
 
