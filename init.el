@@ -189,6 +189,12 @@
 (use-package eldoc
   :delight eldoc-mode)
 
+(use-package eyebrowse
+  :straight t
+  :config
+  (setq eyebrowse-new-workspace t)
+  (eyebrowse-mode 1))
+
 ; UI
 
 (menu-bar-mode 0)
