@@ -106,12 +106,17 @@
 
 (use-package magit
   :straight t
-  :bind (("C-x g" . magit))
+  :bind (("C-x g" . magit)
+         :map magit-mode-map
+		 ("o" . magit-visit-thing)
+		 ("O" . magit-diff-visit-file-other-window))
   :config
   (setq magit-display-buffer-function 'magit-display-buffer-fullcolumn-most-v1
 		magit-published-branches nil)
   (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-pullreqs nil t)
-  (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-issues nil t))
+  (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-issues nil t)
+  (evil-define-key 'normal magit-mode-map (kbd "o") 'magit-visit-thing)
+  (evil-define-key 'normal magit-mode-map (kbd "O") 'magit-diff-visit-file-other-window))
 
 (use-package evil-magit
   :straight t
