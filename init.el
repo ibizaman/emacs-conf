@@ -455,6 +455,140 @@
           (:terminal . "iterm")))
   (setq org-babel-tmux-session-prefix "ob-"))
 
+; Mu4e
+(when (memq window-system '(mac ns))
+  (add-to-list 'load-path "/usr/local/Cellar/mu/1.0/share/emacs/site-lisp/mu/mu4e"))
+(when (memq window-system '(x))
+  (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"))
+
+(use-package mu4e
+  :config
+  (require 'mu4e-contrib)
+
+  (progn
+	(defcustom ibizaman/mu4e-unread-excluded-lists nil
+	  "Mailing lists to be excluded from default unread view."
+	  :group 'mu4e
+	  :type '(repeat string))
+
+	(defun ibizaman/mu4e-add-message-list-to-excluded-lists (msg)
+	  (let ((list (mu4e-message-field msg :mailing-list)))
+		(add-to-list 'ibizaman/mu4e-unread-excluded-lists list)
+		(message "Added %s to excluded list" list)))
+
+	(add-to-list 'mu4e-headers-actions
+				 '("Exclude list" . ibizaman/mu4e-add-message-list-to-excluded-lists) t)
+
+	(defun ibizaman/mu4e-generate-unread-filter ()
+	  (concat "flag:unread "
+			  "AND NOT flag:trashed "
+			  "AND NOT maildir:/Gmail/recruiting "
+			  "AND NOT maildir:\"/Gmail/[Google Mail].Trash\" "
+			  "AND NOT maildir:\"/Gmail/[Google Mail].Spam\" "
+			  (mapconcat (lambda (v) (concat " AND NOT list:" v))
+						 ibizaman/mu4e-unread-excluded-lists "")))
+
+	(defun ibizaman/mu4e-get-unread-list-filter-query (wanted-list)
+	  (interactive (list (completing-read "List: " ibizaman/mu4e-unread-excluded-lists)))
+	  (concat "flag:unread AND NOT flag:trashed AND list:" wanted-list)))
+
+  (setq mail-user-agent                  'mu4e-user-agent
+		mu4e-maildir                     "~/Maildir"
+		mu4e-use-fancy-chars             t
+		mu4e-attachment-dir              "~/Maildir/Attachments/Gmail"
+		mu4e-view-show-images            t
+		mu4e-confirm-quit                nil
+		mu4e-completing-read-function    'ivy-completing-read
+		mu4e-hide-index-messages         t
+		message-kill-buffer-on-exit      t
+		mu4e-html2text-command           'mu4e-shr2text
+		shr-color-visible-luminance-min  80  ; for dark themes
+		shr-color-visible-distance-min   5
+		mu4e-refile-folder               "/Gmail/[Google Mail].All Mail")
+
+  (defun ibizaman/mu4e-set-contexts ()
+	(setq mu4e-contexts
+		  `( ,(make-mu4e-context
+			   :name "Private"
+			   :enter-func (lambda () (mu4e-message "Entering Private context"))
+			   :leave-func (lambda () (mu4e-message "Leaving Private context"))
+			   ;; we match based on the contact-fields of the message
+			   :match-func (lambda (msg)
+							 (when msg
+							   (string-match-p "^/Gmail" (mu4e-message-field msg :maildir))))
+			   :vars `( ( user-mail-address      . "ibizapeanut@gmail.com"  )
+						( user-full-name         . "Pierre Penninckx" )
+						( mu4e-drafts-folder     . "/Gmail/[Google Mail].Drafts" )
+						( mu4e-sent-folder       . "/Gmail/[Google Mail].Sent Mail" )
+						( mu4e-trash-folder      . "/Gmail/[Google Mail].Trash" )
+						;; don't save message to Sent Messages, Gmail/IMAP takes care of this
+						( mu4e-sent-messages-behavior . delete )
+						( mu4e-maildir-shortcuts .
+												 ( ("/Gmail/INBOX"                     . ?i)
+												   ("/Gmail/recruiting"                . ?r)
+												   ("/Gmail/[Google Mail].Sent Mail"   . ?s)
+												   ("/Gmail/[Google Mail].Trash"       . ?t)
+												   ("/Gmail/[Google Mail].All Mail"    . ?a)) )
+						( mu4e-get-mail-command . "offlineimap" )
+						( mu4e-bookmarks .
+										 (,(make-mu4e-bookmark
+											:name  "Unread messages not list"
+											:query (lambda () (ibizaman/mu4e-generate-unread-filter))
+											:key ?u)
+										  ,(make-mu4e-bookmark
+											:name  "Recruiting"
+											:query "maildir:/Gmail/recruiting"
+											:key ?r)
+										  ,(make-mu4e-bookmark
+											:name  "Unread messages all"
+											:query (concat "flag:unread "
+														   "AND NOT flag:trashed"
+														   "AND NOT maildir:\"/Gmail/[Google Mail].Trash\" "
+														   "AND NOT maildir:\"/Gmail/[Google Mail].Spam\" ")
+											:key ?i)
+										  ,(make-mu4e-bookmark
+											:name  "Unread list messages"
+											:query (lambda () (call-interactively 'ibizaman/mu4e-get-unread-list-filter-query))
+											:key ?l)
+										  ,(make-mu4e-bookmark
+											:name "Today's messages"
+											:query "date:today..now"
+											:key ?t)
+										  ,(make-mu4e-bookmark
+											:name "Last 7 days"
+											:query "date:7d..now AND NOT flag:list AND NOT maildir:/Gmail/recruiting"
+											:key ?w)
+										  ,(make-mu4e-bookmark
+											:name "Messages with images"
+											:query "mime:image/*"
+											:key ?p)
+										  ,(make-mu4e-bookmark
+											:name "Drafts"
+											:query "flag:draft"
+											:key ?d))))))))
+  (ibizaman/mu4e-set-contexts)
+
+  (require 'smtpmail)
+  (setq message-send-mail-function 'smtpmail-send-it
+		user-mail-address "ibizapeanut@gmail.com"
+		starttls-use-gnutls t
+		starttls-gnutls-program "gnutls-cli"
+		starttls-extra-arguments nil
+		smtpmail-default-smtp-server "smtp.gmail.com"
+		smtpmail-smtp-server "smtp.gmail.com"
+		smtpmail-smtp-service 587
+		smtpmail-debug-info t
+		smtpmail-smtp-user "ibizapeanut@gmail.com"))
+
+(use-package org-mu4e
+  :after org mu4e)
+
+(use-package mu4e-maildirs-extension
+  :straight t
+  :after mu4e
+  :config
+  (mu4e-maildirs-extension))
+
 
 ; Language specific packages
 
