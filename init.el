@@ -917,6 +917,11 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package
 		(define-key go-mode-map (kbd "C-c t") 'go-test-args-hydra/body))))
 
 
+;; Arduino
+
+(use-package arduino-mode
+  :straight t)
+
 ; Elfeed
 
 (use-package elfeed
