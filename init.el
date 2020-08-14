@@ -270,6 +270,7 @@
    '(org-block-begin-line ((t (:inherit org-meta-line :background "#102D3F" :foreground "#3A86B4" :slant normal))))
    '(org-meta-line ((t (:inherit font-lock-comment-face :slant italic))))
    '(vertical-border ((t (:foreground "gray23"))))))
+(load-theme 'mustang t)
 
 
 ; Miscellaneous
