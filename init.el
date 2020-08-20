@@ -206,9 +206,11 @@
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode 0))
 
-(if (x-list-fonts "*-Inconsolata-*")
-    (set-face-attribute 'default nil :font "Inconsolata-13")
-  (set-face-attribute 'default nil :font "InconsolataG-10"))
+(when (memq window-system '(mac ns))
+  (if (x-list-fonts "*-Inconsolata-*")
+	  (set-face-attribute 'default nil :font "Inconsolata-13")
+	(set-face-attribute 'default nil :font "InconsolataG-10")))
+
 
 (setq kill-do-not-save-duplicates t
       ; From https://stackoverflow.com/a/29092845/1013628
@@ -461,9 +463,8 @@
   (setq org-babel-tmux-session-prefix "ob-"))
 
 ; Mu4e
-(when (memq window-system '(mac ns))
-  (add-to-list 'load-path "/usr/local/Cellar/mu/1.0/share/emacs/site-lisp/mu/mu4e"))
-(when (memq window-system '(x))
+(if (memq window-system '(mac ns))
+	(add-to-list 'load-path "/usr/local/Cellar/mu/1.0/share/emacs/site-lisp/mu/mu4e")
   (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"))
 
 (use-package mu4e
