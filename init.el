@@ -649,23 +649,72 @@
 
 ;; Haskell
 
+(use-package nix-sandbox
+  :straight t)
+
 (use-package haskell-mode
   :straight t
+  :after nix-sandbox
+  :init
+  (defun my/haskell-set-stylish ()
+	(if-let* ((sandbox (nix-current-sandbox))
+			  (fullcmd (nix-shell-command sandbox "brittany"))
+			  (path (car fullcmd))
+			  (args (cdr fullcmd)))
+	  (setq-local haskell-mode-stylish-haskell-path path
+				  haskell-mode-stylish-haskell-args args)))
+  (defun my/haskell-set-hoogle ()
+	(if-let* ((sandbox (nix-current-sandbox)))
+		(setq-local haskell-hoogle-command (nix-shell-string sandbox "hoogle"))))
   :hook ((haskell-mode . capitalized-words-mode)
 		 (haskell-mode . haskell-decl-scan-mode)
 		 (haskell-mode . haskell-indent-mode)
-		 (haskell-mode . haskell-indentation-mode))
+		 (haskell-mode . haskell-indentation-mode)
+		 (haskell-mode . my/haskell-set-stylish)
+		 (haskell-mode . my/haskell-set-hoogle)
+		 (haskell-mode . lsp-deferred)
+		 (haskell-mode . haskell-auto-insert-module-template))
   :config
-  (setq haskell-hoogle-url "http://localhost:65000/?hoogle=%s"
-	haskell-mode-stylish-haskell-path "~/.local/bin/brittany"
-	haskell-stylish-on-save t))
+  (defun my/haskell-hoogle--server-command (port)
+	(if-let* ((hooglecmd `("hoogle" "serve" "--local" "-p" ,(number-to-string port)))
+			  (sandbox (nix-current-sandbox)))
+		(apply 'nix-shell-command sandbox hooglecmd)
+	  hooglecmd))
+  (setq haskell-hoogle-server-command 'my/haskell-hoogle--server-command
+		haskell-stylish-on-save t))
 
 (use-package lsp-haskell
   :straight t
-  :hook (haskell-mode . lsp-deferred)
+  :after nix-sandbox
   :init
   (setq lsp-prefer-flymake nil)
-  (require 'lsp-haskell))
+  (require 'lsp-haskell)
+  :config
+  ;; from https://github.com/travisbhartwell/nix-emacs#haskell-mode
+  (defun my/nix--lsp-haskell-wrapper (args)
+	(if-let ((sandbox (nix-current-sandbox)))
+		(apply 'nix-shell-command sandbox args)
+	  args))
+  ;; from https://github.com/travisbhartwell/nix-emacs#flycheck
+  (defun my/nix--flycheck-command-wrapper (command)
+	(if-let ((sandbox (nix-current-sandbox)))
+		(apply 'nix-shell-command (nix-current-sandbox) command)
+	  command))
+  (defun my/nix--flycheck-executable-find (cmd)
+	(if-let ((sandbox (nix-current-sandbox)))
+		(nix-executable-find (nix-current-sandbox) cmd)
+	  flycheck-default-executable-find))
+  (setq lsp-haskell-process-path-hie "ghcide"
+		lsp-haskell-process-args-hie '()
+		lsp-haskell-process-wrapper-function 'my/nix--lsp-haskell-wrapper
+		flycheck-command-wrapper-function 'my/nix--flycheck-command-wrapper
+		flycheck-executable-find 'my/nix--flycheck-executable-find))
+
+;; Nix
+
+(use-package nix-mode
+  :straight t
+  :mode "\\.nix\\'")
 
 ;; Markdown
 
