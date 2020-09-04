@@ -462,6 +462,17 @@
           (:terminal . "iterm")))
   (setq org-babel-tmux-session-prefix "ob-"))
 
+(use-package ox-pandoc
+  :straight (ox-pandoc :type git :host github :repo "mgcyung/ox-pandoc" :branch "master"))
+
+(use-package org-pandoc-import
+  :straight (:host github
+             :repo "tecosaur/org-pandoc-import"
+             :files ("*.el" "filters" "preprocessors"))
+  :after ox-pandoc
+  :config
+  (org-pandoc-import-transient-mode 1))
+
 ; Mu4e
 (if (memq window-system '(mac ns))
 	(add-to-list 'load-path "/usr/local/Cellar/mu/1.0/share/emacs/site-lisp/mu/mu4e")
