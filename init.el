@@ -721,7 +721,7 @@
   (defun my/nix--flycheck-executable-find (cmd)
 	(if-let ((sandbox (nix-current-sandbox)))
 		(nix-executable-find (nix-current-sandbox) cmd)
-	  flycheck-default-executable-find))
+	  (flycheck-default-executable-find cmd)))
   (setq lsp-haskell-process-path-hie "ghcide"
 		lsp-haskell-process-args-hie '()
 		lsp-haskell-process-wrapper-function 'my/nix--lsp-haskell-wrapper
@@ -732,7 +732,9 @@
 
 (use-package nix-mode
   :straight t
-  :mode "\\.nix\\'")
+  :mode "\\.nix\\'"
+  :init
+  (require 'nix-build))
 
 ;; Markdown
 
