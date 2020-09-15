@@ -144,7 +144,8 @@
 (use-package ivy
   :straight t
   :delight ivy-mode
-  :bind (("C-s" . 'swiper-thing-at-point))
+  :bind (("C-s" . 'swiper-thing-at-point)
+		 ("C-<return>" . 'ivy-immediate-done))
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
