@@ -694,6 +694,10 @@
   :straight t
   :after company go-mode)
 
+(use-package go-dlv
+  :straight t
+  :after gotest)
+
 (use-package ob-go
   :straight t)
 
