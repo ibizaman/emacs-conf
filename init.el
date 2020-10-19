@@ -30,7 +30,10 @@
   (delight-major-mode))
 
 (use-package undo-tree
-  :delight undo-tree-mode)
+  :straight t
+  :delight undo-tree-mode
+  :config
+  (global-undo-tree-mode))
 
 (use-package autorevert
   :delight auto-revert-mode)
