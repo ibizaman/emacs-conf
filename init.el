@@ -435,14 +435,21 @@
 
   (org-babel-lob-ingest "~/.emacs.d/emacs-lob.org")
 
-  (progn
-    (defun ibizaman/org-copy-element ()
-      (interactive)
-      (let* ((elem (org-element-at-point))
-             (beg (org-element-property :begin elem))
-             (end (org-element-property :end elem)))
-        (copy-region-as-kill beg end)
-        (goto-char end))))
+  (defun ibizaman/org-copy-element ()
+	(interactive)
+	(let* ((elem (org-element-at-point))
+		   (beg (org-element-property :begin elem))
+		   (end (org-element-property :end elem)))
+	  (copy-region-as-kill beg end)
+	  (goto-char end)))
+
+  (defun ibizaman/org-babel-goto-tangle-file ()
+	(if-let* ((args (nth 2 (org-babel-get-src-block-info t)))
+			  (tangle (or (alist-get :dir args) (alist-get :tangle args))))
+		(when (not (equal "no" tangle))
+		  (find-file-other-window tangle)
+		  t)))
+  (add-hook 'org-open-at-point-functions 'ibizaman/org-babel-goto-tangle-file)
 
   (setq org-log-done 'time
 		org-babel-hash-show-time t
