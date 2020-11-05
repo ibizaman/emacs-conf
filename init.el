@@ -74,11 +74,25 @@
 
 (use-package flycheck
   :straight t
+  :after nix-sandbox
   :init
   (add-hook 'after-init-hook 'global-flycheck-mode)
+
+  ;; from https://github.com/travisbhartwell/nix-emacs#flycheck
+  (defun my/nix--flycheck-command-wrapper (command)
+	(if-let ((sandbox (nix-current-sandbox)))
+		(apply 'nix-shell-command (nix-current-sandbox) command)
+	  command))
+  (defun my/nix--flycheck-executable-find (cmd)
+	(if-let ((sandbox (nix-current-sandbox)))
+		(nix-executable-find (nix-current-sandbox) cmd)
+	  (flycheck-default-executable-find cmd)))
+
   :config
   (setq flycheck-check-syntax-automatically '(save idle-change)
-		flycheck-relevant-error-other-file-show nil)
+		flycheck-relevant-error-other-file-show nil
+		flycheck-command-wrapper-function 'my/nix--flycheck-command-wrapper
+		flycheck-executable-find 'my/nix--flycheck-executable-find)
   (add-to-list 'display-buffer-alist
 			   `(,(rx bos "*Flycheck errors*" eos)
 				 (display-buffer-reuse-window
@@ -713,20 +727,9 @@
 	(if-let ((sandbox (nix-current-sandbox)))
 		(apply 'nix-shell-command sandbox args)
 	  args))
-  ;; from https://github.com/travisbhartwell/nix-emacs#flycheck
-  (defun my/nix--flycheck-command-wrapper (command)
-	(if-let ((sandbox (nix-current-sandbox)))
-		(apply 'nix-shell-command (nix-current-sandbox) command)
-	  command))
-  (defun my/nix--flycheck-executable-find (cmd)
-	(if-let ((sandbox (nix-current-sandbox)))
-		(nix-executable-find (nix-current-sandbox) cmd)
-	  (flycheck-default-executable-find cmd)))
   (setq lsp-haskell-process-path-hie "ghcide"
 		lsp-haskell-process-args-hie '()
-		lsp-haskell-process-wrapper-function 'my/nix--lsp-haskell-wrapper
-		flycheck-command-wrapper-function 'my/nix--flycheck-command-wrapper
-		flycheck-executable-find 'my/nix--flycheck-executable-find))
+		lsp-haskell-process-wrapper-function 'my/nix--lsp-haskell-wrapper))
 
 ;; Nix
 
