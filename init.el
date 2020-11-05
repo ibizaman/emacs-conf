@@ -63,14 +63,15 @@
 	 ediff
 	 elfeed
 	 flycheck
+	 info
 	 log-edit
 	 log-view
 	 mu4e
 	 occur
 	 simple
 	 which-key))
-  (evil-collection-occur-setup)
-  )
+  (evil-collection-unimpaired-mode -1)
+  (evil-collection-occur-setup))
 
 (use-package flycheck
   :straight t
