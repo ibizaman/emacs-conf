@@ -419,7 +419,7 @@
 
 (use-package org
   :straight t
-  :after (evil es-mode)
+  :after evil
   :init
   (defun my/org-mode-hook-evil ()
       (setq evil-auto-indent nil))
