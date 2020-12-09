@@ -492,9 +492,11 @@
   (setq org-babel-tmux-session-prefix "ob-"))
 
 (use-package ox-pandoc
+  :disabled
   :straight (ox-pandoc :type git :host github :repo "mgcyung/ox-pandoc" :branch "master"))
 
 (use-package org-pandoc-import
+  :disabled
   :straight (:host github
              :repo "tecosaur/org-pandoc-import"
              :files ("*.el" "filters" "preprocessors"))
