@@ -135,8 +135,8 @@
 		 ("C-x g d" . magit-diff-buffer-file)
 		 ("C-x g b" . magit-blame)
 		 ("C-x g l" . magit-log)
-		 :map magit-file-mode-map
-		 ("C-x g" . nil)
+		 ;; :map magit-file-mode-map
+		 ;; ("C-x g" . nil)
          :map magit-mode-map
 		 ("o" . magit-visit-thing)
 		 ("O" . magit-diff-visit-file-other-window))
