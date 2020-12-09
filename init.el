@@ -510,6 +510,7 @@
   (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"))
 
 (use-package mu4e
+  :if (locate-library "mu4e")
   :config
   (require 'mu4e-contrib)
 
