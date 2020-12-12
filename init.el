@@ -419,6 +419,20 @@
   :straight t)
 
 
+(use-package hledger-mode
+  :straight (hledger-mode :type git :host github :repo "ibizaman/hledger-mode" :branch "master")
+  :config
+  (setq hledger-jfile "~/org/hledger.journal")
+  (add-to-list 'auto-mode-alist '("\\.journal\\'" . hledger-mode))
+  (add-to-list 'company-backends 'hledger-company)
+
+  (evil-define-key 'normal hledger-mode-map (kbd "b") 'hledger-balancesheet*)
+  (evil-define-key 'normal hledger-mode-map (kbd "d") 'hledger-reschedule)
+  (evil-define-key 'normal hledger-view-mode-map (kbd "d") 'hledger-report-at-day)
+  (evil-define-key 'normal hledger-view-mode-map (kbd "n") 'hledger-next-report)
+  (evil-define-key 'normal hledger-view-mode-map (kbd "p") 'hledger-prev-report))
+
+
 ; Org
 
 (use-package org
