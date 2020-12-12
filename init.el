@@ -221,6 +221,10 @@
   (setq eyebrowse-new-workspace t)
   (eyebrowse-mode 1))
 
+(use-package dired
+  :config
+  (setq dired-dwim-target 'dired-dwim-target-recent))
+
 ; UI
 
 (menu-bar-mode 0)
