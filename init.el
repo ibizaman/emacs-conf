@@ -103,7 +103,9 @@
 				 (window-height   . 0.33))))
 
 (use-package yasnippet
-  :straight t)
+  :straight t
+  :config
+  (yas-global-mode))
 
 (use-package flyspell
   :straight t
