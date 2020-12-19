@@ -763,7 +763,7 @@
 	(if-let ((sandbox (nix-current-sandbox)))
 		(apply 'nix-shell-command sandbox args)
 	  args))
-  (setq lsp-haskell-process-path-hie "ghcide"
+  (setq lsp-haskell-process-path-hie "haskell-language-server-wrapper"
 		lsp-haskell-process-args-hie '()
 		lsp-haskell-process-wrapper-function 'my/nix--lsp-haskell-wrapper))
 
