@@ -40,6 +40,7 @@
 
 (use-package evil
   :straight t
+  :after undo-tree
   :init
   (setq evil-want-integration t)  ; needed for evil-collection
   (setq evil-want-keybinding nil) ; needed for evil-collection
@@ -47,7 +48,8 @@
   (evil-mode 1)
   (evil-define-key 'normal Info-mode-map (kbd "]") #'Info-forward-node)
   (evil-define-key 'normal Info-mode-map (kbd "[") #'Info-backward-node)
-  (evil-define-key 'normal 'global "gt" 'counsel-semantic-or-imenu))
+  (evil-define-key 'normal 'global "gt" 'counsel-semantic-or-imenu)
+  (customize-set-variable 'evil-undo-system 'undo-tree))
 
 (use-package evil-collection
   :straight t
