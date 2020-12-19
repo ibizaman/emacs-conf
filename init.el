@@ -436,6 +436,9 @@
   (evil-define-key 'normal hledger-view-mode-map (kbd "n") 'hledger-next-report)
   (evil-define-key 'normal hledger-view-mode-map (kbd "p") 'hledger-prev-report))
 
+(use-package csv-mode
+  :straight t)
+
 
 ; Org
 
