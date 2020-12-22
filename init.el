@@ -202,7 +202,8 @@
   :straight t
   :delight '(:eval (format " [%s]" (projectile-project-name)))
   :config
-  (projectile-mode 1))
+  (projectile-mode 1)
+  (setq projectile-file-exists-local-cache-expire (* 5 60)))
 
 (use-package counsel-projectile
   :straight t
