@@ -351,7 +351,9 @@
 
 ; Helper functions
 (defun get-secret (host user)
-  (funcall (plist-get (nth 0 (auth-source-search :host host :user user :max 1)) :secret)))
+  (if-let* ((item (nth 0 (auth-source-search :host host :user user :max 1))))
+	  (funcall (plist-get item :secret))
+	(error (format "Could not find secret for host:%s user:%s" host user))))
 
 ;; Shortcuts for jumping around functions
 (progn
