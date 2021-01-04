@@ -131,6 +131,8 @@
   :straight t
   :delight company-mode
   :config
+  (setq company-idle-delay 0
+		company-minimum-prefix-length 1)
   (add-hook 'after-init-hook 'global-company-mode))
 
 (use-package magit
@@ -684,9 +686,13 @@
   :hook ((sh-mode . lsp-deferred)
 		 (javascript-mode . lsp-deferred)
 		 (html-mode . lsp-deferred)
-		 (before-save . my/lsp-format-buffer-silent))
+		 (before-save . my/lsp-format-buffer-silent)
+		 (lsp-mode . lsp-enable-which-key-integration))
   :config
   (setq lsp-signature-auto-activate t)
+  ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
+  (setq gc-cons-threshold 100000000
+        read-process-output-max (* 1024 1024)) ;; 1mb
   (lsp-lens-mode t))
 
 (use-package lsp-ui
