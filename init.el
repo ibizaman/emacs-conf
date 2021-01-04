@@ -515,9 +515,9 @@
   :straight (ob-tmux :type git :host nil :repo "https://github.com/ahendriksen/ob-tmux.git")
   :config
   (setq org-babel-default-header-args:tmux
-        '((:results . "silent")
-          (:terminal . "iterm")))
-  (setq org-babel-tmux-session-prefix "ob-"))
+        '((:results . "silent")))
+  (setq org-babel-tmux-terminal "iterm"
+        org-babel-tmux-session-prefix "ob-"))
 
 (use-package ox-pandoc
   :disabled
