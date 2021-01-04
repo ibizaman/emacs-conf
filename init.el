@@ -459,7 +459,8 @@
      (sql . t)
      (python . t)
      (shell . t)
-     (dot . t)))
+     (dot . t)
+	 (eshell . t)))
 
   (org-babel-lob-ingest "~/.emacs.d/emacs-lob.org")
 
