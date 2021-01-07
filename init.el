@@ -92,7 +92,7 @@
 	  (flycheck-default-executable-find cmd)))
 
   :config
-  (setq flycheck-check-syntax-automatically '(save idle-change)
+  (setq flycheck-check-syntax-automatically '(save idle-change idle-buffer-switch)
 		flycheck-relevant-error-other-file-show nil
 		flycheck-command-wrapper-function 'my/nix--flycheck-command-wrapper
 		flycheck-executable-find 'my/nix--flycheck-executable-find)
