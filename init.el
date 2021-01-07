@@ -1,3 +1,8 @@
+;;; My Emacs Config
+;;
+;; Inspirations:
+;;  - https://bzg.fr/en/emacs-strip-tease.html/
+
 ;;; Install straight
 
 (defvar bootstrap-version)
@@ -242,6 +247,19 @@
   (setq dired-dwim-target 'dired-dwim-target-recent))
 
 ;;; UI
+
+(blink-cursor-mode 0)
+
+;; Don't use messages that you don't read
+(setq initial-scratch-message ""
+      inhibit-startup-message t)
+
+(setq visible-bell t
+      ring-bell-function 'ignore)
+
+(customize-set-variable 'inhibit-startup-echo-area-message "ibizaman")
+
+(toggle-frame-fullscreen)
 
 (menu-bar-mode 0)
 (tool-bar-mode 0)
