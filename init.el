@@ -38,6 +38,10 @@
 (use-package autorevert
   :delight auto-revert-mode)
 
+(progn
+ (setq backup-directory-alist
+	   `(("." . ,(concat user-emacs-directory "backups")))))
+
 (use-package evil
   :straight t
   :after undo-tree
