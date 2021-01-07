@@ -135,6 +135,11 @@
 		company-minimum-prefix-length 1)
   (add-hook 'after-init-hook 'global-company-mode))
 
+(use-package company-posframe
+  :straight t
+  :config
+  (company-posframe-mode 1))
+
 (use-package magit
   :straight t
   :bind (("C-x g g" . magit-status)
