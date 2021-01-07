@@ -1,4 +1,4 @@
-; Install straight
+;;; Install straight
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -16,7 +16,7 @@
 (straight-use-package 'use-package)
 
 
-; Base packages
+;;; Base packages
 
 (when (memq window-system '(mac ns x))
   (use-package exec-path-from-shell
@@ -237,7 +237,7 @@
   :config
   (setq dired-dwim-target 'dired-dwim-target-recent))
 
-; UI
+;;; UI
 
 (menu-bar-mode 0)
 (tool-bar-mode 0)
@@ -260,14 +260,14 @@
   (setq-default tab-width 4)
   (setq tab-width 4)
   (setq indent-tabs-mode nil))
-; Tabs are used to format buffer with `lsp-format-buffer'.
+;; Tabs are used to format buffer with `lsp-format-buffer'.
 (add-hook 'haskell-mode-hook 'my/disable-tabs)
 
-;; Modeline
+;;;; Modeline
 
 (column-number-mode 1)
 
-;; Theme
+;;;; Theme
 
 (use-package mustang-theme
   :straight t
@@ -317,7 +317,7 @@
 (load-theme 'mustang t)
 
 
-; Miscellaneous
+;;; Miscellaneous
 
 ;; Use only one space after a dot
 (setq sentence-end-double-space nil)
@@ -356,7 +356,7 @@
   (add-hook 'compilation-filter-hook 'my-colorize-compilation-buffer))
 
 
-; Helper functions
+;;; Helper functions
 (defun get-secret (host user)
   (if-let* ((item (nth 0 (auth-source-search :host host :user user :max 1))))
 	  (funcall (plist-get item :secret))
@@ -372,7 +372,7 @@
   (add-hook 'prog-mode-hook 'ibizaman/jump-functions))
 
 
-; Helper packages
+;;; Helper packages
 
 (use-package expand-region
   :straight t
@@ -450,7 +450,7 @@
   :straight t)
 
 
-; Org
+;;; Org
 
 (use-package org
   :straight t
@@ -540,7 +540,7 @@
   :config
   (org-pandoc-import-transient-mode 1))
 
-; Mu4e
+;;; Mu4e
 (if (memq window-system '(mac ns))
 	(add-to-list 'load-path "/usr/local/Cellar/mu/1.0/share/emacs/site-lisp/mu/mu4e")
   (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"))
@@ -675,11 +675,11 @@
   (mu4e-maildirs-extension))
 
 
-; Language specific packages
+;;; Language specific packages
 
 (global-set-key (kbd "C-c C-j") 'find-function)
 
-;; Language Server Protocol
+;;;; Language Server Protocol
 
 (defun my/lsp-format-buffer-silent ()
   "Silence errors from `lsp-format-buffer'."
@@ -714,7 +714,7 @@
   :config
   (push 'company-lsp company-backends))
 
-;; Elisp
+;;;; Elisp
 
 (defun eval-point-region-and-deactivate ()
   "Evaluate region or expanded region and deactivates region when done."
@@ -730,7 +730,7 @@
 (use-package elisp-mode
   :bind (("C-c C-c" . eval-point-region-and-deactivate)))
 
-;; Haskell
+;;;; Haskell
 
 (use-package nix-sandbox
   :straight t)
@@ -782,7 +782,7 @@
 		lsp-haskell-process-args-hie '()
 		lsp-haskell-process-wrapper-function 'my/nix--lsp-haskell-wrapper))
 
-;; Nix
+;;;; Nix
 
 (use-package nix-mode
   :straight t
@@ -790,7 +790,7 @@
   :init
   (require 'nix-build))
 
-;; Markdown
+;;;; Markdown
 
 (use-package markdown-mode
   :straight t
@@ -800,13 +800,13 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-;; Yaml
+;;;; Yaml
 
 (use-package yaml-mode
   :straight t
   :hook (yaml-mode . lsp-deferred))
 
-;; Go
+;;;; Go
 
 (use-package go-mode
   :straight t
@@ -1050,12 +1050,12 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package
 		(define-key go-mode-map (kbd "C-c t") 'go-test-args-hydra/body))))
 
 
-;; Arduino
+;;;; Arduino
 
 (use-package arduino-mode
   :straight t)
 
-; Elfeed
+;;; Elfeed
 
 (use-package elfeed
   :straight t)
@@ -1070,6 +1070,10 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package
 						 :use-authinfo t)))
   (elfeed-set-timeout 36000)
   (elfeed-protocol-enable))
+
+
+;;; Customization
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
