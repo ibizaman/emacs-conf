@@ -1,7 +1,10 @@
-;;; My Emacs Config
+;;; conf --- my emacs config
 ;;
+;;; Commentary:
 ;; Inspirations:
 ;;  - https://bzg.fr/en/emacs-strip-tease.html/
+;;
+;;; Code:
 
 ;;; Install straight
 
@@ -1159,3 +1162,5 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package
  '(org-level-8 ((t (:foreground "#5091a1" :height 1.1))))
  '(org-link ((t (:inherit link))))
  '(org-meta-line ((t (:inherit font-lock-comment-face :extend t :background "#303b4b" :foreground "#b0e2ff")))))
+
+;;; init.el ends here
