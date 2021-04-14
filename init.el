@@ -372,6 +372,8 @@
    '(eldoc-highlight-function-argument ((t (:inherit bold :underline t))))
    '(eyebrowse-mode-line-active ((t (:inherit mode-line-emphasis :inverse-video t))))
    '(font-lock-warning-face ((t (:background "#202020" :foreground "#ff6523"))))
+   '(font-lock-comment-face ((t (:foreground "RoyalBlue1"))))
+   '(font-lock-comment-delimiter-face ((t (:foreground "RoyalBlue1"))))
    '(git-gutter+-added ((t (:inherit font-lock-comment-face :weight bold))))
    '(git-gutter+-deleted ((t (:inherit font-lock-comment-face :weight bold))))
    '(git-gutter+-modified ((t (:inherit font-lock-comment-face :weight bold))))
