@@ -541,6 +541,7 @@
      (shell . t)
      (dot . t)
      (eshell . t)))
+   (setq org-link-use-indirect-buffer-for-internals t)
 
   (org-babel-lob-ingest "~/.emacs.d/emacs-lob.org")
 
