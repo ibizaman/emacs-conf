@@ -277,7 +277,7 @@
 
 (setq kill-do-not-save-duplicates t
       ; From https://stackoverflow.com/a/29092845/1013628
-      select-enable-clipboard nil)
+      select-enable-clipboard t)
 
 (setq-default tab-width 4)
 (defun my/disable-tabs ()
