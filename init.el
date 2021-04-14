@@ -149,6 +149,7 @@
 
 (use-package company-posframe
   :straight t
+  :delight company-posframe
   :config
   (company-posframe-mode 1))
 
