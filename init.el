@@ -1153,7 +1153,7 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(link ((t (:foreground "#b2d8e8"))))
+ '(link ((t (:foreground "#b2d8e8" :underline nil))))
  '(link-visited ((t (:inherit link))))
  '(org-block ((t (:inherit default :foreground "#e2e2e5"))))
  '(org-level-1 ((t (:foreground "#df9f2d" :underline t :weight bold :height 1.3))))
@@ -1164,7 +1164,7 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package
  '(org-level-6 ((t (:foreground "#5091a1" :underline t :weight bold :height 1.1))))
  '(org-level-7 ((t (:foreground "#5091a1" :underline t :height 1.1))))
  '(org-level-8 ((t (:foreground "#5091a1" :height 1.1))))
- '(org-link ((t (:inherit link))))
+ '(org-link ((t (:foreground unspecified :underline nil :inherit link))))
  '(org-meta-line ((t (:inherit font-lock-comment-face :extend t :background "#303b4b" :foreground "#b0e2ff")))))
 
 ;;; init.el ends here
