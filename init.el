@@ -762,6 +762,8 @@
 (use-package lsp-mode
   :straight t
   :commands lsp
+  :init
+  (setq lsp-keymap-prefix "C-x l")
   :hook ((sh-mode . lsp-deferred)
          (javascript-mode . lsp-deferred)
          (html-mode . lsp-deferred)
