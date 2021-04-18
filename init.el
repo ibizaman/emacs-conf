@@ -96,11 +96,11 @@
   ;; from https://github.com/travisbhartwell/nix-emacs#flycheck
   (defun my/nix--flycheck-command-wrapper (command)
     (if-let ((sandbox (nix-current-sandbox)))
-        (apply 'nix-shell-command (nix-current-sandbox) command)
+        (apply 'nix-shell-command sandbox command)
       command))
   (defun my/nix--flycheck-executable-find (cmd)
     (if-let ((sandbox (nix-current-sandbox)))
-        (nix-executable-find (nix-current-sandbox) cmd)
+        (nix-executable-find sandbox cmd)
       (flycheck-default-executable-find cmd)))
 
   :config
