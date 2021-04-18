@@ -1154,6 +1154,8 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(link ((t (:foreground "#b2d8e8" :underline nil))))
+ '(ediff-even-diff-A ((t (:inherit ediff-current-diff-A))))
+ '(ediff-even-diff-Ancestor ((t (:inherit ediff-current-diff-Ancestor))))
  '(link-visited ((t (:inherit link))))
  '(org-block ((t (:inherit default :foreground "#e2e2e5"))))
  '(org-level-1 ((t (:foreground "#df9f2d" :underline t :weight bold :height 1.3))))
