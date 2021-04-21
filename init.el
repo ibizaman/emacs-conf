@@ -247,6 +247,9 @@
   :config
   (setq dired-dwim-target 'dired-dwim-target-recent))
 
+(use-package dired+
+  :straight t)
+
 ;;; UI
 
 (blink-cursor-mode 0)
