@@ -80,6 +80,7 @@
      info
      log-edit
      log-view
+	 magit
      mu4e
      occur
      simple
@@ -171,10 +172,6 @@
   ;; (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-issues nil t)
   (evil-define-key 'normal magit-mode-map (kbd "o") 'magit-visit-thing)
   (evil-define-key 'normal magit-mode-map (kbd "O") 'magit-diff-visit-file-other-window))
-
-(use-package evil-magit
-  :straight t
-  :after (magit evil))
 
 (use-package forge
   :straight t
