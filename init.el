@@ -537,6 +537,8 @@
 (use-package csv-mode
   :straight t)
 
+(use-package emacs-conflict
+  :straight (emacs-conflict :type git :host github :repo "ibizaman/emacs-conflict" :branch "master"))
 
 (use-package gif-screencast
   :straight t
