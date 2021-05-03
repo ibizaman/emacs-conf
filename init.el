@@ -68,7 +68,9 @@
   :after evil
   :config
   (evil-collection-init
-   '(compile
+   '(
+	 compile
+	 xref
      comint
      custom
      deadgrep
