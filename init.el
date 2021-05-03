@@ -1043,6 +1043,19 @@
             (symbol-value 'go-test-args-custom)))
 
 
+        (defvar go-test-args-run nil
+          "Test name to run")
+
+        (defun go-test-args-run-toggle ()
+          "Toggle run argument."
+			(go-test-args--toggle-str 'go-test-args-run))
+
+		(defun go-test-run-one ()
+		  "Run TESTNAME."
+		  (let ((go-test--current-test-cache `("" ,go-test-args-run)))
+			(go-test-current-test 'last)))
+
+
         (defun go-test-args--set-global-var ()
           "Set go-test-args from variables toggled in this module."
           (let* ((allvalues `(,(go-test-args-tags-arg)
@@ -1086,7 +1099,7 @@
           (go-test-args--set-global-var))
 
         (defun go-test-args--toggle-str (var)
-          (let ((value (read-string "Enter a value (leave empty to unset the argument): ")))
+          (let ((value (read-string "Enter a value (leave empty to unset the argument): " nil nil (thing-at-point 'symbol t))))
             (if (equal value "")
                 (set var nil)
               (set var value)))
@@ -1103,11 +1116,12 @@ cp_u_:             %`go-test-args-cpu
 c_o_verprofile:    %`go-test-args-coverprofile
 coverp_k_g:        %`go-test-args-coverpkg
 _c_ustom:          %`go-test-args-custom
+_R_un:             %`go-test-args-run
 
 go-test-args: %s(symbol-value 'go-test-args)
 
 _t_: run current _t_est   _b_: run current _b_enchmark   _O_: show coverage
-_f_:      ... in _f_ile   _B_:           ^^... in file
+_f_:      ... in _f_ile   _B_:           ^^... in file   _r_: run
 _p_:   ... in _p_ackage   _N_:        ^^... in package
 "
           ("T" (go-test-args-tags-toggle))
@@ -1119,6 +1133,7 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package
           ("o" (go-test-args-coverprofile-toggle))
           ("k" (go-test-args-coverpkg-toggle))
           ("c" (go-test-args-custom-toggle))
+          ("R" (go-test-args-run-toggle))
 
           ("t" (go-test-current-test) :color blue)
           ("f" (go-test-current-file) :color blue)
@@ -1126,9 +1141,11 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package
           ("b" (go-test-current-benchmark) :color blue)
           ("B" (go-test-current-file-benchmarks) :color blue)
           ("N" (go-test-current-project-benchmarks) :color blue)
-          ("O" (go-coverage) :color blue))
+          ("O" (go-coverage) :color blue)
+          ("r" (go-test-run-one) :color blue))
 
-        (define-key go-mode-map (kbd "C-c t") 'go-test-args-hydra/body))))
+        (define-key go-mode-map (kbd "C-c t") 'go-test-args-hydra/body)
+        (define-key go-test-mode-map (kbd "C-c t") 'go-test-args-hydra/body))))
 
 
 ;;;; Arduino
