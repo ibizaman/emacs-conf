@@ -177,8 +177,12 @@
   :straight t
   :after magit
   :config
+  (add-hook 'magit-status-sections-hook 'forge-insert-assigned-pullreqs 10)
+  (add-hook 'magit-status-sections-hook 'forge-insert-assigned-issues 10)
+  (add-hook 'magit-status-sections-hook 'forge-insert-authored-issues 10)
   (remove-hook 'magit-status-sections-hook 'forge-insert-pullreqs)
-  (remove-hook 'magit-status-sections-hook 'forge-insert-issues))
+  (remove-hook 'magit-status-sections-hook 'forge-insert-issues)
+  )
 
 (use-package auth-source)
 
