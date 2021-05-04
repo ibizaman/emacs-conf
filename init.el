@@ -901,7 +901,27 @@
 
 (use-package gotest
   :straight t
-  :after company go-mode)
+  :after company go-mode
+  :config
+  (defun go-test-subtest-name ()
+	"Returns the full name of the subtest under point if any, or the test name."
+	(cl-destructuring-bind (test-suite test-name) go-test--current-test-cache
+	  (let ((subtest (go-test--read-subtest-name)))
+		(if (string-blank-p subtest)
+			test-name
+		  (message "%s/%s" test-name subtest)))))
+
+  (defun go-test--read-subtest-name()
+	"Read the string under point and replaces whitespaces with underscores."
+	(if (not (er--point-inside-string-p))
+		""
+	  (er/mark-inside-quotes)
+	  (let* ((rawname (buffer-substring-no-properties (region-beginning) (region-end)))
+			 (name (replace-regexp-in-string " " "_" rawname)))
+		(deactivate-mark)
+		name)))
+
+  )
 
 (use-package go-dlv
   :straight t
@@ -1099,7 +1119,7 @@
           (go-test-args--set-global-var))
 
         (defun go-test-args--toggle-str (var)
-          (let ((value (read-string "Enter a value (leave empty to unset the argument): " nil nil (thing-at-point 'symbol t))))
+          (let ((value (read-string "Enter a value (leave empty to unset the argument): " nil nil (go-test-subtest-name))))
             (if (equal value "")
                 (set var nil)
               (set var value)))
