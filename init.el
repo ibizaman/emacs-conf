@@ -538,6 +538,20 @@
   :straight t)
 
 
+(use-package gif-screencast
+  :straight t
+  :config
+  :bind (("<f7>" . gif-screencast-start-or-stop)
+         ("<f8>" . gif-screencast-toggle-pause)
+         ("<f9>" . gif-screencast-stop))
+  :config
+  (when (memq window-system '(ns))
+	  (setq gif-screencast-args '("-x")) ;; To shut up the shutter sound of `screencapture' (see `gif-screencast-command').
+	  (setq gif-screencast-cropping-program "mogrify") ;; Optional: Used to crop the capture to the Emacs frame.
+	  (setq gif-screencast-capture-format "ppm")) ;; Optional: Required to crop captured images.
+  )
+
+
 ;;; Org
 
 (use-package org
