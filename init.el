@@ -835,6 +835,9 @@
 (use-package elisp-mode
   :bind (("C-c C-c" . eval-point-region-and-deactivate)))
 
+(use-package dap-mode
+  :straight t)
+
 ;;;; Haskell
 
 (use-package nix-sandbox
