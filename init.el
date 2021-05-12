@@ -622,6 +622,10 @@
 (use-package ob-shell
   :after org)
 
+(use-package ob-mongo
+  :straight t
+  :after org)
+
 (use-package ob-tmux
   :straight (ob-tmux :type git :host nil :repo "https://github.com/ahendriksen/ob-tmux.git")
   :config
