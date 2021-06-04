@@ -982,10 +982,12 @@
           "Toggle tags argument."
           (go-test-args--toggle-list 'go-test-args-tags 'go-test-args-base-tags))
 
-        (defun go-test-args-tags-arg ()
+        (defun go-test-args-tags-arg (&optional testprefix)
           "Get tags argument."
           (if (null go-test-args-tags) ""
-            (format "--tags=\"%s\"" (mapconcat 'identity (symbol-value 'go-test-args-tags) " "))))
+            (format "-%stags=\"%s\""
+					(if testprefix "test." "-")
+					(mapconcat 'identity (symbol-value 'go-test-args-tags) " "))))
 
 
         (defcustom go-test-args-base-cpu '("1" "2" "3" "4" "5" "6" "7" "8")
@@ -1000,10 +1002,12 @@
           "Toggle cpu argument."
           (go-test-args--toggle-list 'go-test-args-cpu 'go-test-args-base-cpu))
 
-        (defun go-test-args-cpu-arg ()
+        (defun go-test-args-cpu-arg (&optional testprefix)
           "Get cpu argument."
           (if (null go-test-args-cpu) ""
-            (format "--cpu=%s" (mapconcat 'identity (symbol-value 'go-test-args-cpu) ","))))
+            (format "-%scpu=%s"
+					(if testprefix "test." "-")
+					(mapconcat 'identity (symbol-value 'go-test-args-cpu) ","))))
 
 
         (defvar go-test-args-verbose nil
@@ -1013,9 +1017,9 @@
           "Toggle verbose argument."
           (go-test-args--toggle-bool 'go-test-args-verbose))
 
-        (defun go-test-args-verbose-arg ()
+        (defun go-test-args-verbose-arg (&optional testprefix)
           "Get verbose argument."
-          (if go-test-args-verbose "-v" ""))
+          (if go-test-args-verbose (format "-%sv" (if testprefix "test." "")) ""))
 
 
         (defvar go-test-args-race nil
@@ -1025,9 +1029,10 @@
           "Toggle race argument."
           (go-test-args--toggle-bool 'go-test-args-race))
 
-        (defun go-test-args-race-arg ()
+        (defun go-test-args-race-arg (&optional testprefix)
           "Get race argument."
-          (if go-test-args-race "--race" ""))
+          (if go-test-args-race
+			  (format"-%srace" (if testprefix "test." "-")) ""))
 
 
         (defvar go-test-args-count nil
@@ -1037,10 +1042,12 @@
           "Toggle count argument."
           (go-test-args--toggle-number 'go-test-args-count))
 
-        (defun go-test-args-count-arg ()
+        (defun go-test-args-count-arg (&optional testprefix)
           "Get count argument."
           (if (null go-test-args-count) ""
-            (format "--count=\"%s\"" go-test-args-count)))
+            (format "-%scount=\"%s\""
+					(if testprefix "test." "-")
+					go-test-args-count)))
 
 
         (defvar go-test-args-parallel nil
@@ -1050,10 +1057,12 @@
           "Toggle parallel argument."
           (go-test-args--toggle-number 'go-test-args-parallel))
 
-        (defun go-test-args-parallel-arg ()
+        (defun go-test-args-parallel-arg (&optional testprefix)
           "Get parallel argument."
           (if (null go-test-args-parallel) ""
-            (format "--parallel=\"%s\"" go-test-args-parallel)))
+            (format "-%sparallel=\"%s\""
+					(if testprefix "test." "-")
+					go-test-args-parallel)))
 
 
         (defvar go-test-args-coverprofile nil
@@ -1063,10 +1072,12 @@
           "Toggle coverprofile argument."
           (go-test-args--toggle-str 'go-test-args-coverprofile))
 
-        (defun go-test-args-coverprofile-arg ()
+        (defun go-test-args-coverprofile-arg (&optional testprefix)
           "Get coverprofile argument."
           (if (null go-test-args-coverprofile) ""
-            (format "--coverprofile=\"%s\"" go-test-args-coverprofile)))
+            (format "-%scoverprofile=\"%s\""
+					(if testprefix "test." "-")
+					go-test-args-coverprofile)))
 
 
         (defvar go-test-args-coverpkg nil
@@ -1076,10 +1087,12 @@
           "Toggle coverpkg argument."
           (go-test-args--toggle-list 'go-test-args-coverpkg ()))
 
-        (defun go-test-args-coverpkg-arg ()
+        (defun go-test-args-coverpkg-arg (&optional testprefix)
           "Get coverpkg argument."
           (if (null go-test-args-coverpkg) ""
-            (format "--coverpkg=\"%s\"" (mapconcat 'identity (symbol-value 'go-test-args-coverpkg) ","))))
+			(format "-%scoverpkg=\"%s\""
+					(if testprefix "test." "-")
+					(mapconcat 'identity (symbol-value 'go-test-args-coverpkg) ","))))
 
 
         (defvar go-test-args-custom nil
@@ -1108,20 +1121,31 @@
 			(go-test-current-test 'last)))
 
 
-        (defun go-test-args--set-global-var ()
+		(defun go-test-debug-one ()
+		  "Run TESTNAME."
+		  (let ((cmd (concat "dlv test -- -test.run=" go-test-args-run " " (go-test-args--all-args t))))
+			(message cmd)
+			(dlv cmd)))
+
+
+		(defun go-test-args--all-args (&optional prefix)
           "Set go-test-args from variables toggled in this module."
-          (let* ((allvalues `(,(go-test-args-tags-arg)
-                              ,(go-test-args-count-arg)
-                              ,(go-test-args-parallel-arg)
-                              ,(go-test-args-verbose-arg)
-                              ,(go-test-args-race-arg)
-                              ,(go-test-args-cpu-arg)
-                              ,(go-test-args-coverprofile-arg)
-                              ,(go-test-args-coverpkg-arg)
+          (let* ((allvalues `(,(go-test-args-tags-arg prefix)
+                              ,(go-test-args-count-arg prefix)
+                              ,(go-test-args-parallel-arg prefix)
+                              ,(go-test-args-verbose-arg prefix)
+                              ,(go-test-args-race-arg prefix)
+                              ,(go-test-args-cpu-arg prefix)
+                              ,(go-test-args-coverprofile-arg prefix)
+                              ,(go-test-args-coverpkg-arg prefix)
                               ,(go-test-args-custom-arg)))
                  (nonnil (seq-filter (lambda (elem) (not (or (null elem) (equal elem ""))))
                                      allvalues)))
-            (setq go-test-args (mapconcat 'identity nonnil " "))))
+            (mapconcat 'identity nonnil " ")))
+
+        (defun go-test-args--set-global-var (&optional prefix)
+          "Set go-test-args from variables toggled in this module."
+            (setq go-test-args (go-test-args--all-args)))
 
 
         (defun go-test-args--toggle-in-list (list element)
@@ -1163,7 +1187,7 @@ _T_ags:            %`go-test-args-tags
 _C_ount:           %`go-test-args-count
 _P_arallel:        %`go-test-args-parallel
 _v_erbose:         %`go-test-args-verbose
-_r_ace:            %`go-test-args-race
+r_a_ce:            %`go-test-args-race
 cp_u_:             %`go-test-args-cpu
 c_o_verprofile:    %`go-test-args-coverprofile
 coverp_k_g:        %`go-test-args-coverpkg
@@ -1173,14 +1197,14 @@ _R_un:             %`go-test-args-run
 go-test-args: %s(symbol-value 'go-test-args)
 
 _t_: run current _t_est   _b_: run current _b_enchmark   _O_: show coverage
-_f_:      ... in _f_ile   _B_:           ^^... in file   _r_: run
-_p_:   ... in _p_ackage   _N_:        ^^... in package
+_f_:      ... in _f_ile   _B_:           ^^... in file   _r_: run RUN
+_p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
 "
           ("T" (go-test-args-tags-toggle))
           ("C" (go-test-args-count-toggle))
           ("P" (go-test-args-parallel-toggle))
           ("v" (go-test-args-verbose-toggle))
-          ("r" (go-test-args-race-toggle))
+          ("a" (go-test-args-race-toggle))
           ("u" (go-test-args-cpu-toggle))
           ("o" (go-test-args-coverprofile-toggle))
           ("k" (go-test-args-coverpkg-toggle))
@@ -1194,7 +1218,8 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package
           ("B" (go-test-current-file-benchmarks) :color blue)
           ("N" (go-test-current-project-benchmarks) :color blue)
           ("O" (go-coverage) :color blue)
-          ("r" (go-test-run-one) :color blue))
+          ("r" (go-test-run-one) :color blue)
+          ("d" (go-test-debug-one) :color blue))
 
         (define-key go-mode-map (kbd "C-c t") 'go-test-args-hydra/body)
         (define-key go-test-mode-map (kbd "C-c t") 'go-test-args-hydra/body))))
