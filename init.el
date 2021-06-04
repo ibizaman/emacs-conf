@@ -534,11 +534,15 @@
   (evil-define-key 'normal hledger-view-mode-map (kbd "n") 'hledger-next-report)
   (evil-define-key 'normal hledger-view-mode-map (kbd "p") 'hledger-prev-report))
 
+
 (use-package csv-mode
   :straight t)
 
 (use-package emacs-conflict
   :straight (emacs-conflict :type git :host github :repo "ibizaman/emacs-conflict" :branch "master"))
+
+(use-package copy-as-format
+  :straight t)
 
 (use-package gif-screencast
   :straight t
