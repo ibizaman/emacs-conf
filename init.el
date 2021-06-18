@@ -1228,6 +1228,11 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
         (define-key go-mode-map (kbd "C-c t") 'go-test-args-hydra/body)
         (define-key go-test-mode-map (kbd "C-c t") 'go-test-args-hydra/body))))
 
+;;;; Java
+
+(use-package lsp-java
+  :straight t)
+
 
 ;;;; Arduino
 
