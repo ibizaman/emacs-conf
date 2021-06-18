@@ -1258,6 +1258,8 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
 
 ;;; Customization
 
+(put 'narrow-to-region 'disabled nil)
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
