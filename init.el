@@ -399,6 +399,17 @@
 
 ;;; Miscellaneous
 
+;; Shortcuts to files
+(defun find-file-marker (file)
+  "Find FILE but mark the current point first."
+  `(lambda ()
+	 (interactive)
+	 (xref-push-marker-stack)
+	 (find-file ,file)))
+
+(global-set-key (kbd "C-c SPC") (find-file-marker "~/Documents/tasks.org"))
+(evil-global-set-key 'normal (kbd "C-c SPC") (find-file-marker "~/Documents/tasks.org"))
+
 ;; Use only one space after a dot
 (setq sentence-end-double-space nil)
 
