@@ -450,9 +450,9 @@
 
   (add-hook 'prog-mode-hook 'ibizaman/jump-functions))
 
-(defun compile-at ()
+(defun compile-at (arg)
   ""
-  (interactive)
+  (interactive "P")
   (let* ((default-directory (read-directory-name "Compile directory: " (magit-toplevel)))
 		 (default-directory (if (file-exists-p default-directory)
 								(file-name-directory default-directory)
