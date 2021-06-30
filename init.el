@@ -61,7 +61,8 @@
   (evil-define-key 'normal Info-mode-map (kbd "]") #'Info-forward-node)
   (evil-define-key 'normal Info-mode-map (kbd "[") #'Info-backward-node)
   (evil-define-key 'normal 'global "gt" 'counsel-semantic-or-imenu)
-  (customize-set-variable 'evil-undo-system 'undo-tree))
+  (customize-set-variable 'evil-undo-system 'undo-tree)
+  (add-hook 'evil-local-mode-hook 'turn-on-undo-tree-mode))
 
 (use-package evil-collection
   :straight t
