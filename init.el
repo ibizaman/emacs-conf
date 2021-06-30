@@ -257,6 +257,30 @@
 (use-package dired+
   :straight t)
 
+(use-package xref
+  :config
+
+  (defcustom xref-pop-bury-buffer nil
+	"Toggles if popping a buffer buries it also."
+	:type 'boolean)
+
+  (defun xref-pop-marker-stack ()
+	"Pop back to where \\[xref-find-definitions] was last invoked."
+	(interactive)
+	(let ((ring xref--marker-ring))
+	  (when (ring-empty-p ring)
+		(user-error "Marker stack is empty"))
+	  (let ((marker (ring-remove ring 0)))
+		(when xref-pop-bury-buffer
+		  (bury-buffer))
+		(switch-to-buffer (or (marker-buffer marker)
+							  (user-error "The marked buffer has been deleted")))
+		(goto-char (marker-position marker))
+		(set-marker marker nil nil)
+		(run-hooks 'xref-after-return-hook))))
+
+  (setq xref-pop-bury-buffer t))
+
 ;;; UI
 
 (blink-cursor-mode 0)
