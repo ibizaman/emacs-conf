@@ -776,7 +776,9 @@
         smtpmail-smtp-server "smtp.gmail.com"
         smtpmail-smtp-service 587
         smtpmail-debug-info t
-        smtpmail-smtp-user "ibizapeanut@gmail.com"))
+        smtpmail-smtp-user "ibizapeanut@gmail.com")
+
+  (global-set-key (kbd "C-x m") #'mu4e))
 
 (use-package org-mu4e
   :after org mu4e)
