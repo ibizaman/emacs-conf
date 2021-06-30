@@ -898,7 +898,7 @@
     (if-let ((sandbox (nix-current-sandbox)))
         (apply 'nix-shell-command sandbox args)
       args))
-  (setq lsp-haskell-server-path "haskell-language-server-wrapper"
+  (setq lsp-haskell-server-path "haskell-language-server"
         lsp-haskell-server-wrapper-function 'my/nix--lsp-haskell-wrapper))
 
 ;;;; Nix
