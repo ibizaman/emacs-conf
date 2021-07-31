@@ -80,6 +80,7 @@
      ediff
      elfeed
      flycheck
+	 ibuffer
      info
      log-edit
      log-view
