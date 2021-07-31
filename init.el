@@ -638,6 +638,7 @@
         org-adapt-indentation nil
         org-edit-src-content-indentation 0
         org-babel-uppercase-example-markers t
+		org-src-preserve-indentation t
         org-src-tab-acts-natively t)
 
   (add-hook 'org-capture-prepare-finalize-hook 'org-id-store-link)
