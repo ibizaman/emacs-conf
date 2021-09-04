@@ -696,6 +696,17 @@
     (add-to-list 'load-path "/usr/local/Cellar/mu/1.0/share/emacs/site-lisp/mu/mu4e")
   (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"))
 
+(let ((mu4epath
+       (concat
+        (f-dirname
+         (file-truename
+          (executable-find "mu")))
+        "/../share/emacs/site-lisp/mu4e")))
+  (when (and
+         (string-prefix-p "/nix/store/" mu4epath)
+         (file-directory-p mu4epath))
+	(add-to-list 'load-path mu4epath)))
+
 (use-package mu4e
   :if (locate-library "mu4e")
   :config
