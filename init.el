@@ -675,7 +675,7 @@
   :config
   (setq org-babel-default-header-args:tmux
         '((:results . "silent")))
-  (setq org-babel-tmux-terminal "iterm"
+  (setq org-babel-tmux-terminal "/Applications/iTerm.app/Contents/MacOS/iTerm2"
         org-babel-tmux-session-prefix "ob-"))
 
 (use-package ox-pandoc
