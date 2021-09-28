@@ -641,6 +641,9 @@
 		org-src-preserve-indentation t
         org-src-tab-acts-natively t)
 
+  (setq org-todo-keywords
+		'((sequence "TODO" "INPROGRESS" "DONE")))
+
   (add-hook 'org-capture-prepare-finalize-hook 'org-id-store-link)
 
   (evil-define-key 'normal org-mode-map (kbd "<tab>") 'org-cycle)
