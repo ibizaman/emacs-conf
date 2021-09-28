@@ -868,6 +868,7 @@
   :hook ((sh-mode . lsp-deferred)
          (javascript-mode . lsp-deferred)
          (html-mode . lsp-deferred)
+		 (sh-mode . lsp-deferred)
          (before-save . my/lsp-format-buffer-silent)
          (lsp-mode . lsp-enable-which-key-integration))
   :config
