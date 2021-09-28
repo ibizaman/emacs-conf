@@ -691,6 +691,13 @@
   :config
   (org-pandoc-import-transient-mode 1))
 
+(use-package org-noter
+  :straight t
+  :after org)
+
+(use-package pdf-tools
+  :straight t)
+
 ;;; Mu4e
 (if (memq window-system '(mac ns))
     (add-to-list 'load-path "/usr/local/Cellar/mu/1.0/share/emacs/site-lisp/mu/mu4e")
