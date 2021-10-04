@@ -37,6 +37,13 @@
   :config
   (delight-major-mode))
 
+(use-package general
+  :straight t
+
+  :config
+  (general-create-definer spc-leader
+   :prefix "SPC"))
+
 (use-package undo-tree
   :straight t
   :delight undo-tree-mode
@@ -281,6 +288,33 @@
 		(run-hooks 'xref-after-return-hook))))
 
   (setq xref-pop-bury-buffer t))
+
+(use-package popper
+  :straight t
+
+  :init
+  (setq popper-reference-buffers '("\\*Messages\\*"
+								   "Output\\*$"
+								   help-mode
+								   compilation-mode
+								   go-test-mode)
+		popper-group-function #'popper-group-by-projectile)
+
+  :config
+  (popper-mode 1)
+
+  (spc-leader
+	:keymaps 'normal
+	"p" #'popper-cycle
+	"SPC" #'popper-toggle-latest))
+
+(use-package shackle
+  :straight t
+  :config
+  (shackle-mode 1)
+  ;; (setq shackle-default-alignment 'right
+  ;; 		shackle-rules '())
+  )
 
 ;;; UI
 
