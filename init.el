@@ -1038,7 +1038,7 @@
   :config
   (defun go-test-subtest-name ()
 	"Returns the full name of the subtest under point if any, or the test name."
-	(cl-destructuring-bind (test-suite test-name) go-test--current-test-cache
+	(cl-destructuring-bind (test-suite test-name) (go-test--get-current-test-info)
 	  (let ((subtest (go-test--read-subtest-name)))
 		(if (string-blank-p subtest)
 			test-name
