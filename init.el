@@ -1355,6 +1355,11 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
   (elfeed-protocol-enable))
 
 
+;;; Save session
+
+(desktop-load-default)
+(desktop-read)
+
 ;;; Customization
 
 (put 'narrow-to-region 'disabled nil)
