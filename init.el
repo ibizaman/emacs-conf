@@ -681,6 +681,14 @@
   (add-hook 'org-capture-prepare-finalize-hook 'org-id-store-link)
 
   (evil-define-key 'normal org-mode-map (kbd "<tab>") 'org-cycle)
+
+  (defun org-archive-done-tasks ()
+	(interactive)
+	(org-map-entries
+	 (lambda ()
+	   (org-archive-subtree)
+	   (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
+	 "/DONE" 'file))
   :bind (("C-c j" . outline-next-heading)
          ("C-c k" . outline-previous-heading)
          ("C-c h" . outline-up-heading)
