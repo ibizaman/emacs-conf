@@ -1365,8 +1365,8 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
 
 ;;; Save session
 
-(desktop-load-default)
-(desktop-read)
+; (desktop-load-default)
+; (desktop-read)
 
 ;;; Customization
 
