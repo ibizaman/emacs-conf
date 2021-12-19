@@ -1010,6 +1010,7 @@
 (use-package markdown-mode
   :straight t
   :commands (markdown-mode gf-mode)
+  :hook (markdown-mode . lsp-deferred)
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
