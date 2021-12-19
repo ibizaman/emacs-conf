@@ -979,7 +979,8 @@
         (apply 'nix-shell-command sandbox hooglecmd)
       hooglecmd))
   (setq haskell-hoogle-server-command 'my/haskell-hoogle--server-command
-        haskell-stylish-on-save t))
+        haskell-stylish-on-save t
+		lsp-haskell-formatting-provider "stylish-haskell"))
 
 (use-package lsp-haskell
   :straight t
