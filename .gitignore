@@ -11,3 +11,7 @@ transient
 url
 .org-id-locations
 projectile-bookmarks.eld
+.cache
+.dap-breakpoints
+eclipse.jdt.ls
+workspace
