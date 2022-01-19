@@ -908,12 +908,13 @@
   :commands lsp
   :init
   (setq lsp-keymap-prefix "C-x l")
-  :hook ((sh-mode . lsp-deferred)
+  :hook (lsp-enable-which-key-integration
+		 (sh-mode . lsp-deferred)
          (javascript-mode . lsp-deferred)
          (html-mode . lsp-deferred)
 		 (sh-mode . lsp-deferred)
-         (before-save . my/lsp-format-buffer-silent)
          (lsp-mode . lsp-enable-which-key-integration))
+         ;; (before-save . my/lsp-format-buffer-silent)
   :config
   (setq lsp-signature-auto-activate t)
   ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
