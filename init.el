@@ -478,7 +478,7 @@
 (setq sentence-end-double-space nil)
 
 ;; Delete trailing whitespace
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; Save some variables with savehist
 (require 'savehist)
