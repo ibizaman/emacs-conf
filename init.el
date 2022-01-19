@@ -407,6 +407,10 @@
 
 ;;;; Theme
 
+(straight-use-package
+  '(nano-emacs :type git :host github :repo "rougier/nano-emacs"))
+(require 'nano)
+
 (use-package mustang-theme
   :straight t
   :config
@@ -647,6 +651,7 @@
      (python . t)
      (shell . t)
      (dot . t)
+     (http . t)
      (eshell . t)))
    (setq org-link-use-indirect-buffer-for-internals t)
 
@@ -713,6 +718,10 @@
   :after org)
 
 (use-package ob-mongo
+  :straight t
+  :after org)
+
+(use-package ob-http
   :straight t
   :after org)
 
@@ -917,7 +926,8 @@
          (lsp-mode . lsp-enable-which-key-integration)
 		 (kotlin-mode . lsp-deferred))
   :config
-  (setq lsp-signature-auto-activate t)
+  (setq lsp-signature-auto-activate t
+		lsp-ui-doc-show-with-cursor t)
   ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
   (setq gc-cons-threshold 100000000
         read-process-output-max (* 1024 1024)) ;; 1mb
@@ -1346,6 +1356,10 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
 (use-package kotlin-mode
   :straight t)
 
+;;;; PHP
+
+(use-package php-mode
+  :straight t)
 
 ;;;; Arduino
 
@@ -1438,6 +1452,15 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
  '(org-meta-line ((t (:inherit font-lock-comment-face :extend t :background "#303b4b" :foreground "#b0e2ff"))))
  '(region ((t (:extend t :background "#3c414c"))))
  '(vertical-border ((t (:foreground "gray23")))))
+
+
+(defun diredp-mark-if-not-inode-in-other-directoy (other-dir)
+  "E."
+  (interactive "D")
+  (let ((inode (file-attribute-inode-number (file-attributes (dired-get-file-for-visit) 'string))))
+	(shell-command (format "find %s -inum %d" other-dir inode) )
+	)
+  )
 
 
 ;;; init.el ends here
