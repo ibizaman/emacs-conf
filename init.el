@@ -913,8 +913,9 @@
          (javascript-mode . lsp-deferred)
          (html-mode . lsp-deferred)
 		 (sh-mode . lsp-deferred)
-         (lsp-mode . lsp-enable-which-key-integration))
          ;; (before-save . my/lsp-format-buffer-silent)
+         (lsp-mode . lsp-enable-which-key-integration)
+		 (kotlin-mode . lsp-deferred))
   :config
   (setq lsp-signature-auto-activate t)
   ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
@@ -1340,6 +1341,9 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
 ;;;; Java
 
 (use-package lsp-java
+  :straight t)
+
+(use-package kotlin-mode
   :straight t)
 
 
