@@ -330,7 +330,7 @@
 
 (customize-set-variable 'inhibit-startup-echo-area-message "ibizaman")
 
-(toggle-frame-fullscreen)
+; (toggle-frame-fullscreen)
 
 (menu-bar-mode 0)
 (tool-bar-mode 0)
@@ -409,7 +409,7 @@
 
 (straight-use-package
   '(nano-emacs :type git :host github :repo "rougier/nano-emacs"))
-(require 'nano)
+; (require 'nano)
 
 (use-package mustang-theme
   :straight t
