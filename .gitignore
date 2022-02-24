@@ -5,6 +5,7 @@ forge-database.sqlite
 .lsp-session*
 history
 recentf
+request
 straight
 tramp
 transient
