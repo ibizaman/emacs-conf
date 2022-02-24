@@ -1050,7 +1050,20 @@
   (defun lsp-go-install-save-hooks ()
     (add-hook 'before-save-hook #'lsp-format-buffer t t)
     (add-hook 'before-save-hook #'lsp-organize-imports t t))
-  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks))
+  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+  (defun my/lsp-go-exclude-vendor-directory ()
+    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]vendor\\'")
+    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]dashboard/ui\\'")
+    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]dashboard/assets\\'")
+    (setq lsp-file-watch-threshold 50000))
+  (add-hook 'go-mode-hook #'my/lsp-go-exclude-vendor-directory)
+  (setq flycheck-go-golint-executable "golangci-lint run")
+  ;; (setq lsp-go-directory-filters '("-vendor"))
+  ;; (setq lsp-go-directory-filters "[- +dataservices]"))
+  ;; (setq lsp-go-directory-filters "[]")
+  ;; (lsp-register-custom-settings
+  ;;  '(("gopls.directoryFilters" lsp-go-directory-filters)))
+  )
 
 (use-package gotest
   :straight t
