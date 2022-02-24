@@ -919,7 +919,8 @@
 		 (sh-mode . lsp-deferred)
          ;; (before-save . my/lsp-format-buffer-silent)
          (lsp-mode . lsp-enable-which-key-integration)
-		 (kotlin-mode . lsp-deferred))
+		 (kotlin-mode . lsp-deferred)
+		 (python-mode . lsp-deferred))
   :config
   (setq lsp-signature-auto-activate t
 		lsp-ui-doc-show-with-cursor t)
