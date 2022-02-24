@@ -638,7 +638,7 @@
 
 (use-package org
   :straight t
-  :after evil
+  :after evil ob-http
   :init
   (defun my/org-mode-hook-evil ()
       (setq evil-auto-indent nil))
@@ -708,22 +708,17 @@
 
 
 (use-package ob-async
-  :straight t
-  :after org)
+  :straight t)
 
-(use-package ob-python
-  :after org)
+(use-package ob-python)
 
-(use-package ob-shell
-  :after org)
+(use-package ob-shell)
 
 (use-package ob-mongo
-  :straight t
-  :after org)
+  :straight t)
 
 (use-package ob-http
-  :straight t
-  :after org)
+  :straight t)
 
 (use-package ob-tmux
   :straight (ob-tmux :type git :host nil :repo "https://github.com/ahendriksen/ob-tmux.git")
