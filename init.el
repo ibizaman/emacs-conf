@@ -683,7 +683,7 @@
         org-src-tab-acts-natively t)
 
   (setq org-todo-keywords
-		'((sequence "TODO" "INPROGRESS" "DONE")))
+		'((sequence "TODO(t)" "INPROGRESS(i!)" "BLOCKED(b@!/@!)" "|" "DONE(d@!)" "CANCELLED(c@!)")))
 
   (add-hook 'org-capture-prepare-finalize-hook 'org-id-store-link)
 
