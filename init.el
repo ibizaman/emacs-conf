@@ -1379,6 +1379,21 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
   (elfeed-set-timeout 36000)
   (elfeed-protocol-enable))
 
+;;; Jira
+
+(use-package org-jira
+  :if (string= system-name "Pierres-MBP.tiserbox.com")
+  :straight t
+  :config
+  (make-directory "~/Documents/Jira/Fastly" t)
+  (setq jiralib-url "https://fastly.atlassian.net"
+		org-jira-working-dir "~/Documents/Jira/Fastly"
+        org-jira-use-status-as-todo t))
+
+(setq jiralib-update-issue-fields-exclude-list '(reporter))
+
+; (setq request-log-level 'blather)
+; (setq request-message-level 'blather)
 
 ;;; Save session
 
@@ -1394,62 +1409,21 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(company-scrollbar-bg ((t (:background "#6080a0"))))
- '(company-scrollbar-fg ((t (:background "#7090ff"))))
- '(company-tooltip ((t (:background "#2e5077"))))
- '(company-tooltip-annotation ((t nil)))
- '(company-tooltip-common ((t (:foreground "#d73c3f"))))
- '(company-tooltip-common-selection ((t (:foreground "#921e20"))))
- '(company-tooltip-selection ((t (:background "#ff9642" :foreground "#202020"))))
- '(diff-added ((t (:inherit ediff-even-diff-B))))
- '(diff-changed ((t (:inherit ediff-even-diff-C))))
- '(diff-refine-added ((t (:inherit ediff-fine-diff-B))))
- '(diff-refine-changed ((t (:inherit ediff-fine-diff-C))))
- '(diff-refine-removed ((t (:inherit ediff-fine-diff-A))))
- '(diff-removed ((t (:inherit ediff-even-diff-A))))
- '(ediff-current-diff-C ((t (:background "#554433"))))
- '(ediff-even-diff-A ((t (:inherit ediff-current-diff-A))))
- '(ediff-even-diff-Ancestor ((t (:inherit ediff-current-diff-Ancestor))))
- '(ediff-even-diff-B ((t (:background "#335533"))))
- '(ediff-even-diff-C ((t (:background "#5a442e"))))
- '(ediff-fine-diff-A ((t (:background "#46150f"))))
- '(ediff-fine-diff-B ((t (:background "#0f4615"))))
- '(ediff-fine-diff-C ((t (:background "#46310f"))))
- '(ediff-odd-diff-A ((t (:background "#553333"))))
- '(ediff-odd-diff-Ancestor ((t (:background "#004151"))))
- '(ediff-odd-diff-B ((t (:background "#335533"))))
- '(ediff-odd-diff-C ((t (:background "#5a442e"))))
- '(eldoc-highlight-function-argument ((t (:inherit bold :underline t))))
- '(eyebrowse-mode-line-active ((t (:inherit mode-line-emphasis :inverse-video t))))
- '(font-lock-comment-delimiter-face ((t (:foreground "RoyalBlue1"))))
- '(font-lock-comment-face ((t (:foreground "RoyalBlue1"))))
- '(font-lock-warning-face ((t (:background "#202020" :foreground "#ff6523"))))
- '(git-gutter+-added ((t (:inherit font-lock-comment-face :weight bold))))
- '(git-gutter+-deleted ((t (:inherit font-lock-comment-face :weight bold))))
- '(git-gutter+-modified ((t (:inherit font-lock-comment-face :weight bold))))
- '(link ((t (:foreground "#b2d8e8" :underline nil))))
- '(link-visited ((t (:inherit link))))
- '(magit-diff-context-highlight ((t (:background "#312C33" :foreground "grey70"))))
- '(magit-diff-file-heading ((t (:background "#794214" :weight bold))))
- '(magit-diff-file-heading-highlight ((t (:inherit magit-section-highlight :background "#a55a1c"))))
- '(magit-diff-hunk-heading ((t (:background "#113f67" :foreground "grey90" :weight bold))))
- '(magit-diff-hunk-heading-highlight ((t (:background "#38598b"))))
- '(mu4e-view-body-face ((t (:background "gray10"))))
- '(org-block ((t (:inherit default :foreground "#e2e2e5"))))
- '(org-block-begin-line ((t (:inherit org-meta-line :background "#102D3F" :foreground "#3A86B4" :slant normal))))
- '(org-level-1 ((t (:foreground "#df9f2d" :underline t :weight bold :height 1.3))))
- '(org-level-2 ((t (:foreground "#df9f2d" :underline t :weight normal :height 1.3))))
- '(org-level-3 ((t (:foreground "#b1d631" :underline t :weight bold :height 1.3))))
- '(org-level-4 ((t (:foreground "#b1d631" :underline t :weight normal :height 1.3))))
- '(org-level-5 ((t (:foreground "#b1d631" :height 1.1))))
- '(org-level-6 ((t (:foreground "#5091a1" :underline t :weight bold :height 1.1))))
- '(org-level-7 ((t (:foreground "#5091a1" :underline t :height 1.1))))
- '(org-level-8 ((t (:foreground "#5091a1" :height 1.1))))
- '(org-link ((t (:foreground unspecified :underline nil :inherit link))))
- '(org-meta-line ((t (:inherit font-lock-comment-face :extend t :background "#303b4b" :foreground "#b0e2ff"))))
- '(region ((t (:extend t :background "#3c414c"))))
- '(vertical-border ((t (:foreground "gray23")))))
+ )
 
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-undo-system 'undo-tree)
+ '(inhibit-startup-echo-area-message "ibizaman")
+ '(org-jira-custom-jqls
+   '((:jql " assignee = currentUser() and createdDate < '2019-01-01' order by created DESC " :limit 100 :filename "last-years-work")
+	 (:jql " assignee = currentUser() and createdDate >= '2019-01-01' order by created DESC " :limit 100 :filename "this-years-work")
+	 (:jql " (assignee = currentUser() OR reporter = currentUser()) and resolution = unresolved ORDER BY priority DESC, created ASC " :limit 100 :filename "all my issues")
+	 (:jql " (watcher = currentUser() AND NOT (assignee = currentUser() AND reporter = currentUser())) and resolution = unresolved ORDER BY priority DESC, created ASC " :limit 100 :filename "watched only"))))
 
 (defun diredp-mark-if-not-inode-in-other-directoy (other-dir)
   "E."
