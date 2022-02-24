@@ -938,11 +938,11 @@
   (setq lsp-ui-flycheck-enable t
         lsp-ui-flycheck-live-reporting nil))
 
-(use-package company-lsp
-  :straight t
-  :commands company-lsp
-  :config
-  (push 'company-lsp company-backends))
+;; (use-package company-lsp
+;;   :straight t
+;;   :commands company-lsp
+;;   :config
+;;   (push 'company-lsp company-backends))
 
 ;;;; Elisp
 
