@@ -353,7 +353,7 @@
   (setq tab-width 4)
   (setq indent-tabs-mode nil))
 ;; Tabs are used to format buffer with `lsp-format-buffer'.
-(add-hook 'haskell-mode-hook 'my/disable-tabs)
+(my/disable-tabs)
 
 ;;;; Modeline
 
