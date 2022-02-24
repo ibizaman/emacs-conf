@@ -640,6 +640,7 @@
   :straight t
   :after evil ob-http
   :init
+  (defun org-clocking-buffer ())
   (defun my/org-mode-hook-evil ()
       (setq evil-auto-indent nil))
   (add-hook 'org-mode-hook 'my/org-mode-hook-evil)
