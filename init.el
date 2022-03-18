@@ -63,6 +63,8 @@
   :init
   (setq evil-want-integration t)  ; needed for evil-collection
   (setq evil-want-keybinding nil) ; needed for evil-collection
+  (setq-default evil-symbol-word-search t)
+  (setq evil-symbol-word-search t)
   :config
   (evil-mode 1)
   (evil-define-key 'normal Info-mode-map (kbd "]") #'Info-forward-node)
