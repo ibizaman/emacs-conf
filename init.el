@@ -1480,9 +1480,9 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
  '(mouse-wheel-progressive-speed nil)
  '(org-jira-custom-jqls
    '((:jql " assignee = currentUser() and createdDate < '2019-01-01' order by created DESC " :limit 100 :filename "last-years-work")
-	 (:jql " assignee = currentUser() and createdDate >= '2019-01-01' order by created DESC " :limit 100 :filename "this-years-work")
-	 (:jql " (assignee = currentUser() OR reporter = currentUser()) and resolution = unresolved ORDER BY priority DESC, created ASC " :limit 100 :filename "all my issues")
-	 (:jql " (watcher = currentUser() AND NOT (assignee = currentUser() AND reporter = currentUser())) and resolution = unresolved ORDER BY priority DESC, created ASC " :limit 100 :filename "watched only"))))
+     (:jql " assignee = currentUser() and createdDate >= '2019-01-01' order by created DESC " :limit 100 :filename "this-years-work")
+     (:jql " (assignee = currentUser() OR reporter = currentUser()) and resolution = unresolved ORDER BY priority DESC, created ASC " :limit 100 :filename "all my issues")
+     (:jql " (watcher = currentUser() AND NOT (assignee = currentUser() AND reporter = currentUser())) and resolution = unresolved ORDER BY priority DESC, created ASC " :limit 100 :filename "watched only"))))
 
 (defun diredp-mark-if-not-inode-in-other-directoy (other-dir)
   "E."
