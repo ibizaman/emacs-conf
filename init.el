@@ -348,11 +348,11 @@
       ; From https://stackoverflow.com/a/29092845/1013628
       select-enable-clipboard t)
 
-(setq-default tab-width 4)
 (defun my/disable-tabs ()
   "Disable tabs and set them to 4 spaces."
   (setq-default tab-width 4)
   (setq tab-width 4)
+  (setq-default indent-tabs-mode nil)
   (setq indent-tabs-mode nil))
 ;; Tabs are used to format buffer with `lsp-format-buffer'.
 (my/disable-tabs)
