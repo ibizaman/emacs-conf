@@ -688,6 +688,28 @@
   (setq org-todo-keywords
 		'((sequence "TODO(t)" "INPROGRESS(i!)" "BLOCKED(b@!/@!)" "|" "DONE(d@!)" "CANCELLED(c@!)")))
 
+  (defface org-todo-inprogress
+	`((t (:inherit org-warning)))
+	"Face for in progress todo keywords"
+	:group 'org-faces)
+
+  (defface org-todo-blocked
+	`((t (:inherit org-warning)))
+	"Face for blocked todo keywords"
+	:group 'org-faces)
+
+  (defface org-todo-ready
+	`((t (:inherit org-warning)))
+	"Face for ready to start todo keywords"
+	:group 'org-faces)
+
+  (setq org-todo-keyword-faces
+		'(("INPROGRESS" . org-todo-inprogress)
+		  ("IN-PROGRESS" . org-todo-inprogress)
+		  ("READY-TO-START" . org-todo-ready)
+		  ("NEEDS-REVIEW" . org-todo-blocked)
+		  ("BLOCKED" . org-todo-blocked)))
+
   (add-hook 'org-capture-prepare-finalize-hook 'org-id-store-link)
 
   (evil-define-key 'normal org-mode-map (kbd "<tab>") 'org-cycle)
@@ -699,6 +721,7 @@
 	   (org-archive-subtree)
 	   (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
 	 "/DONE" 'file))
+
   :bind (("C-c j" . outline-next-heading)
          ("C-c k" . outline-previous-heading)
          ("C-c h" . outline-up-heading)
