@@ -1477,6 +1477,7 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
  ;; If there is more than one, they won't work right.
  '(evil-undo-system 'undo-tree)
  '(inhibit-startup-echo-area-message "ibizaman")
+ '(mouse-wheel-progressive-speed nil)
  '(org-jira-custom-jqls
    '((:jql " assignee = currentUser() and createdDate < '2019-01-01' order by created DESC " :limit 100 :filename "last-years-work")
 	 (:jql " assignee = currentUser() and createdDate >= '2019-01-01' order by created DESC " :limit 100 :filename "this-years-work")
