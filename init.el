@@ -1448,7 +1448,26 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:inherit nil :extend nil :stipple nil :background "#202020" :foreground "#F9F6F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 130 :width normal :foundry "nil" :family "Inconsolata"))))
+ '(org-hide ((t (:background "#18363E" :foreground "#18363E"))))
+ '(org-indent ((t (:inherit org-hide :background "#18363E"))))
+ '(org-level-1 ((t (:extend t :foreground "#DD517F" :inverse-video t :weight bold :height 1.5))))
+ '(org-level-2 ((t (:inherit org-level-1 :extend nil :foreground "#acaec5" :inverse-video nil :overline t :weight bold :height 0.8))))
+ '(org-level-3 ((t (:extend nil :foreground "#acaec5" :weight bold :height 1.1))))
+ '(org-meta-line ((t (:inherit default :foreground "gray89"))))
+ '(org-todo ((t (:inherit default :foreground "#AA9D94" :weight bold))))
+ '(org-todo-blocked ((t (:inherit nil :background "gray95" :foreground "#C6808C" :inverse-video t))))
+ '(org-todo-inprogress ((t (:inherit nil :background "gray99" :foreground "#3E88A5" :inverse-video t))))
+ '(org-todo-ready ((t (:inherit nil :background "gray85" :foreground "#6B8E6E" :inverse-video t))))
+ '(rainbow-delimiters-depth-1-face ((t (:inherit rainbow-delimiters-base-face :foreground "#389AD2"))))
+ '(rainbow-delimiters-depth-2-face ((t (:inherit rainbow-delimiters-base-face :foreground "#60BBB7"))))
+ '(rainbow-delimiters-depth-3-face ((t (:inherit rainbow-delimiters-base-face :foreground "#B5C047"))))
+ '(rainbow-delimiters-depth-4-face ((t (:inherit rainbow-delimiters-base-face :foreground "#F6CD53"))))
+ '(rainbow-delimiters-depth-5-face ((t (:inherit rainbow-delimiters-base-face :foreground "#EDA546"))))
+ '(rainbow-delimiters-depth-6-face ((t (:inherit rainbow-delimiters-base-face :foreground "#E46B36"))))
+ '(rainbow-delimiters-depth-7-face ((t (:inherit rainbow-delimiters-base-face :foreground "#CA4640"))))
+ '(rainbow-delimiters-depth-8-face ((t (:inherit rainbow-delimiters-base-face :foreground "#DD6D7C"))))
+ '(rainbow-delimiters-depth-9-face ((t (:inherit rainbow-delimiters-base-face :foreground "#9A69D2")))))
 
 
 (custom-set-variables
