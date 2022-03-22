@@ -648,6 +648,17 @@
 
 ;;; Org
 
+;; (defcustom org-startup-folded 'showeverything
+;; 	  (const :tag "content: headlines until level 2" content-2)
+;;
+;; (defconst org-startup-options
+;;     ("content-2" org-startup-folded content-2)
+;;
+;; (defun org-global-cycle (&optional arg)
+;;    ((eq org-startup-folded 'content-2)
+;;     (org-content 2))
+
+
 (use-package org
   :straight t
   :after evil ob-http
