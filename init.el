@@ -357,6 +357,16 @@
 ;; Tabs are used to format buffer with `lsp-format-buffer'.
 (my/disable-tabs)
 
+(use-package rainbow-mode
+  :straight t
+  :config
+  (rainbow-mode 1))
+
+(use-package rainbow-delimiters
+  :straight t
+  :config
+  (rainbow-delimiters-mode 1))
+
 ;;;; Modeline
 
 (column-number-mode 1)
