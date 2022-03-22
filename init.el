@@ -1439,6 +1439,14 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
 ; (desktop-load-default)
 ; (desktop-read)
 
+;;; Terraform
+
+(use-package terraform-mode
+  :straight t
+  :hook ((terraform-mode . lsp-deferred))
+  :config
+  (setq lsp-terraform-server '("terraform-ls" "serve")))
+
 ;;; Customization
 
 (put 'narrow-to-region 'disabled nil)
