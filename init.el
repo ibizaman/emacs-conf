@@ -976,7 +976,7 @@
   :init
   (defun my/haskell-set-stylish ()
     (if-let* ((sandbox (nix-current-sandbox))
-              (fullcmd (nix-shell-command sandbox "brittany"))
+              (fullcmd (nix-shell-command sandbox "stylish-haskell"))
               (path (car fullcmd))
               (args (cdr fullcmd)))
       (setq-local haskell-mode-stylish-haskell-path path
