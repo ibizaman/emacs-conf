@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: jira SDS
+# key: SDS
+# --
+
+https://fastly.atlassian.net/browse/SDS-$0
