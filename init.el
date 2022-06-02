@@ -48,7 +48,9 @@
   :straight t
   :delight undo-tree-mode
   :config
-  (global-undo-tree-mode))
+  (global-undo-tree-mode)
+  (setq undo-tree-enable-undo-in-region t
+        undo-tree-visualizer-diff t))
 
 (use-package autorevert
   :delight auto-revert-mode)
