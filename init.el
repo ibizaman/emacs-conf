@@ -1555,7 +1555,7 @@ length of PATH (sans directory slashes) down to MAX-LEN."
 ;; Mouse With a normal `setq', I always get prompted on exit to save
 ;; this value. This needs to be called after `custom-set-variables' and
 ;; `custom-set-faces' are called otherwise we erase those.
-(customize-save-variable 'mouse-wheel-progressive-speed nil)
+(customize-mark-as-set 'mouse-wheel-progressive-speed)
 
 (defun diredp-mark-if-not-inode-in-other-directoy (other-dir)
   "E."
