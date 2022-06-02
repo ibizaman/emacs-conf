@@ -75,7 +75,7 @@
 
 (use-package evil-collection
   :straight t
-  :after evil
+  :after evil forge
   :config
   (evil-collection-init
    '(
