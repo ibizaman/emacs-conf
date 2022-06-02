@@ -103,6 +103,13 @@
   (evil-collection-unimpaired-mode -1)
   (evil-collection-occur-setup))
 
+(evil-define-key 'normal treemacs-mode-map (kbd "x") 'treemacs-delete-file)
+(evil-define-key 'normal treemacs-mode-map (kbd "n") 'treemacs-add-project-to-workspace)
+(evil-define-key 'normal treemacs-mode-map (kbd "cf") 'treemacs-create-file)
+(evil-define-key 'normal treemacs-mode-map (kbd "cd") 'treemacs-create-dir)
+(evil-define-key 'normal treemacs-mode-map (kbd "r") 'treemacs-rename)
+(evil-define-key 'normal treemacs-mode-map (kbd "R") 'treemacs-move-file)
+
 (use-package flycheck
   :straight t
   :after nix-sandbox
