@@ -70,7 +70,7 @@
   (evil-define-key 'normal Info-mode-map (kbd "]") #'Info-forward-node)
   (evil-define-key 'normal Info-mode-map (kbd "[") #'Info-backward-node)
   (evil-define-key 'normal 'global "gt" 'counsel-semantic-or-imenu)
-  (customize-set-variable 'evil-undo-system 'undo-tree)
+  (setq-default evil-undo-system 'undo-tree)
   (add-hook 'evil-local-mode-hook 'turn-on-undo-tree-mode))
 
 (use-package evil-collection
@@ -330,7 +330,7 @@
 (setq visible-bell t
       ring-bell-function 'ignore)
 
-(customize-set-variable 'inhibit-startup-echo-area-message "ibizaman")
+(setq inhibit-startup-echo-area-message "ibizaman")
 
 ; (toggle-frame-fullscreen)
 
@@ -1536,14 +1536,17 @@ length of PATH (sans directory slashes) down to MAX-LEN."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(evil-undo-system 'undo-tree)
- '(inhibit-startup-echo-area-message "ibizaman")
  '(mouse-wheel-progressive-speed nil)
  '(org-jira-custom-jqls
    '((:jql " assignee = currentUser() and createdDate < '2019-01-01' order by created DESC " :limit 100 :filename "last-years-work")
      (:jql " assignee = currentUser() and createdDate >= '2019-01-01' order by created DESC " :limit 100 :filename "this-years-work")
      (:jql " (assignee = currentUser() OR reporter = currentUser()) and resolution = unresolved ORDER BY priority DESC, created ASC " :limit 100 :filename "all my issues")
      (:jql " (watcher = currentUser() AND NOT (assignee = currentUser() AND reporter = currentUser())) and resolution = unresolved ORDER BY priority DESC, created ASC " :limit 100 :filename "watched only"))))
+
+;; Mouse With a normal `setq', I always get prompted on exit to save
+;; this value. This needs to be called after `custom-set-variables' and
+;; `custom-set-faces' are called otherwise we erase those.
+(customize-save-variable 'mouse-wheel-progressive-speed nil)
 
 (defun diredp-mark-if-not-inode-in-other-directoy (other-dir)
   "E."
