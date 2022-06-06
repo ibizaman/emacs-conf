@@ -72,7 +72,6 @@
   (evil-define-key 'normal Info-mode-map (kbd "]") #'Info-forward-node)
   (evil-define-key 'normal Info-mode-map (kbd "[") #'Info-backward-node)
   (evil-define-key 'normal 'global "gt" 'counsel-semantic-or-imenu)
-  (setq-default evil-undo-system 'undo-tree)
   (add-hook 'evil-local-mode-hook 'turn-on-undo-tree-mode))
 
 (use-package evil-collection
@@ -1545,6 +1544,7 @@ length of PATH (sans directory slashes) down to MAX-LEN."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(evil-undo-system 'undo-tree)
  '(mouse-wheel-progressive-speed nil)
  '(org-jira-custom-jqls
    '((:jql " assignee = currentUser() and createdDate < '2019-01-01' order by created DESC " :limit 100 :filename "last-years-work")
