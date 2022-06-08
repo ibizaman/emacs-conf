@@ -23,6 +23,162 @@
 
 (straight-use-package 'use-package)
 
+;;; Org
+
+;; Needs to be at the top to load the correct version from straight.el
+;; instead of the built-in.
+;;
+;; (defcustom org-startup-folded 'showeverything
+;; 	  (const :tag "content: headlines until level 2" content-2)
+;;
+;; (defconst org-startup-options
+;;     ("content-2" org-startup-folded content-2)
+;;
+;; (defun org-global-cycle (&optional arg)
+;;    ((eq org-startup-folded 'content-2)
+;;     (org-content 2))
+
+
+(use-package org
+  :straight t
+  :init
+  (defun org-clocking-buffer ())
+  (defun my/org-mode-hook-evil ()
+      (setq evil-auto-indent nil))
+  (add-hook 'org-mode-hook 'my/org-mode-hook-evil)
+  :config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (sql . t)
+     (python . t)
+     (shell . t)
+     (dot . t)
+     (eshell . t)))
+   (setq org-link-use-indirect-buffer-for-internals t)
+
+  (org-babel-lob-ingest "~/.emacs.d/emacs-lob.org")
+
+  (defun ibizaman/org-copy-element ()
+    (interactive)
+    (let* ((elem (org-element-at-point))
+           (beg (org-element-property :begin elem))
+           (end (org-element-property :end elem)))
+      (copy-region-as-kill beg end)
+      (goto-char end)))
+
+  (defun ibizaman/org-babel-goto-tangle-file ()
+    (if-let* ((args (nth 2 (org-babel-get-src-block-info t)))
+              (tangle (or (alist-get :dir args) (alist-get :tangle args))))
+        (when (not (equal "no" tangle))
+          (find-file-other-window tangle)
+          t)))
+  (add-hook 'org-open-at-point-functions 'ibizaman/org-babel-goto-tangle-file)
+
+  (setq org-log-done 'time
+        org-babel-hash-show-time t
+        org-adapt-indentation nil
+        org-edit-src-content-indentation 0
+        org-babel-uppercase-example-markers t
+        org-startup-indented t
+		org-src-preserve-indentation t
+        org-src-tab-acts-natively t)
+
+  (setq org-todo-keywords
+		'((sequence "TODO(t)" "INPROGRESS(i!)" "BLOCKED(b@!/@!)" "|" "DONE(d@!)" "CANCELLED(c@!)")))
+
+  (defface org-todo-inprogress
+	`((t (:inherit org-warning)))
+	"Face for in progress todo keywords"
+	:group 'org-faces)
+
+  (defface org-todo-blocked
+	`((t (:inherit org-warning)))
+	"Face for blocked todo keywords"
+	:group 'org-faces)
+
+  (defface org-todo-ready
+	`((t (:inherit org-warning)))
+	"Face for ready to start todo keywords"
+	:group 'org-faces)
+
+  (setq org-todo-keyword-faces
+		'(("INPROGRESS" . org-todo-inprogress)
+		  ("IN-PROGRESS" . org-todo-inprogress)
+		  ("READY-TO-START" . org-todo-ready)
+		  ("NEEDS-REVIEW" . org-todo-blocked)
+		  ("BLOCKED" . org-todo-blocked)))
+
+  (add-hook 'org-capture-prepare-finalize-hook 'org-id-store-link)
+
+  ;; (evil-define-key 'normal org-mode-map (kbd "<tab>") 'org-cycle)
+
+  (defun org-archive-done-tasks ()
+	(interactive)
+	(org-map-entries
+	 (lambda ()
+	   (org-archive-subtree)
+	   (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
+	 "/DONE" 'file))
+
+  :bind (("C-c j" . outline-next-heading)
+         ("C-c k" . outline-previous-heading)
+         ("C-c h" . outline-up-heading)
+         ("C-c l" . outline-show-subtree)
+         ("C-c c" . org-capture)
+         ("C-c C-l" . org-store-link)
+         :map org-mode-map
+         ("C-c o d" . org-cut-element)
+         ("C-c o c" . ibizaman/org-copy-element)
+         ("<tab>" . org-cycle)))
+
+
+(use-package ob-async
+  :straight t)
+
+(use-package ob-python)
+
+(use-package ob-shell)
+
+(use-package ob-mongo
+  :straight t)
+
+(use-package ob-http
+  :straight t
+  :after org
+  :config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((http . t))))
+
+(use-package ob-tmux
+  :straight (ob-tmux :type git :host nil :repo "https://github.com/ahendriksen/ob-tmux.git")
+  :config
+  (setq org-babel-default-header-args:tmux
+        '((:results . "silent")))
+  (setq org-babel-tmux-terminal "/Applications/iTerm.app/Contents/MacOS/iTerm2"
+        org-babel-tmux-session-prefix "ob-"))
+
+(use-package ox-pandoc
+  :disabled
+  :straight (ox-pandoc :type git :host github :repo "mgcyung/ox-pandoc" :branch "master"))
+
+(use-package org-pandoc-import
+  :disabled
+  :straight (:host github
+             :repo "tecosaur/org-pandoc-import"
+             :files ("*.el" "filters" "preprocessors"))
+  :after ox-pandoc
+  :config
+  (org-pandoc-import-transient-mode 1))
+
+(use-package org-noter
+  :straight t
+  :after org)
+
+(use-package pdf-tools
+  :straight t)
+
 
 ;;; Base packages
 
@@ -61,7 +217,7 @@
 
 (use-package evil
   :straight t
-  :after undo-tree
+  :after undo-tree org
   :init
   (setq evil-want-integration t)  ; needed for evil-collection
   (setq evil-want-keybinding nil) ; needed for evil-collection
@@ -71,12 +227,11 @@
   (evil-mode 1)
   (evil-define-key 'normal Info-mode-map (kbd "]") #'Info-forward-node)
   (evil-define-key 'normal Info-mode-map (kbd "[") #'Info-backward-node)
-  (evil-define-key 'normal 'global "gt" 'counsel-semantic-or-imenu)
-  (add-hook 'evil-local-mode-hook 'turn-on-undo-tree-mode))
+  (evil-define-key 'normal 'global "gt" 'counsel-semantic-or-imenu))
 
 (use-package evil-collection
   :straight t
-  :after evil forge
+  :after evil forge org
   :config
   (evil-collection-init
    '(
@@ -96,18 +251,19 @@
      log-view
 	 magit
      mu4e
-     occur
+     replace
      simple
      which-key))
-  (evil-collection-unimpaired-mode -1)
-  (evil-collection-occur-setup))
+  (evil-collection-unimpaired-mode -1))
 
-(evil-define-key 'normal treemacs-mode-map (kbd "x") 'treemacs-delete-file)
-(evil-define-key 'normal treemacs-mode-map (kbd "n") 'treemacs-add-project-to-workspace)
-(evil-define-key 'normal treemacs-mode-map (kbd "cf") 'treemacs-create-file)
-(evil-define-key 'normal treemacs-mode-map (kbd "cd") 'treemacs-create-dir)
-(evil-define-key 'normal treemacs-mode-map (kbd "r") 'treemacs-rename)
-(evil-define-key 'normal treemacs-mode-map (kbd "R") 'treemacs-move-file)
+(eval-after-load 'org
+  '(progn
+     (evil-define-key 'normal treemacs-mode-map (kbd "x") 'treemacs-delete-file)
+     (evil-define-key 'normal treemacs-mode-map (kbd "n") 'treemacs-add-project-to-workspace)
+     (evil-define-key 'normal treemacs-mode-map (kbd "cf") 'treemacs-create-file)
+     (evil-define-key 'normal treemacs-mode-map (kbd "cd") 'treemacs-create-dir)
+     (evil-define-key 'normal treemacs-mode-map (kbd "r") 'treemacs-rename)
+     (evil-define-key 'normal treemacs-mode-map (kbd "R") 'treemacs-move-file)))
 
 (use-package flycheck
   :straight t
@@ -492,7 +648,9 @@
 	 (find-file ,file)))
 
 (global-set-key (kbd "C-c SPC") (find-file-marker "~/Documents/tasks.org"))
-(evil-global-set-key 'normal (kbd "C-c SPC") (find-file-marker "~/Documents/tasks.org"))
+(eval-after-load 'org
+  '(progn
+     (evil-global-set-key 'normal (kbd "C-c SPC") (find-file-marker "~/Documents/tasks.org"))))
 
 ;; Use only one space after a dot
 (setq sentence-end-double-space nil)
@@ -653,156 +811,6 @@
 	  (setq gif-screencast-capture-format "ppm")) ;; Optional: Required to crop captured images.
   )
 
-
-;;; Org
-
-;; (defcustom org-startup-folded 'showeverything
-;; 	  (const :tag "content: headlines until level 2" content-2)
-;;
-;; (defconst org-startup-options
-;;     ("content-2" org-startup-folded content-2)
-;;
-;; (defun org-global-cycle (&optional arg)
-;;    ((eq org-startup-folded 'content-2)
-;;     (org-content 2))
-
-
-(use-package org
-  :straight t
-  :after evil ob-http
-  :init
-  (defun org-clocking-buffer ())
-  (defun my/org-mode-hook-evil ()
-      (setq evil-auto-indent nil))
-  (add-hook 'org-mode-hook 'my/org-mode-hook-evil)
-  :config
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((emacs-lisp . t)
-     (sql . t)
-     (python . t)
-     (shell . t)
-     (dot . t)
-     (http . t)
-     (eshell . t)))
-   (setq org-link-use-indirect-buffer-for-internals t)
-
-  (org-babel-lob-ingest "~/.emacs.d/emacs-lob.org")
-
-  (defun ibizaman/org-copy-element ()
-    (interactive)
-    (let* ((elem (org-element-at-point))
-           (beg (org-element-property :begin elem))
-           (end (org-element-property :end elem)))
-      (copy-region-as-kill beg end)
-      (goto-char end)))
-
-  (defun ibizaman/org-babel-goto-tangle-file ()
-    (if-let* ((args (nth 2 (org-babel-get-src-block-info t)))
-              (tangle (or (alist-get :dir args) (alist-get :tangle args))))
-        (when (not (equal "no" tangle))
-          (find-file-other-window tangle)
-          t)))
-  (add-hook 'org-open-at-point-functions 'ibizaman/org-babel-goto-tangle-file)
-
-  (setq org-log-done 'time
-        org-babel-hash-show-time t
-        org-adapt-indentation nil
-        org-edit-src-content-indentation 0
-        org-babel-uppercase-example-markers t
-        org-startup-indented t
-		org-src-preserve-indentation t
-        org-src-tab-acts-natively t)
-
-  (setq org-todo-keywords
-		'((sequence "TODO(t)" "INPROGRESS(i!)" "BLOCKED(b@!/@!)" "|" "DONE(d@!)" "CANCELLED(c@!)")))
-
-  (defface org-todo-inprogress
-	`((t (:inherit org-warning)))
-	"Face for in progress todo keywords"
-	:group 'org-faces)
-
-  (defface org-todo-blocked
-	`((t (:inherit org-warning)))
-	"Face for blocked todo keywords"
-	:group 'org-faces)
-
-  (defface org-todo-ready
-	`((t (:inherit org-warning)))
-	"Face for ready to start todo keywords"
-	:group 'org-faces)
-
-  (setq org-todo-keyword-faces
-		'(("INPROGRESS" . org-todo-inprogress)
-		  ("IN-PROGRESS" . org-todo-inprogress)
-		  ("READY-TO-START" . org-todo-ready)
-		  ("NEEDS-REVIEW" . org-todo-blocked)
-		  ("BLOCKED" . org-todo-blocked)))
-
-  (add-hook 'org-capture-prepare-finalize-hook 'org-id-store-link)
-
-  (evil-define-key 'normal org-mode-map (kbd "<tab>") 'org-cycle)
-
-  (defun org-archive-done-tasks ()
-	(interactive)
-	(org-map-entries
-	 (lambda ()
-	   (org-archive-subtree)
-	   (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
-	 "/DONE" 'file))
-
-  :bind (("C-c j" . outline-next-heading)
-         ("C-c k" . outline-previous-heading)
-         ("C-c h" . outline-up-heading)
-         ("C-c l" . outline-show-subtree)
-         ("C-c c" . org-capture)
-         ("C-c C-l" . org-store-link)
-         :map org-mode-map
-         ("C-c o d" . org-cut-element)
-         ("C-c o c" . ibizaman/org-copy-element)
-         ("<tab>" . org-cycle)))
-
-
-(use-package ob-async
-  :straight t)
-
-(use-package ob-python)
-
-(use-package ob-shell)
-
-(use-package ob-mongo
-  :straight t)
-
-(use-package ob-http
-  :straight t)
-
-(use-package ob-tmux
-  :straight (ob-tmux :type git :host nil :repo "https://github.com/ahendriksen/ob-tmux.git")
-  :config
-  (setq org-babel-default-header-args:tmux
-        '((:results . "silent")))
-  (setq org-babel-tmux-terminal "/Applications/iTerm.app/Contents/MacOS/iTerm2"
-        org-babel-tmux-session-prefix "ob-"))
-
-(use-package ox-pandoc
-  :disabled
-  :straight (ox-pandoc :type git :host github :repo "mgcyung/ox-pandoc" :branch "master"))
-
-(use-package org-pandoc-import
-  :disabled
-  :straight (:host github
-             :repo "tecosaur/org-pandoc-import"
-             :files ("*.el" "filters" "preprocessors"))
-  :after ox-pandoc
-  :config
-  (org-pandoc-import-transient-mode 1))
-
-(use-package org-noter
-  :straight t
-  :after org)
-
-(use-package pdf-tools
-  :straight t)
 
 ;;; Mu4e
 (if (memq window-system '(mac ns))
