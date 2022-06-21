@@ -1468,6 +1468,7 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
   :config
   (make-directory "~/Documents/Jira/Fastly" t)
   (setq jiralib-url "https://fastly.atlassian.net"
+        jiralib-user "pierre@fastly.com"
 		org-jira-working-dir "~/Documents/Jira/Fastly"
         org-jira-use-status-as-todo t))
 
