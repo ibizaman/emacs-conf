@@ -1463,7 +1463,7 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
 ;;; Jira
 
 (use-package org-jira
-  :if (string= system-name "Pierres-MBP.tiserbox.com")
+  :if (seq-some (lambda (name) (string= system-name name)) '("Pierres-MBP.tiserbox.com" "C02Z93RNLVDL"))
   :straight t
   :config
   (make-directory "~/Documents/Jira/Fastly" t)
