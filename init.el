@@ -1439,6 +1439,11 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
 (use-package arduino-mode
   :straight t)
 
+;;;; Protobuf
+
+(use-package protobuf-mode
+  :straight t)
+
 ;;; Elfeed
 
 (use-package elfeed
