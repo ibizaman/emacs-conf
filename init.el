@@ -1445,6 +1445,11 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
 (use-package protobuf-mode
   :straight t)
 
+;;;; Flatbuffers
+
+(use-package flatbuffers-mode
+  :straight t)
+
 ;;; Elfeed
 
 (use-package elfeed
