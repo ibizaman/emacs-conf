@@ -1518,6 +1518,17 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
   :config
   (setq lsp-terraform-server '("terraform-ls" "serve")))
 
+;;; Json
+
+(use-package json-mode
+  :straight t
+  :config
+  (setq json-mode-wi 2))
+
+;;; Javascript
+
+(setq js-indent-level 2)
+
 ;;; Eshell
 
 (defun my-eshell-prompt-function ()
