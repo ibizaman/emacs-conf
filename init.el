@@ -353,7 +353,19 @@
 
   ;;; Keybindings
   (evil-define-key 'normal magit-mode-map (kbd "o") 'magit-visit-thing)
-  (evil-define-key 'normal magit-mode-map (kbd "O") 'magit-diff-visit-file-other-window))
+  (evil-define-key 'normal magit-mode-map (kbd "O") 'magit-diff-visit-file-other-window)
+
+  (defun magit-fetch-and-reset-main ()
+    "Fetch upstream and reset main branch to its upstream."
+    (interactive)
+    (let* ((main (magit-main-branch))
+           (main-upstream (magit-get-upstream-branch main)))
+    (call-interactively 'magit-fetch-from-upstream)
+    (magit-branch-reset main main-upstream)))
+
+  ;;; Transient
+  (transient-append-suffix 'magit-reset "w" '("M" "main branch" magit-fetch-and-reset-main))
+  )
 
 (use-package forge
   :straight t
