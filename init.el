@@ -345,9 +345,13 @@
   :config
   (setq magit-display-buffer-function 'magit-display-buffer-fullcolumn-most-v1
         magit-published-branches nil)
+
+  ;;; Sections
   (magit-add-section-hook 'magit-status-sections-hook 'magit-insert-local-branches nil t)
-  ;; (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-pullreqs nil t)
+  (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-pullreqs nil t)
   ;; (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-issues nil t)
+
+  ;;; Keybindings
   (evil-define-key 'normal magit-mode-map (kbd "o") 'magit-visit-thing)
   (evil-define-key 'normal magit-mode-map (kbd "O") 'magit-diff-visit-file-other-window))
 
