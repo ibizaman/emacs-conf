@@ -1498,7 +1498,13 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
   (setq jiralib-url "https://fastly.atlassian.net"
         jiralib-user "pierre@fastly.com"
 		org-jira-working-dir "~/Documents/Jira/Fastly"
-        org-jira-use-status-as-todo t))
+        org-jira-use-status-as-todo t)
+
+  (defun org-jira-get-issues-from-one-custom-jql (filename)
+    ""
+    (interactive (list (completing-read "Custom sql name: " (mapcar (lambda (x) (plist-get x :filename)) org-jira-custom-jqls))))
+    (let ((custom-jql (cl-find filename org-jira-custom-jqls :test 'equal :key (lambda (x) (plist-get x :filename)))))
+      (org-jira-get-issues-from-custom-jql (list custom-jql)))))
 
 (setq jiralib-update-issue-fields-exclude-list '(reporter))
 
