@@ -128,7 +128,10 @@
            :prepend :kill-buffer)
           ("j" "Journal" entry (file+datetree ,org-journal-file)
            "* %?\nEntered on %U\n  %i\n  %a"
-           :tree-week :kill-buffer)))
+           :tree-week :kill-buffer)
+          ("w" "Web site"
+           entry (file+headline "~/org/inbox.org" "Web")
+           "* %a :website:\n\n%U %?\n\n%:initial")))
   (defun find-org-tasks ()
     (interactive)
     (find-file org-default-notes-file))
@@ -150,6 +153,11 @@
    ("C-c o c" . ibizaman/org-copy-element)
    ("<tab>" . org-cycle)))
 
+(use-package org-protocol)
+(use-package org-protocol-capture-html
+  :straight t)
+(use-package org-capture-pop-frame
+  :straight t)
 
 (use-package ob-async
   :straight t)
