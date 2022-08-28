@@ -136,17 +136,19 @@
     (interactive)
     (find-file org-journal-file))
 
-  :bind (("C-c j" . outline-next-heading)
-         ("C-c k" . outline-previous-heading)
-         ("C-c h" . outline-up-heading)
-         ("C-c l" . outline-show-subtree)
-         ("C-c c" . org-capture)
-         ("C-c C-l" . org-store-link)
-         ("C-c SPC" . find-org-tasks)
-         :map org-mode-map
-         ("C-c o d" . org-cut-element)
-         ("C-c o c" . ibizaman/org-copy-element)
-         ("<tab>" . org-cycle)))
+  (bind-keys
+   ("C-c j" . outline-next-heading)
+   ("C-c k" . outline-previous-heading)
+   ("C-c h" . outline-up-heading)
+   ("C-c l" . outline-show-subtree)
+   ("C-c c" . org-capture)
+   ("C-c C-l" . org-store-link)
+   ("C-c SPC t" . find-org-tasks)
+   ("C-c SPC j" . find-org-journal)
+   :map org-mode-map
+   ("C-c o d" . org-cut-element)
+   ("C-c o c" . ibizaman/org-copy-element)
+   ("<tab>" . org-cycle)))
 
 
 (use-package ob-async
