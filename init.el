@@ -111,8 +111,6 @@
 
   (add-hook 'org-capture-prepare-finalize-hook 'org-id-store-link)
 
-  ;; (evil-define-key 'normal org-mode-map (kbd "<tab>") 'org-cycle)
-
   (defun org-archive-done-tasks ()
 	(interactive)
 	(org-map-entries
@@ -122,12 +120,21 @@
 	 "/DONE" 'file))
 
   ;;; Capture templates
-  (setq org-default-notes-file (concat org-directory "/tasks.org"))
+  (setq org-default-notes-file (concat org-directory "/tasks.org")
+        org-journal-file (concat org-directory "/journal.org"))
+  (setq org-capture-templates
+        `(("t" "Todo" entry (file ,org-default-notes-file)
+           "* TODO %?\n  %i\n  %a"
+           :prepend :kill-buffer)
+          ("j" "Journal" entry (file+datetree ,org-journal-file)
+           "* %?\nEntered on %U\n  %i\n  %a"
+           :tree-week :kill-buffer)))
   (defun find-org-tasks ()
     (interactive)
-    (find-file (concat org-directory "/tasks.org")))
-  ;; (global-set-key (kbd "C-c SPC") 'find-org-tasks)
-  ;; (evil-global-set-key 'normal (kbd "C-c SPC") 'find-org-tasks)
+    (find-file org-default-notes-file))
+  (defun find-org-journal ()
+    (interactive)
+    (find-file org-journal-file))
 
   :bind (("C-c j" . outline-next-heading)
          ("C-c k" . outline-previous-heading)
