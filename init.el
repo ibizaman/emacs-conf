@@ -718,6 +718,10 @@
       (ansi-color-apply-on-region compilation-filter-start (point-max))))
   (add-hook 'compilation-filter-hook 'my-colorize-compilation-buffer))
 
+;; Maximize startup window
+;; https://emacs.stackexchange.com/a/3017/16879
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
 
 ;;; Helper functions
 (defun get-secret (host user)
