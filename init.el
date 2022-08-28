@@ -111,7 +111,7 @@
 
   (add-hook 'org-capture-prepare-finalize-hook 'org-id-store-link)
 
-  (evil-define-key 'normal org-mode-map (kbd "<tab>") 'org-cycle)
+  ;; (evil-define-key 'normal org-mode-map (kbd "<tab>") 'org-cycle)
 
   (defun org-archive-done-tasks ()
 	(interactive)
@@ -126,8 +126,8 @@
   (defun find-org-tasks ()
     (interactive)
     (find-file (concat org-directory "/tasks.org")))
-  (global-set-key (kbd "C-c SPC") 'find-org-tasks)
-  (evil-global-set-key 'normal (kbd "C-c SPC") 'find-org-tasks)
+  ;; (global-set-key (kbd "C-c SPC") 'find-org-tasks)
+  ;; (evil-global-set-key 'normal (kbd "C-c SPC") 'find-org-tasks)
 
   :bind (("C-c j" . outline-next-heading)
          ("C-c k" . outline-previous-heading)
@@ -135,6 +135,7 @@
          ("C-c l" . outline-show-subtree)
          ("C-c c" . org-capture)
          ("C-c C-l" . org-store-link)
+         ("C-c SPC" . find-org-tasks)
          :map org-mode-map
          ("C-c o d" . org-cut-element)
          ("C-c o c" . ibizaman/org-copy-element)
