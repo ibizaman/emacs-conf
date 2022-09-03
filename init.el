@@ -232,7 +232,8 @@
   :config
   (global-undo-tree-mode)
   (setq undo-tree-enable-undo-in-region t
-        undo-tree-visualizer-diff t))
+        undo-tree-visualizer-diff t
+        undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory "/undo-tree")))))
 
 (use-package autorevert
   :delight auto-revert-mode)
