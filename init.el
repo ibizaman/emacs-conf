@@ -205,6 +205,10 @@
 (use-package pdf-tools
   :straight t)
 
+(use-package pdf-view
+  :config
+  (setq pdf-view-display-size 'fit-height))
+
 (use-package org-visibility
   :after (org)
   :straight t
