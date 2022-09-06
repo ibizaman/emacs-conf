@@ -154,8 +154,8 @@
    ("<tab>" . org-cycle)))
 
 (use-package org-protocol)
-(use-package org-protocol-capture-html
-  :straight t)
+;(use-package org-protocol-capture-html
+;  :straight t)
 (use-package org-capture-pop-frame
   :straight t)
 
