@@ -1650,7 +1650,7 @@ length of PATH (sans directory slashes) down to MAX-LEN."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :extend nil :stipple nil :background "#202020" :foreground "#F9F6F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 130 :width normal :foundry "nil" :family "Inconsolata"))))
+ '(default ((t (:inherit nil :extend nil :stipple nil :background "#202020" :foreground "#F9F6F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "nil" :family "Inconsolata"))))
  '(org-hide ((t (:background "#18363E" :foreground "#18363E"))))
  '(org-indent ((t (:inherit org-hide :background "#18363E"))))
  '(org-level-1 ((t (:extend t :foreground "#DD517F" :inverse-video t :weight bold :height 1.5))))
