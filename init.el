@@ -595,6 +595,7 @@
 ;;; UI
 
 (blink-cursor-mode 0)
+(setq use-dialog-box nil)
 
 ;; Don't use messages that you don't read
 (setq initial-scratch-message ""
