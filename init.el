@@ -569,12 +569,22 @@
   :straight t
 
   :init
+  (defun popper-display-popup-on-right (buffer &optional alist)
+    "Display popup-buffer BUFFER on the right of the screen."
+    (display-buffer-in-side-window
+     buffer
+     (append alist
+             `((window-height . ,popper-window-height)
+               (side . right)
+               (slot . 1)))))
+
   (setq popper-reference-buffers '("\\*Messages\\*"
 								   "Output\\*$"
 								   help-mode
 								   compilation-mode
 								   go-test-mode)
-		popper-group-function #'popper-group-by-projectile)
+		popper-group-function #'popper-group-by-projectile
+        popper-display-function #'popper-display-popup-on-right)
 
   :config
   (popper-mode 1)
