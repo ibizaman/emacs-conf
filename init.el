@@ -453,7 +453,6 @@
     (interactive)
     (let* ((main (magit-main-branch))
            (main-upstream (magit-get-upstream-branch main)))
-    (call-interactively 'magit-fetch-from-upstream)
     (magit-branch-reset main main-upstream)))
 
   ;;; Transient
