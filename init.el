@@ -236,6 +236,14 @@
   ;;(org-visibility-display-messages nil)
   )
 
+(use-package ob-mermaid
+  :straight t
+  :after org
+  :config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((mermaid . t))))
+
 
 ;;; Base packages
 
