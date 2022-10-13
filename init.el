@@ -1207,6 +1207,11 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
+;;;; Mermaid
+
+(use-package mermaid-mode
+  :straight t)
+
 ;;;; Yaml
 
 (use-package yaml-mode
