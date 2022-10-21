@@ -1641,6 +1641,10 @@ length of PATH (sans directory slashes) down to MAX-LEN."
 
 (setq eshell-prompt-function 'my-eshell-prompt-function)
 
+;;; Music
+
+(use-package lilypond-mode)
+
 ;;; Customization
 
 (put 'narrow-to-region 'disabled nil)
