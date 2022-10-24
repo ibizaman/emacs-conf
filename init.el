@@ -684,8 +684,8 @@
                "Use M-x hidden-mode-line-mode to make the mode-line appear."))))
 
   ;; Activate hidden-mode-line-mode
-  (hidden-mode-line-mode 1)
-  (add-hook 'after-change-major-mode-hook 'hidden-mode-line-mode)
+  ; (hidden-mode-line-mode 1)
+  ; (add-hook 'after-change-major-mode-hook 'hidden-mode-line-mode)
 
   ;; Command to toggle the display of the mode-line as a header
   (defvar-local header-line-format nil)
