@@ -1228,6 +1228,11 @@
   :straight t
   :hook (yaml-mode . lsp-deferred))
 
+;;;; Jenkins
+
+(use-package jenkinsfile-mode
+  :straight t)
+
 ;;;; Go
 
 (use-package go-mode
