@@ -1698,7 +1698,8 @@ length of PATH (sans directory slashes) down to MAX-LEN."
 
 ;;; Music
 
-(use-package lilypond-mode)
+(use-package lilypond-mode
+  :requires lilypond-mode)
 
 ;;; Customization
 
