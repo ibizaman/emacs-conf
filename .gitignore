@@ -3,14 +3,17 @@
 .dap-breakpoints
 .lsp-session*
 .org-id-locations
+.org-visibility
 auto-save-list
 eclipse.jdt.ls
 eln-cache
+elpa/
 eshell
 forge-database.sqlite
 history
 org-persist
 projectile-bookmarks.eld
+projectile.cache
 recentf
 request
 straight
