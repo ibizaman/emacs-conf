@@ -1702,6 +1702,11 @@ length of PATH (sans directory slashes) down to MAX-LEN."
 (use-package lilypond-mode
   :requires lilypond-mode)
 
+;;; SQL
+
+(use-package sql-mode
+  :straight t)
+
 ;;; Customization
 
 (put 'narrow-to-region 'disabled nil)
