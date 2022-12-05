@@ -1525,7 +1525,7 @@
           (go-test-args--set-global-var))
 
         (defun go-test-args--toggle-str (var)
-          (let ((value (read-string "Enter a value (leave empty to unset the argument): " nil nil (go-test-subtest-name))))
+          (let ((value (read-string "Enter a value (leave empty to unset the argument): " (go-test-subtest-name))))
             (if (equal value "")
                 (set var nil)
               (set var value)))
