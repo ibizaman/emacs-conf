@@ -1705,8 +1705,8 @@ length of PATH (sans directory slashes) down to MAX-LEN."
 
 ;;; SQL
 
-(use-package sql-mode
-  :straight t)
+;; (use-package sql-mode
+;;   :straight t)
 
 ;;; Customization
 
