@@ -1136,7 +1136,7 @@
   (interactive)
   (use-region-or-expand-region)
   (condition-case-unless-debug err
-      (call-interactively 'eval-region)
+      (message "%s" (call-interactively 'eval-region))
     (error (deactivate-mark)
            (signal (car err) (cdr err))))
   (deactivate-mark))
