@@ -1206,7 +1206,17 @@
   :straight t
   :mode "\\.nix\\'"
   :init
-  (require 'nix-build))
+  (require 'nix-build)
+  :config
+  (defun nix-search-package (arg)
+    (interactive "P")
+    (let* ((package (thing-at-point 'filename t))
+           (url (format "https://search.nixos.org/packages?channel=22.11&from=0&size=50&sort=relevance&type=packages&query=%s" package)))
+      (if url
+          (browse-url url (if arg
+                              (not browse-url-new-window-flag)
+                            browse-url-new-window-flag))
+        (error "No URL found")))))
 
 ;;;; Markdown
 
