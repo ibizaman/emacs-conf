@@ -624,10 +624,11 @@
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode 0))
 
-(cond
- ((x-list-fonts "*-Inconsolata-*") (set-face-attribute 'default nil :font "Inconsolata-13"))
- ((x-list-fonts "*-Inconsolata Nerd Font-*") (set-face-attribute 'default nil :font "Inconsolata Nerd Font-9"))
- ((x-list-fonts "*-InconsolataG-*") (set-face-attribute 'default nil :font "InconsolataG-10")))
+(when (memq window-system '(mac ns))
+  (cond
+   ((x-list-fonts "*-Inconsolata-*") (set-face-attribute 'default nil :font "Inconsolata-13"))
+   ((x-list-fonts "*-Inconsolata Nerd Font-*") (set-face-attribute 'default nil :font "Inconsolata Nerd Font-9"))
+   ((x-list-fonts "*-InconsolataG-*") (set-face-attribute 'default nil :font "InconsolataG-10"))))
 
 (setq kill-do-not-save-duplicates t
       ; From https://stackoverflow.com/a/29092845/1013628
