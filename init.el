@@ -624,11 +624,21 @@
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode 0))
 
-(when (memq window-system '(mac ns))
-  (cond
-   ((x-list-fonts "*-Inconsolata-*") (set-face-attribute 'default nil :font "Inconsolata-13"))
-   ((x-list-fonts "*-Inconsolata Nerd Font-*") (set-face-attribute 'default nil :font "Inconsolata Nerd Font-9"))
-   ((x-list-fonts "*-InconsolataG-*") (set-face-attribute 'default nil :font "InconsolataG-10"))))
+;; Set fonts even in daemon mode thanks to the hooks. Comes from
+;; https://emacs.stackexchange.com/a/64499/16879.
+;; after-make-frame-functions hook works in daemon mode and
+;; window-setup-hook works in non-daemon mode.
+(progn
+  (defun configure-fonts (frame)
+    (when (memq window-system '(mac ns x))
+      (cond
+       ((x-list-fonts "*-Inconsolata-*") (set-face-attribute 'default nil :font "Inconsolata-13"))
+       ((x-list-fonts "*-Inconsolata Nerd Font-*") (set-face-attribute 'default nil :font "Inconsolata Nerd Font-9"))
+       ((x-list-fonts "*-InconsolataG-*") (set-face-attribute 'default nil :font "InconsolataG-10")))))
+
+  (add-hook 'after-make-frame-functions #'configure-fonts)
+  (add-hook 'window-setup-hook #'configure-fonts))
+
 
 (setq kill-do-not-save-duplicates t
       ; From https://stackoverflow.com/a/29092845/1013628
