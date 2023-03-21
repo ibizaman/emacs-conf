@@ -637,7 +637,7 @@
 ;; after-make-frame-functions hook works in daemon mode and
 ;; window-setup-hook works in non-daemon mode.
 (progn
-  (defun configure-fonts (frame)
+  (defun configure-fonts (&optional frame)
     (when (memq window-system '(mac ns x))
       (cond
        ((x-list-fonts "*-Inconsolata-*") (set-face-attribute 'default nil :font "Inconsolata-13"))
