@@ -1040,39 +1040,31 @@
                                                    ("/Gmail/[Google Mail].All Mail"    . ?a)) )
                         ( mu4e-get-mail-command . "offlineimap" )
                         ( mu4e-bookmarks .
-                                         (,(make-mu4e-bookmark
-                                            :name  "Unread messages not list"
+                                         ( (:name  "Unread messages not list"
                                             :query (lambda () (ibizaman/mu4e-generate-unread-filter))
                                             :key ?u)
-                                          ,(make-mu4e-bookmark
-                                            :name  "Recruiting"
+                                           (:name  "Recruiting"
                                             :query "maildir:/Gmail/recruiting"
                                             :key ?r)
-                                          ,(make-mu4e-bookmark
-                                            :name  "Unread messages all"
+                                           (:name  "Unread messages all"
                                             :query (concat "flag:unread "
                                                            "AND NOT flag:trashed"
                                                            "AND NOT maildir:\"/Gmail/[Google Mail].Trash\" "
                                                            "AND NOT maildir:\"/Gmail/[Google Mail].Spam\" ")
                                             :key ?i)
-                                          ,(make-mu4e-bookmark
-                                            :name  "Unread list messages"
+                                           (:name  "Unread list messages"
                                             :query (lambda () (call-interactively 'ibizaman/mu4e-get-unread-list-filter-query))
                                             :key ?l)
-                                          ,(make-mu4e-bookmark
-                                            :name "Today's messages"
+                                           (:name "Today's messages"
                                             :query "date:today..now"
                                             :key ?t)
-                                          ,(make-mu4e-bookmark
-                                            :name "Last 7 days"
+                                           (:name "Last 7 days"
                                             :query "date:7d..now AND NOT flag:list AND NOT maildir:/Gmail/recruiting"
                                             :key ?w)
-                                          ,(make-mu4e-bookmark
-                                            :name "Messages with images"
+                                           (:name "Messages with images"
                                             :query "mime:image/*"
                                             :key ?p)
-                                          ,(make-mu4e-bookmark
-                                            :name "Drafts"
+                                           (:name "Drafts"
                                             :query "flag:draft"
                                             :key ?d))))))))
   (ibizaman/mu4e-set-contexts)
