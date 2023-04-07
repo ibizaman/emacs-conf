@@ -299,27 +299,7 @@
   :straight t
   :after evil forge org
   :config
-  (evil-collection-init
-   '(
-	 compile
-	 xref
-     comint
-     custom
-     deadgrep
-     debug
-     dired
-     ediff
-     elfeed
-     flycheck
-	 ibuffer
-     info
-     log-edit
-     log-view
-	 magit
-     mu4e
-     replace
-     simple
-     which-key))
+  (evil-collection-init)
   (evil-collection-unimpaired-mode -1))
 
 (eval-after-load 'treemacs
