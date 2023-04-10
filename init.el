@@ -1549,6 +1549,8 @@
 
 		(defun go-test-debug-one ()
 		  "Run TESTNAME."
+          (when (string-empty-p go-test-args-run)
+            (error "Please set the -run argument first"))
 		  (let ((cmd (concat "dlv test -- -test.run=" go-test-args-run " " (go-test-args--all-args t))))
 			(message cmd)
 			(dlv cmd)))
