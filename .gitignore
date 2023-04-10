@@ -5,9 +5,11 @@
 .org-id-locations
 .org-visibility
 auto-save-list
+code-review*
 eclipse.jdt.ls
 eln-cache
 elpa/
+emojis
 eshell
 forge-database.sqlite
 history
