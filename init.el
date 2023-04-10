@@ -669,6 +669,8 @@
   :config
   (rainbow-delimiters-mode 1))
 
+(setq-default fill-column 100)
+
 ;;;; Modeline
 
 (column-number-mode 1)
