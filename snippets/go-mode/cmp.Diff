@@ -1,0 +1,6 @@
+# key: cmp.Diff
+# name: cmp.Diff
+# --
+if diff := cmp.Diff($1, $2); diff != "" {
+    t.Errorf("unexpected $3 found (-want +got):\n%s", diff)
+}
