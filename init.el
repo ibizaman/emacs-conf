@@ -450,6 +450,7 @@
   (add-hook 'magit-status-sections-hook 'forge-insert-assigned-pullreqs 10)
   (add-hook 'magit-status-sections-hook 'forge-insert-assigned-issues 10)
   (add-hook 'magit-status-sections-hook 'forge-insert-authored-issues 10)
+  (add-hook 'magit-status-sections-hook 'forge-insert-pullreqs 10)
   (remove-hook 'magit-status-sections-hook 'forge-insert-pullreqs)
   (remove-hook 'magit-status-sections-hook 'forge-insert-issues)
   (setq forge-alist (append '(("ibizaman.github.com" "api.github.com" "github.com" forge-github-repository)) forge-alist))
