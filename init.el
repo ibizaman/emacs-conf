@@ -293,7 +293,10 @@
   (evil-mode 1)
   (evil-define-key 'normal Info-mode-map (kbd "]") #'Info-forward-node)
   (evil-define-key 'normal Info-mode-map (kbd "[") #'Info-backward-node)
-  (evil-define-key 'normal 'global "gt" 'counsel-semantic-or-imenu))
+  (evil-define-key 'normal 'global "gt" 'counsel-semantic-or-imenu)
+  (evil-define-key 'normal text-mode-map (kbd "C-k") 'dwim-move-up)
+  (evil-define-key 'normal text-mode-map (kbd "C-j") 'dwim-move-down)
+  )
 
 (use-package evil-collection
   :straight t
