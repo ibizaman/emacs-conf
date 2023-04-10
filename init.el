@@ -1123,6 +1123,7 @@
   ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
   (setq gc-cons-threshold 100000000
         read-process-output-max (* 1024 1024)) ;; 1mb
+  (setq lsp-warn-no-matched-clients nil)
   (lsp-treemacs-sync-mode 1)
   (lsp-lens-mode nil))
 
