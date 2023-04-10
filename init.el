@@ -1650,6 +1650,16 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
         (define-key go-mode-map (kbd "C-c t") 'go-test-args-hydra/body)
         (define-key go-test-mode-map (kbd "C-c t") 'go-test-args-hydra/body))))
 
+(defcustom go-test-test-function-regexp
+  "func +Test.*(t \\*testing.T) {"
+  "Regex to identify test functions."
+  :type 'string
+  :group 'gotest)
+
+(defun go-test-list ()
+  (interactive)
+  (project-find-regexp go-test-test-function-regexp))
+
 ;;;; Java
 
 (use-package lsp-java
