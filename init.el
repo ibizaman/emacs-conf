@@ -253,6 +253,11 @@
   :config
     (exec-path-from-shell-initialize)))
 
+(defun my/focus-new-client-frame ()
+  (select-frame-set-input-focus (selected-frame)))
+
+(add-hook 'server-after-make-frame-hook #'my/focus-new-client-frame)
+
 (use-package delight
   :straight t
   :config
