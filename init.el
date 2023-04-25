@@ -452,12 +452,12 @@
   :straight t
   :after magit
   :config
-  (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-pullreqs nil t)
-  (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-issues nil t)
-  (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-authored-issues nil t)
+  ;; (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-pullreqs nil t)
+  ;; (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-issues nil t)
+  ;; (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-authored-issues nil t)
   (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-pullreqs nil t)
-  (remove-hook 'magit-status-sections-hook 'forge-insert-pullreqs)
-  (remove-hook 'magit-status-sections-hook 'forge-insert-issues)
+  ;; (remove-hook 'magit-status-sections-hook 'forge-insert-pullreqs)
+  ;; (remove-hook 'magit-status-sections-hook 'forge-insert-issues)
   (setq forge-alist (append '(("ibizaman.github.com" "api.github.com" "github.com" forge-github-repository)) forge-alist))
   )
 
