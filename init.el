@@ -1097,8 +1097,8 @@ ENTRY is the name of a password-store entry."
 
   (global-set-key (kbd "C-x m") #'mu4e))
 
-(use-package org-mu4e
-  :after org mu4e)
+;; (use-package org-mu4e
+;;   :after org mu4e)
 
 (use-package mu4e-maildirs-extension
   :straight t
