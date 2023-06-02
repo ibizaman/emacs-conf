@@ -1296,6 +1296,7 @@ ENTRY is the name of a password-store entry."
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]dashboard/assets\\'")
     (setq lsp-file-watch-threshold 50000))
   (add-hook 'go-mode-hook #'my/lsp-go-exclude-vendor-directory)
+  (add-hook 'markdown-mode-hook #'my/lsp-go-exclude-vendor-directory)
   (setq flycheck-go-golint-executable "golangci-lint run")
   ;; (setq lsp-go-directory-filters '("-vendor"))
   ;; (setq lsp-go-directory-filters "[- +dataservices]"))
