@@ -466,10 +466,10 @@
   :after magit
   :config
   (add-hook 'code-review-mode-hook #'emojify-mode)
-  (define-key magit-status-mode-map (kbd "RET") 'code-review-forge-pr-at-point)
-  (define-key forge-topic-mode-map (kbd "RET") 'code-review-forge-pr-at-point)
+  ;; (define-key code-review-mode-map (kbd "RET") nil)
+  ;; (define-key forge-topic-mode-map (kbd "RET") 'code-review-forge-pr-at-point)
   (evil-define-key '(normal visual) code-review-mode-map (kbd "r") 'code-review-transient-api)
-  (define-key code-review-mode-map (kbd "RET") 'code-review-comment-add-or-edit)
+  ;; (define-key code-review-mode-map (kbd "RET") 'code-review-comment-add-or-edit)
   (evil-define-key 'normal code-review-mode-map (kbd "RET") 'code-review-comment-add-or-edit)
   (evil-define-key 'normal code-review-mode-map (kbd "C-n") 'code-review-comment-jump-next)
   (evil-define-key 'normal code-review-mode-map (kbd "C-p") 'code-review-comment-jump-previous)
