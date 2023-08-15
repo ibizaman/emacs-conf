@@ -1685,7 +1685,7 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
   "Create new blog post under `hakyll-blog-dir' with given TITLE."
   (interactive "sBlog post title: ")
   (find-file (hakyll-blog--file-format title))
-  (insert (format "---\ntitle: %s\ntags: \n---\n\n" title)))
+  (insert (format "---\ntitle: %s\ntags: \nwip: true\n---\n\n" title)))
 
 (defun hakyll-blog--file-format (title)
   "File name for TITLE post."
