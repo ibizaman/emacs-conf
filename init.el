@@ -210,7 +210,7 @@
   (setq pdf-view-display-size 'fit-height))
 
 (use-package org-visibility
-  :after (org)
+  :after org
   :straight t
   ;; :bind* (:map org-visibility-mode-map
   ;;              ("C-x C-v" . org-visibility-force-save) ; defaults to `find-alternative-file'
@@ -288,7 +288,7 @@
 
 (use-package evil
   :straight t
-  :after undo-tree org
+  :after (undo-tree org)
   :init
   (setq evil-want-integration t)  ; needed for evil-collection
   (setq evil-want-keybinding nil) ; needed for evil-collection
@@ -305,7 +305,7 @@
 
 (use-package evil-collection
   :straight t
-  :after evil forge org
+  :after (evil forge org)
   :config
   (evil-collection-init)
   (evil-collection-unimpaired-mode -1))
@@ -1053,7 +1053,7 @@ ENTRY is the name of a password-store entry."
   (global-set-key (kbd "C-x m") #'mu4e))
 
 ;; (use-package org-mu4e
-;;   :after org mu4e)
+;;   :after (org mu4e))
 
 (use-package mu4e-maildirs-extension
   :straight t
@@ -1330,7 +1330,7 @@ ENTRY is the name of a password-store entry."
 
 (use-package gotest
   :straight t
-  :after company go-mode
+  :after (company go-mode)
   :config
   (defun go-test-subtest-name ()
 	"Returns the full name of the subtest under point if any, or the test name."
