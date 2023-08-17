@@ -1685,14 +1685,31 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
   "Create new blog post under `hakyll-blog-dir' with given TITLE."
   (interactive "sBlog post title: ")
   (find-file (hakyll-blog--file-format title))
-  (insert (format "---\ntitle: %s\ntags: \nwip: true\n---\n\n" title)))
+  (make-directory (hakyll-blog--post-images-dir title))
+  (insert (format "---\ntitle: %s\ntags: \nwip: true\n---\n\n![image example](/images/%s)\n\n" title (hakyll-blog--sluggify-post-title title))))
+
+(defun hakyll-blog--sluggify-post-title (title)
+  "Slug of post TITLE."
+  (format "%s-%s"
+          (format-time-string hakyll-blog-file-time-format)
+          (s-dashed-words title)))
 
 (defun hakyll-blog--file-format (title)
   "File name for TITLE post."
-  (format "%s/posts/%s-%s.markdown"
+  (format "%s/posts/%s.markdown"
           (expand-file-name hakyll-blog-dir)
-          (format-time-string hakyll-blog-file-time-format)
-          (s-dashed-words title)))
+          (hakyll-blog--sluggify-post-title title)))
+
+(defun hakyll-blog--post-images-dir (title)
+  "Directory name for images of TITLE post."
+  (format "%s/images/%s"
+          (expand-file-name hakyll-blog-dir)
+          (hakyll-blog--sluggify-post-title title)))
+
+(defun hakyll-blog-dired-wip ()
+  "List all WIP blog posts."
+  (interactive)
+  (find-grep-dired (concat (file-name-as-directory hakyll-blog-dir) "posts") "wip: *true"))
 
 ;;; Elfeed
 
