@@ -305,7 +305,7 @@
 
 (use-package evil-collection
   :straight t
-  :after (evil forge org)
+  :after evil
   :config
   (evil-collection-init)
   (evil-collection-unimpaired-mode -1))
