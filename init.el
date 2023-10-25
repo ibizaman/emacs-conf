@@ -492,9 +492,9 @@ ENTRY is the name of a password-store entry."
 (use-package ivy
   :straight t
   :delight ivy-mode
-  :bind (("C-s" . 'swiper-thing-at-point)
-         ("C-<return>" . 'ivy-immediate-done))
   :config
+  (evil-define-key 'normal 'global (kbd "C-s") 'swiper-thing-at-point)
+  (evil-define-key 'normal 'global (kbd "C-<return>") 'ivy-immediate-done)
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
   (setq ivy-count-format "(%d/%d) ")
