@@ -416,15 +416,6 @@
 
 (use-package magit
   :straight t
-  :bind (("C-x g g" . magit-status)
-         ("C-x g d" . magit-diff-buffer-file)
-         ("C-x g b" . magit-blame)
-         ("C-x g l" . magit-log)
-         ;; :map magit-file-mode-map
-         ;; ("C-x g" . nil)
-         :map magit-mode-map
-         ("o" . magit-visit-thing)
-         ("O" . magit-diff-visit-file-other-window))
   :config
   (setq magit-display-buffer-function 'magit-display-buffer-fullcolumn-most-v1
         magit-published-branches nil)
@@ -435,6 +426,11 @@
   ;; (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-issues nil t)
 
   ;;; Keybindings
+  (evil-define-key 'normal 'global (kbd "C-x g g") 'magit-status)
+  (evil-define-key 'normal 'global (kbd "C-x g d") 'magit-diff-buffer-file)
+  (evil-define-key 'normal 'global (kbd "C-x g b") 'magit-blame)
+  (evil-define-key 'normal 'global (kbd "C-x g l") 'magit-log)
+  (evil-define-key 'normal magic-mode-map (kbd "RET") 'code-review-comment-add-or-edit)
   (evil-define-key 'normal magit-mode-map (kbd "o") 'magit-visit-thing)
   (evil-define-key 'normal magit-mode-map (kbd "O") 'magit-diff-visit-file-other-window)
 
