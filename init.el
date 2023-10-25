@@ -306,7 +306,7 @@
 
 (use-package evil-collection
   :straight t
-  :after evil
+  :after evil ;forge
   :config
   (evil-collection-init)
   (evil-collection-unimpaired-mode -1))
@@ -431,7 +431,7 @@
 
   ;;; Sections
   (magit-add-section-hook 'magit-status-sections-hook 'magit-insert-local-branches nil t)
-  (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-pullreqs nil t)
+  ;; (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-pullreqs nil t)
   ;; (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-issues nil t)
 
   ;;; Keybindings
@@ -449,18 +449,19 @@
   (transient-append-suffix 'magit-reset "w" '("M" "main branch" magit-fetch-and-reset-main))
   )
 
-(use-package forge
-  :straight t
-  :after magit
-  :config
-  ;; (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-pullreqs nil t)
-  ;; (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-issues nil t)
-  ;; (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-authored-issues nil t)
-  (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-pullreqs nil t)
-  ;; (remove-hook 'magit-status-sections-hook 'forge-insert-pullreqs)
-  ;; (remove-hook 'magit-status-sections-hook 'forge-insert-issues)
-  (setq forge-alist (append '(("ibizaman.github.com" "api.github.com" "github.com" forge-github-repository)) forge-alist))
-  )
+;; TODO: enable, not working on nix-darwin
+;; (use-package forge
+;;   :straight t
+;;   :after magit
+;;   :config
+;;   ;; (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-pullreqs nil t)
+;;   ;; (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-issues nil t)
+;;   ;; (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-authored-issues nil t)
+;;   (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-pullreqs nil t)
+;;   ;; (remove-hook 'magit-status-sections-hook 'forge-insert-pullreqs)
+;;   ;; (remove-hook 'magit-status-sections-hook 'forge-insert-issues)
+;;   (setq forge-alist (append '(("ibizaman.github.com" "api.github.com" "github.com" forge-github-repository)) forge-alist))
+;;   )
 
 (use-package code-review
   :straight t
@@ -623,6 +624,9 @@ ENTRY is the name of a password-store entry."
    (lambda (key _value)
      (file-notify-rm-watch key))
    file-notify-descriptors))
+
+;; (use-package impatient-mode
+;;   :straight t)
 
 ;;; UI
 
@@ -920,6 +924,8 @@ ENTRY is the name of a password-store entry."
 	  (setq gif-screencast-capture-format "ppm")) ;; Optional: Required to crop captured images.
   )
 
+(use-package edit-server
+  :straight t)
 
 ;;; Mu4e
 
@@ -1969,7 +1975,10 @@ length of PATH (sans directory slashes) down to MAX-LEN."
      (:jql " assignee = currentUser() and createdDate >= '2019-01-01' order by created DESC " :limit 100 :filename "this-years-work")
      (:jql " (assignee = currentUser() OR reporter = currentUser()) and resolution = unresolved ORDER BY priority DESC, created ASC " :limit 100 :filename "all my issues")
      (:jql " (watcher = currentUser() AND NOT (assignee = currentUser() AND reporter = currentUser())) and resolution = unresolved ORDER BY priority DESC, created ASC " :limit 100 :filename "watched only")))
- '(warning-suppress-types '((lsp-mode) (comp))))
+ '(warning-suppress-types '((lsp-mode) (comp)))
+ '(safe-local-variable-values
+   '((gofmt-args "-local" "github.com/signalsciences/sigsci/")
+     (lsp-go-goimports-local . "github.com/signalsciences/sigsci/"))))
 
 ;; Mouse With a normal `setq', I always get prompted on exit to save
 ;; this value. This needs to be called after `custom-set-variables' and
