@@ -1293,6 +1293,7 @@ ENTRY is the name of a password-store entry."
     (add-hook 'before-save-hook #'lsp-format-buffer t t)
     (add-hook 'before-save-hook #'lsp-organize-imports t t))
   (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
   (defun my/lsp-go-exclude-vendor-directory ()
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]vendor\\'")
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]dashboard/ui\\'")
@@ -1300,6 +1301,21 @@ ENTRY is the name of a password-store entry."
     (setq lsp-file-watch-threshold 50000))
   (add-hook 'go-mode-hook #'my/lsp-go-exclude-vendor-directory)
   (add-hook 'markdown-mode-hook #'my/lsp-go-exclude-vendor-directory)
+
+  (defun my/nix--lsp-go-wrapper (args)
+    (if-let ((sandbox (nix-current-sandbox)))
+        (apply 'nix-shell-command sandbox args)
+      args))
+  (setq lsp-go-server-path "gopls"
+        lsp-go-server-wrapper-function 'my/nix--lsp-go-wrapper)
+
+  ; https://emacs-lsp.github.io/lsp-mode/page/lsp-gopls/#configuration
+  (setq lsp-go-analyses '((shadow . t)
+                          (nilness . t)
+                          (unusedparams . t)
+                          (unusedwrite . t)
+                          (unusedvariable . t)))
+
   (setq flycheck-go-golint-executable "golangci-lint run")
   ;; (setq lsp-go-directory-filters '("-vendor"))
   ;; (setq lsp-go-directory-filters "[- +dataservices]"))
@@ -1331,9 +1347,15 @@ ENTRY is the name of a password-store entry."
 ; 
 ;   (add-to-list 'lsp-language-id-configuration '(go-mode . "golangci-lint")))
 
+
+(defun nix-go-test-go-command ()
+  "Set go-test go executable using nix."
+  (setq-local go-test-go-command (nix-executable-find (nix-current-sandbox) "go")))
+
 (use-package gotest
   :straight t
   :after (company go-mode)
+  :hook ((go-mode . nix-go-test-go-command))
   :config
   (defun go-test-subtest-name ()
 	"Returns the full name of the subtest under point if any, or the test name."
@@ -1971,10 +1993,11 @@ length of PATH (sans directory slashes) down to MAX-LEN."
      (:jql " assignee = currentUser() and createdDate >= '2019-01-01' order by created DESC " :limit 100 :filename "this-years-work")
      (:jql " (assignee = currentUser() OR reporter = currentUser()) and resolution = unresolved ORDER BY priority DESC, created ASC " :limit 100 :filename "all my issues")
      (:jql " (watcher = currentUser() AND NOT (assignee = currentUser() AND reporter = currentUser())) and resolution = unresolved ORDER BY priority DESC, created ASC " :limit 100 :filename "watched only")))
- '(warning-suppress-types '((lsp-mode) (comp)))
  '(safe-local-variable-values
-   '((gofmt-args "-local" "github.com/signalsciences/sigsci/")
-     (lsp-go-goimports-local . "github.com/signalsciences/sigsci/"))))
+   '((lsp-go-use-gofumpt . t)
+     (gofmt-args "-local" "github.com/signalsciences/sigsci/")
+     (lsp-go-goimports-local . "github.com/signalsciences/sigsci/")))
+ '(warning-suppress-types '((lsp-mode) (comp))))
 
 ;; Mouse With a normal `setq', I always get prompted on exit to save
 ;; this value. This needs to be called after `custom-set-variables' and
