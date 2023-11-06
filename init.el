@@ -1385,7 +1385,7 @@ ENTRY is the name of a password-store entry."
   :straight t)
 
 (eval-after-load 'hydra
-  (eval-after-load 'go-mode
+  (eval-after-load 'go-test
      '(progn
         (defgroup go-test-args nil
           "Go test args specific customization."
