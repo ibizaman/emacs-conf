@@ -1277,6 +1277,7 @@
 
 (use-package go-mode
   :straight t
+  :after nix-sandbox
   :hook (go-mode . lsp-deferred)
   :bind (([remap find-function] . 'lsp-find-definition))
   :config
@@ -1313,6 +1314,13 @@
   ;; (setq lsp-go-directory-filters "[]")
   ;; (lsp-register-custom-settings
   ;;  '(("gopls.directoryFilters" lsp-go-directory-filters)))
+
+  (defun my/nix--lsp-go-wrapper (args)
+    (if-let ((sandbox (nix-current-sandbox)))
+        (apply 'nix-shell-command sandbox args)
+      args))
+  (setq lsp-go-gopls-server-path "gopls"
+        lsp-go-gopls-server-wrapper-function 'my/nix--lsp-go-wrapper)
   )
 
 ; Not sure I want this, takes a lot of RAM for not much.
