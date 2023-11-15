@@ -1346,7 +1346,7 @@
 (use-package gotest
   :straight t
   :after (company go-mode)
-  :hook ((go-mode . nix-go-test-go-command))
+  ; :hook ((go-mode . nix-go-test-go-command))
   :config
   (defun go-test-subtest-name ()
 	"Returns the full name of the subtest under point if any, or the test name."
