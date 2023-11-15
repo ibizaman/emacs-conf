@@ -478,16 +478,7 @@
 (use-package auth-source-pass
   :straight t
   :config
-  (auth-source-pass-enable)
-
-  (defun auth-source-pass-parse-entry (entry)
-    "Return an alist of the data associated with ENTRY.
-
-ENTRY is the name of a password-store entry."
-    (let ((file-contents (with-demoted-errors "Error: %S" (auth-source-pass--read-entry entry))))
-      (and file-contents
-           (cons `(secret . ,(auth-source-pass--parse-secret file-contents))
-                 (auth-source-pass--parse-data file-contents))))))
+  (auth-source-pass-enable))
 
 (use-package ivy
   :straight t
