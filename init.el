@@ -1193,6 +1193,19 @@
                             browse-url-new-window-flag))
         (error "No URL found")))))
 
+;;;; Sops
+
+(defvar random-secret-openssl-executable "openssl"
+  "OpenSSL executable for generating random secret. Example: 'nix run nixpkgs#openssl --'")
+
+(setq random-secret-openssl-executable "nix run nixpkgs#openssl -- ")
+
+(defun insert-random-secret (&optional length)
+  "Insert at point a random secret of given LENGTH."
+  (interactive)
+  (unless length (setq length 64))
+  (insert (shell-command-to-string (format "%s rand -hex %d" random-secret-openssl-executable length))))
+
 ;;;; Markdown
 
 (use-package markdown-mode
