@@ -521,6 +521,11 @@
   (counsel-projectile-mode 1)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
+;; (use-package persp-projectile
+;;   :straight t
+;;   :config
+;;   (persp-mode))
+
 (use-package which-key
   :straight t
   :delight which-key-mode
