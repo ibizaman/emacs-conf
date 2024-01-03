@@ -266,15 +266,15 @@
    'org-babel-load-languages
    '((mermaid . t))))
 
-(use-package org-fc
-  :straight
-  (org-fc
-   :type git :repo "https://git.sr.ht/~l3kn/org-fc"
-   :files (:defaults "awk" "demo.org"))
-  :custom
-  (org-fc-directories '("~/org/"))
-  :config
-  (require 'org-fc-hydra))
+;; (use-package org-fc
+;;   :straight
+;;   (org-fc
+;;    :type git :repo "https://git.sr.ht/~l3kn/org-fc"
+;;    :files (:defaults "awk" "demo.org"))
+;;   :custom
+;;   (org-fc-directories '("~/org/"))
+;;   :config
+;;   (require 'org-fc-hydra))
 
 ;;; Base packages
 
