@@ -121,7 +121,7 @@
 	 "/DONE" 'file))
 
   ;;; Capture templates
-  (setq org-default-notes-file (concat org-directory "/tasks.org")
+  (setq org-default-notes-file (concat org-directory "/inbox.org")
         org-journal-file (concat org-directory "/journal.org"))
   (setq org-capture-templates
         `(("t" "Todo" entry (file ,org-default-notes-file)
