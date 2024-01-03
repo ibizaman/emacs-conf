@@ -282,7 +282,13 @@
   (use-package exec-path-from-shell
   :straight t
   :config
-    (exec-path-from-shell-initialize)))
+  (exec-path-from-shell-initialize)))
+
+(when (daemonp)
+  (use-package exec-path-from-shell
+  :straight t
+  :config
+  (exec-path-from-shell-initialize)))
 
 (defun my/focus-new-client-frame ()
   (select-frame-set-input-focus (selected-frame)))
