@@ -140,6 +140,27 @@
     (interactive)
     (find-file org-journal-file))
 
+  (defun org-get-buffer-tags-completion-alist ()
+    "This function's result should be passed as a collection to `completing-read'"
+    (mapcar 'car (org-get-buffer-tags)))
+
+  (defun org-rename-tag (old new)
+    (interactive (list
+                  (completing-read "Old Tag: " (org-get-tags) nil t)
+                  (completing-read "New Tag: " (org-get-buffer-tags-completion-alist) nil 'confirm)))
+    (when (member old (org-get-tags))
+      (org-toggle-tag old 'off)
+      (org-toggle-tag new 'on)))
+
+  (defun org-rename-tags (old new)
+    (interactive (list
+                  (completing-read "Old Tag: " (org-get-buffer-tags-completion-alist) nil t)
+                  (completing-read "New Tag: " (org-get-buffer-tags-completion-alist) nil 'confirm)))
+    (org-map-entries
+     (lambda () (org-rename-tag old new))
+     (format "+%s" old)
+     nil))
+
   (bind-keys
    ("C-c j" . outline-next-heading)
    ("C-c k" . outline-previous-heading)
