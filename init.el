@@ -161,6 +161,9 @@
      (format "+%s" old)
      nil))
 
+  (setq org-refile-targets
+        '(("General.org" :maxlevel . 1)))
+
   (bind-keys
    ("C-c j" . outline-next-heading)
    ("C-c k" . outline-previous-heading)
