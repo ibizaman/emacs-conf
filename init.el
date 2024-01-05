@@ -118,7 +118,7 @@
 	 (lambda ()
 	   (org-archive-subtree)
 	   (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
-	 "/DONE" 'file))
+	 "/DONE|CANCELLED" 'file))
 
   ;;; Capture templates
   (setq org-default-notes-file (concat org-directory "/inbox.org")
