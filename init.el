@@ -184,6 +184,10 @@
 (use-package org-capture-pop-frame
   :straight t)
 
+(use-package org-sticky-header
+  :straight t
+  :hook (org-mode . org-sticky-header-mode))
+
 (use-package ob-async
   :straight t)
 
