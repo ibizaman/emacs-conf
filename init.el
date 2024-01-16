@@ -6,42 +6,13 @@
 ;;
 ;;; Code:
 
-;;; Install straight
-
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
-(straight-use-package 'use-package)
-(straight-use-package 'org)
+;; See https://github.com/jwiegley/use-package/issues/436
+(require 'use-package)
 
 ;;; Org
 
-;; Needs to be at the top to load the correct version from straight.el
-;; instead of the built-in.
-;;
-;; (defcustom org-startup-folded 'showeverything
-;; 	  (const :tag "content: headlines until level 2" content-2)
-;;
-;; (defconst org-startup-options
-;;     ("content-2" org-startup-folded content-2)
-;;
-;; (defun org-global-cycle (&optional arg)
-;;    ((eq org-startup-folded 'content-2)
-;;     (org-content 2))
-
-
 (use-package org
-  :straight t
+  :ensure t
   :init
   (defun org-clocking-buffer ())
   (defun my/org-mode-hook-evil ()
@@ -180,26 +151,26 @@
 
 (use-package org-protocol)
 ;(use-package org-protocol-capture-html
-;  :straight t)
+;  :ensure t)
 (use-package org-capture-pop-frame
-  :straight t)
+  :ensure t)
 
 (use-package org-sticky-header
-  :straight t
+  :ensure t
   :hook (org-mode . org-sticky-header-mode))
 
 (use-package ob-async
-  :straight t)
+  :ensure t)
 
 (use-package ob-python)
 
 (use-package ob-shell)
 
 (use-package ob-mongo
-  :straight t)
+  :ensure t)
 
 (use-package ob-http
-  :straight t
+  :ensure t
   :after org
   :config
   (org-babel-do-load-languages
@@ -207,7 +178,7 @@
    '((http . t))))
 
 (use-package ob-tmux
-  :straight (ob-tmux :type git :host nil :repo "https://github.com/ahendriksen/ob-tmux.git")
+  :ensure t
   :config
   (setq org-babel-default-header-args:tmux
         '((:results . "silent")))
@@ -216,23 +187,21 @@
 
 (use-package ox-pandoc
   :disabled
-  :straight (ox-pandoc :type git :host github :repo "mgcyung/ox-pandoc" :branch "master"))
+  :ensure t)
 
 (use-package org-pandoc-import
   :disabled
-  :straight (:host github
-             :repo "tecosaur/org-pandoc-import"
-             :files ("*.el" "filters" "preprocessors"))
+  :ensure t
   :after ox-pandoc
   :config
   (org-pandoc-import-transient-mode 1))
 
 (use-package org-noter
-  :straight t
+  :ensure t
   :after org)
 
 (use-package pdf-tools
-  :straight t)
+  :ensure t)
 
 (use-package pdf-view
   :config
@@ -240,7 +209,7 @@
 
 (use-package org-visibility
   :after org
-  :straight t
+  :ensure t
   ;; :bind* (:map org-visibility-mode-map
   ;;              ("C-x C-v" . org-visibility-force-save) ; defaults to `find-alternative-file'
   ;;              ("C-x M-v" . org-visibility-remove))    ; defaults to undefined
@@ -266,18 +235,16 @@
   )
 
 (use-package ob-mermaid
-  :straight t
+  :ensure t
   :after org
   :config
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((mermaid . t))))
 
+;; TODO: not found by :ensure
 ;; (use-package org-fc
-;;   :straight
-;;   (org-fc
-;;    :type git :repo "https://git.sr.ht/~l3kn/org-fc"
-;;    :files (:defaults "awk" "demo.org"))
+;;   :ensure t
 ;;   :custom
 ;;   (org-fc-directories '("~/org/"))
 ;;   :config
@@ -287,13 +254,13 @@
 
 (when (memq window-system '(mac ns x))
   (use-package exec-path-from-shell
-  :straight t
+  :ensure t
   :config
   (exec-path-from-shell-initialize)))
 
 (when (daemonp)
   (use-package exec-path-from-shell
-  :straight t
+  :ensure t
   :config
   (exec-path-from-shell-initialize)))
 
@@ -303,19 +270,19 @@
 (add-hook 'server-after-make-frame-hook #'my/focus-new-client-frame)
 
 (use-package delight
-  :straight t
+  :ensure t
   :config
   (delight-major-mode))
 
 (use-package general
-  :straight t
+  :ensure t
 
   :config
   (general-create-definer spc-leader
    :prefix "SPC"))
 
 (use-package undo-tree
-  :straight t
+  :ensure t
   :delight undo-tree-mode
   :config
   (global-undo-tree-mode)
@@ -331,7 +298,7 @@
        `(("." . ,(concat user-emacs-directory "backups")))))
 
 (use-package evil
-  :straight t
+  :ensure t
   :after (undo-tree org)
   :init
   (setq evil-want-integration t)  ; needed for evil-collection
@@ -348,7 +315,7 @@
   )
 
 (use-package evil-collection
-  :straight t
+  :ensure t
   :after evil ;forge
   :config
   (evil-collection-init)
@@ -365,7 +332,7 @@
      ))
 
 (use-package flycheck
-  :straight t
+  :ensure t
   :after nix-sandbox
   :init
   (add-hook 'after-init-hook 'global-flycheck-mode)
@@ -394,12 +361,11 @@
                  (window-height   . 0.33))))
 
 (use-package yasnippet
-  :straight t
+  :ensure t
   :config
   (yas-global-mode))
 
 (use-package flyspell
-  :straight t
   :delight flyspell-mode
   :config
   ; Do not emit message when checking word
@@ -417,7 +383,7 @@
   (flyspell-mode t))
 
 (use-package company
-  :straight t
+  :ensure t
   :delight company-mode
   :config
   (setq company-idle-delay 0
@@ -452,13 +418,13 @@
                 (company-ensure-emulation-alist)))))
 
 (use-package company-posframe
-  :straight t
+  :ensure t
   :delight company-posframe
   :config
   (company-posframe-mode 1))
 
 (use-package magit
-  :straight t
+  :ensure t
   :config
   (setq magit-display-buffer-function 'magit-display-buffer-fullcolumn-most-v1
         magit-published-branches nil)
@@ -473,7 +439,7 @@
   (evil-define-key 'normal 'global (kbd "C-x g d") 'magit-diff-buffer-file)
   (evil-define-key 'normal 'global (kbd "C-x g b") 'magit-blame)
   (evil-define-key 'normal 'global (kbd "C-x g l") 'magit-log)
-  (evil-define-key 'normal magic-mode-map (kbd "RET") 'code-review-comment-add-or-edit)
+  ;; (evil-define-key 'normal magic-mode-map (kbd "RET") 'code-review-comment-add-or-edit)
   (evil-define-key 'normal magit-mode-map (kbd "o") 'magit-visit-thing)
   (evil-define-key 'normal magit-mode-map (kbd "O") 'magit-diff-visit-file-other-window)
 
@@ -488,43 +454,42 @@
   (transient-append-suffix 'magit-reset "w" '("M" "main branch" magit-fetch-and-reset-main))
   )
 
-;; TODO: enable, not working on nix-darwin
-;; (use-package forge
-;;   :straight t
-;;   :after magit
-;;   :config
-;;   ;; (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-pullreqs nil t)
-;;   ;; (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-issues nil t)
-;;   ;; (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-authored-issues nil t)
-;;   (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-pullreqs nil t)
-;;   ;; (remove-hook 'magit-status-sections-hook 'forge-insert-pullreqs)
-;;   ;; (remove-hook 'magit-status-sections-hook 'forge-insert-issues)
-;;   (setq forge-alist (append '(("ibizaman.github.com" "api.github.com" "github.com" forge-github-repository)) forge-alist))
-;;   )
+(use-package forge
+  :ensure t
+  :after magit
+  :config
+  ;; (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-pullreqs nil t)
+  ;; (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-assigned-issues nil t)
+  ;; (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-authored-issues nil t)
+  (magit-add-section-hook 'magit-status-sections-hook 'forge-insert-pullreqs nil t)
+  ;; (remove-hook 'magit-status-sections-hook 'forge-insert-pullreqs)
+  ;; (remove-hook 'magit-status-sections-hook 'forge-insert-issues)
+  (setq forge-alist (append '(("ibizaman.github.com" "api.github.com" "github.com" forge-github-repository)) forge-alist))
+  )
 
+;; Currently this fails, see: https://github.com/wandersoncferreira/code-review/issues/245
 ;; (use-package code-review
-;;   :straight t
-;;   :after magit
-;;   :config
-;;   (add-hook 'code-review-mode-hook #'emojify-mode)
-;;   ;; (define-key code-review-mode-map (kbd "RET") nil)
-;;   ;; (define-key forge-topic-mode-map (kbd "RET") 'code-review-forge-pr-at-point)
-;;   (evil-define-key '(normal visual) code-review-mode-map (kbd "r") 'code-review-transient-api)
-;;   ;; (define-key code-review-mode-map (kbd "RET") 'code-review-comment-add-or-edit)
-;;   (evil-define-key 'normal code-review-mode-map (kbd "RET") 'code-review-comment-add-or-edit)
-;;   (evil-define-key 'normal code-review-mode-map (kbd "C-n") 'code-review-comment-jump-next)
-;;   (evil-define-key 'normal code-review-mode-map (kbd "C-p") 'code-review-comment-jump-previous)
-;;   )
+;;  :ensure t
+;;  :after magit
+;;  :config
+;;  (add-hook 'code-review-mode-hook #'emojify-mode)
+;;  ;; (define-key code-review-mode-map (kbd "RET") nil)
+;;  ;; (define-key forge-topic-mode-map (kbd "RET") 'code-review-forge-pr-at-point)
+;;  (evil-define-key '(normal visual) code-review-mode-map (kbd "r") 'code-review-transient-api)
+;;  ;; (define-key code-review-mode-map (kbd "RET") 'code-review-comment-add-or-edit)
+;;  (evil-define-key 'normal code-review-mode-map (kbd "RET") 'code-review-comment-add-or-edit)
+;;  (evil-define-key 'normal code-review-mode-map (kbd "C-n") 'code-review-comment-jump-next)
+;;  (evil-define-key 'normal code-review-mode-map (kbd "C-p") 'code-review-comment-jump-previous)
+;;  )
 
 (use-package auth-source)
 
 (use-package auth-source-pass
-  :straight t
   :config
   (auth-source-pass-enable))
 
 (use-package ivy
-  :straight t
+  :ensure t
   :delight ivy-mode
   :config
   (evil-define-key 'normal 'global (kbd "C-s") 'swiper-thing-at-point)
@@ -537,40 +502,40 @@
   (setq magit-completing-read-function 'ivy-completing-read))
 
 (use-package wgrep
-  :straight t)
+  :ensure t)
 
 (use-package counsel
-  :straight t
+  :ensure t
   :delight counsel-mode
   :after ivy
   :config
   (counsel-mode 1))
 
 (use-package deadgrep
-  :straight t
+  :ensure t
   :config
   (global-set-key (kbd "C-c g") #'deadgrep))
 
 (use-package projectile
-  :straight t
+  :ensure t
   :delight '(:eval (format " [%s]" (projectile-project-name)))
   :config
   (projectile-mode 1)
   (setq projectile-file-exists-local-cache-expire (* 5 60)))
 
 (use-package counsel-projectile
-  :straight t
+  :ensure t
   :config
   (counsel-projectile-mode 1)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
 ;; (use-package persp-projectile
-;;   :straight t
+;;   :ensure t
 ;;   :config
 ;;   (persp-mode))
 
 (use-package which-key
-  :straight t
+  :ensure t
   :delight which-key-mode
   :config
   (which-key-mode 1))
@@ -579,7 +544,7 @@
   :delight eldoc-mode)
 
 (use-package eyebrowse
-  :straight t
+  :ensure t
   :config
   (setq eyebrowse-new-workspace t)
   (eyebrowse-mode 1))
@@ -588,8 +553,8 @@
   :config
   (setq dired-dwim-target 'dired-dwim-target-recent))
 
-(use-package dired+
-  :straight t)
+;; (use-package dired-plus
+;;   :ensure t)
 
 (use-package xref
   :config
@@ -616,8 +581,8 @@
   (setq xref-pop-bury-buffer t))
 
 (use-package popper
-  :straight t
-
+  :ensure t
+  :after evil
   :init
   (defun popper-display-popup-on-right (buffer &optional alist)
     "Display popup-buffer BUFFER on the right of the screen."
@@ -639,13 +604,14 @@
   :config
   (popper-mode 1)
 
-  (spc-leader
-	:keymaps 'normal
-	"p" #'popper-cycle
-	"SPC" #'popper-toggle-latest))
+;;  (spc-leader
+;;	:keymaps 'normal
+;;	"p" #'popper-cycle
+;;	"SPC" #'popper-toggle-latest)
+)
 
 (use-package shackle
-  :straight t
+  :ensure t
   :config
   (shackle-mode 1)
   ;; (setq shackle-default-alignment 'right
@@ -661,7 +627,7 @@
    file-notify-descriptors))
 
 ;; (use-package impatient-mode
-;;   :straight t)
+;;   :ensure t)
 
 ;;; UI
 
@@ -714,12 +680,12 @@
 (my/disable-tabs)
 
 (use-package rainbow-mode
-  :straight t
+  :ensure t
   :config
   (rainbow-mode 1))
 
 (use-package rainbow-delimiters
-  :straight t
+  :ensure t
   :config
   (rainbow-delimiters-mode 1))
 
@@ -777,12 +743,12 @@
 
 ;;;; Theme
 
-(straight-use-package
-  '(nano-emacs :type git :host github :repo "rougier/nano-emacs"))
-; (require 'nano)
+;; (straight-use-package
+;;   '(nano-emacs :type git :host github :repo "rougier/nano-emacs"))
+;; ; (require 'nano)
 
 (use-package mustang-theme
-  :straight t
+  :ensure t
   :config
   (load-theme 'mustang t))
 
@@ -865,7 +831,7 @@
 ;;; Helper packages
 
 (use-package expand-region
-  :straight t
+  :ensure t
   :bind (("C-c =" . (lambda () (interactive) (er--expand-region-1)))
      ("C-c -" . (lambda () (interactive) (er/contract-region 1)))))
 
@@ -876,7 +842,7 @@
       (call-interactively 'er/expand-region))))
 
 (use-package helpful
-  :straight t
+  :ensure t
   :bind (("C-h f" . #'helpful-callable)
          ("C-h v" . #'helpful-variable)
          ("C-h k" . #'helpful-key))
@@ -893,12 +859,11 @@
 
 
 (use-package ibuffer
-  :straight t
   :bind (("C-x C-b" . 'ibuffer)))
 
 
 (use-package git-link
-  :straight t
+  :ensure t
   :config
   (defun git-link-master-branch ()
     (interactive)
@@ -915,16 +880,17 @@
       (call-interactively 'git-link))))
 
 
-(use-package emacs-org-babel-conf
-  :straight (emacs-org-babel-conf :type git :host github :repo "ibizaman/emacs-org-babel-conf" :branch "master"))
+;; TODO: use ensure
+;; (use-package emacs-org-babel-conf
+;;   :straight (emacs-org-babel-conf :type git :host github :repo "ibizaman/emacs-org-babel-conf" :branch "master"))
 
 
 (use-package hydra
-  :straight t)
+  :ensure t)
 
 
 (use-package hledger-mode
-  :straight (hledger-mode :type git :host github :repo "ibizaman/hledger-mode" :branch "master")
+  :ensure t
   :config
   (setq hledger-jfile "~/org/hledger.journal")
   (add-to-list 'auto-mode-alist '("\\.journal\\'" . hledger-mode))
@@ -938,16 +904,17 @@
 
 
 (use-package csv-mode
-  :straight t)
+  :ensure t)
 
-(use-package emacs-conflict
-  :straight (emacs-conflict :type git :host github :repo "ibizaman/emacs-conflict" :branch "master"))
+;; TODO: use ensure
+;; (use-package emacs-conflict
+;;   :straight (emacs-conflict :type git :host github :repo "ibizaman/emacs-conflict" :branch "master"))
 
 (use-package copy-as-format
-  :straight t)
+  :ensure t)
 
 (use-package gif-screencast
-  :straight t
+  :ensure t
   :config
   :bind (("<f7>" . gif-screencast-start-or-stop)
          ("<f8>" . gif-screencast-toggle-pause)
@@ -960,7 +927,7 @@
   )
 
 (use-package edit-server
-  :straight t)
+  :ensure t)
 
 ;;; Mu4e
 
@@ -1097,13 +1064,6 @@
 ;; (use-package org-mu4e
 ;;   :after (org mu4e))
 
-(use-package mu4e-maildirs-extension
-  :straight t
-  :after mu4e
-  :config
-  (mu4e-maildirs-extension))
-
-
 ;;; Language specific packages
 
 (global-set-key (kbd "C-c C-j") 'find-function)
@@ -1115,7 +1075,7 @@
   (ignore-errors (lsp-format-buffer)))
 
 (use-package lsp-mode
-  :straight t
+  :ensure t
   :commands lsp
   :init
   (setq lsp-keymap-prefix "C-x l")
@@ -1139,7 +1099,7 @@
   (lsp-lens-mode nil))
 
 (use-package lsp-ui
-  :straight t
+  :ensure t
   :hook (lsp-mode-hook . lsp-ui-mode)
   :commands lsp-ui-mode
   :config
@@ -1147,7 +1107,7 @@
         lsp-ui-flycheck-live-reporting nil))
 
 ;; (use-package company-lsp
-;;   :straight t
+;;   :ensure t
 ;;   :commands company-lsp
 ;;   :config
 ;;   (push 'company-lsp company-backends))
@@ -1169,15 +1129,15 @@
   :bind (("C-c C-c" . eval-point-region-and-deactivate)))
 
 (use-package dap-mode
-  :straight t)
+  :ensure t)
 
 ;;;; Haskell
 
 (use-package nix-sandbox
-  :straight t)
+  :ensure t)
 
 (use-package haskell-mode
-  :straight t
+  :ensure t
   :after nix-sandbox
   :init
   (defun my/haskell-set-stylish ()
@@ -1209,7 +1169,7 @@
 		lsp-haskell-formatting-provider "stylish-haskell"))
 
 (use-package lsp-haskell
-  :straight t
+  :ensure t
   :after nix-sandbox
   :init
   (setq lsp-prefer-flymake nil)
@@ -1226,7 +1186,7 @@
 ;;;; Nix
 
 (use-package nix-mode
-  :straight t
+  :ensure t
   :mode "\\.nix\\'"
   :init
   (require 'nix-build)
@@ -1257,7 +1217,7 @@
 ;;;; Markdown
 
 (use-package markdown-mode
-  :straight t
+  :ensure t
   :commands (markdown-mode gf-mode)
   :hook (markdown-mode . lsp-deferred)
   :mode (("README\\.md\\'" . gfm-mode)
@@ -1268,16 +1228,16 @@
 ;;;; Mermaid
 
 (use-package mermaid-mode
-  :straight t)
+  :ensure t)
 
 ;;;; Yaml
 
 
 (use-package outline-magic
-  :straight t)
+  :ensure t)
 
 (use-package yaml-mode
-  :straight t
+  :ensure t
   :hook (yaml-mode . lsp-deferred)
   :config
 
@@ -1332,12 +1292,12 @@
 ;;;; Jenkins
 
 (use-package jenkinsfile-mode
-  :straight t)
+  :ensure t)
 
 ;;;; Go
 
 (use-package go-mode
-  :straight t
+  :ensure t
   :after nix-sandbox
   :hook (go-mode . lsp-deferred)
   :bind (([remap find-function] . 'lsp-find-definition))
@@ -1413,9 +1373,9 @@
   (setq-local go-test-go-command (nix-executable-find (nix-current-sandbox) "go")))
 
 (use-package gotest
-  :straight t
+  :ensure t
   :after (company go-mode)
-  ; :hook ((go-mode . nix-go-test-go-command))
+  :hook ((go-mode . nix-go-test-go-command))
   :config
   (defun go-test-subtest-name ()
 	"Returns the full name of the subtest under point if any, or the test name."
@@ -1438,14 +1398,14 @@
   )
 
 (use-package go-dlv
-  :straight t
+  :ensure t
   :after gotest)
 
 (use-package ob-go
-  :straight t)
+  :ensure t)
 
 (eval-after-load 'hydra
-  (eval-after-load 'go-test
+  (eval-after-load 'gotest
      '(progn
         (defgroup go-test-args nil
           "Go test args specific customization."
@@ -1721,30 +1681,30 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
 ;;;; Java
 
 (use-package lsp-java
-  :straight t)
+  :ensure t)
 
 (use-package kotlin-mode
-  :straight t)
+  :ensure t)
 
 ;;;; PHP
 
 (use-package php-mode
-  :straight t)
+  :ensure t)
 
 ;;;; Arduino
 
 (use-package arduino-mode
-  :straight t)
+  :ensure t)
 
 ;;;; Protobuf
 
 (use-package protobuf-mode
-  :straight t)
+  :ensure t)
 
 ;;;; Flatbuffers
 
 (use-package flatbuffers-mode
-  :straight t)
+  :ensure t)
 
 ;;;; Hakyll
 
@@ -1799,10 +1759,10 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
 ;;; Elfeed
 
 (use-package elfeed
-  :straight t)
+  :ensure t)
 
 (use-package elfeed-protocol
-  :straight t
+  :ensure t
 
   :config
   (setq elfeed-use-curl t
@@ -1816,7 +1776,7 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
 
 (use-package org-jira
   :if (seq-some (lambda (name) (string= system-name name)) '("Pierres-MBP.tiserbox.com" "C02Z93RNLVDL"))
-  :straight t
+  :ensure t
   :config
   (make-directory "~/Documents/Jira/Fastly" t)
   (setq jiralib-url "https://fastly.atlassian.net"
@@ -1835,48 +1795,50 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
 ; (setq request-log-level 'blather)
 ; (setq request-message-level 'blather)
 
-(use-package ejira
-  :if (seq-some (lambda (name) (string= system-name name)) '("Pierres-MBP.tiserbox.com" "C02Z93RNLVDL"))
-  :straight (ejira :type git :host github :repo "nyyManni/ejira" :branch "master")
-  :init
-  (setq jiralib2-url              "https://fastly.atlassian.net"
-        jiralib2-auth             'basic
-        jiralib2-user-login-name  "pierre@fastly.com"
-        jiralib2-token            nil
+;; TODO: not found by :ensure, also wasn't updated in a long time.
+;; (use-package ejira
+;;   :if (seq-some (lambda (name) (string= system-name name)) '("Pierres-MBP.tiserbox.com" "C02Z93RNLVDL"))
+;;   :ensure t
+;;   :init
+;;   (setq jiralib2-url              "https://fastly.atlassian.net"
+;;         jiralib2-auth             'basic
+;;         jiralib2-user-login-name  "pierre@fastly.com"
+;;         jiralib2-token            nil
 
-        ;; NOTE, this directory needs to be in `org-agenda-files'`
-        ejira-org-directory       "~/Documents/ejira"
-        ejira-projects            '("SDS")
+;;         ;; NOTE, this directory needs to be in `org-agenda-files'`
+;;         ejira-org-directory       "~/Documents/ejira"
+;;         ejira-projects            '("SDS")
 
-        ejira-priorities-alist    '(("Highest" . ?A)
-                                    ("High"    . ?B)
-                                    ("Medium"  . ?C)
-                                    ("Low"     . ?D)
-                                    ("Lowest"  . ?E))
-        ejira-todo-states-alist   '(("To Do"       . 1)
-                                    ("In Progress" . 2)
-                                    ("Done"        . 3)))
-  :config
-  ;; Tries to auto-set custom fields by looking into /editmeta
-  ;; of an issue and an epic.
-  (add-hook 'jiralib2-post-login-hook #'ejira-guess-epic-sprint-fields)
+;;         ejira-priorities-alist    '(("Highest" . ?A)
+;;                                     ("High"    . ?B)
+;;                                     ("Medium"  . ?C)
+;;                                     ("Low"     . ?D)
+;;                                     ("Lowest"  . ?E))
+;;         ejira-todo-states-alist   '(("To Do"       . 1)
+;;                                     ("In Progress" . 2)
+;;                                     ("Done"        . 3)))
+;; :config
+;; ;; Tries to auto-set custom fields by looking into /editmeta
+;; ;; of an issue and an epic.
+;; (add-hook 'jiralib2-post-login-hook #'ejira-guess-epic-sprint-fields)
 
-  ;; They can also be set manually if autoconfigure is not used.
-  ;; (setq ejira-sprint-field       'customfield_10001
-  ;;       ejira-epic-field         'customfield_10002
-  ;;       ejira-epic-summary-field 'customfield_10004)
+;; ;; They can also be set manually if autoconfigure is not used.
+;; ;; (setq ejira-sprint-field       'customfield_10001
+;; ;;       ejira-epic-field         'customfield_10002
+;; ;;       ejira-epic-summary-field 'customfield_10004)
 
-  (require 'ejira-agenda)
+;; (require 'ejira-agenda)
 
-  ;; Make the issues visisble in your agenda by adding `ejira-org-directory'
-  ;; into your `org-agenda-files'.
-  (add-to-list 'org-agenda-files ejira-org-directory)
+;; ;; Make the issues visisble in your agenda by adding `ejira-org-directory'
+;; ;; into your `org-agenda-files'.
+;; (add-to-list 'org-agenda-files ejira-org-directory)
 
-  ;; Add an agenda view to browse the issues that
-  (org-add-agenda-custom-command
-   '("j" "My JIRA issues"
-     ((ejira-jql "resolution = unresolved and assignee = currentUser()"
-                 ((org-agenda-overriding-header "Assigned to me")))))))
+;; ;; Add an agenda view to browse the issues that
+;; (org-add-agenda-custom-command
+;;  '("j" "My JIRA issues"
+;;    ((ejira-jql "resolution = unresolved and assignee = currentUser()"
+;;                ((org-agenda-overriding-header "Assigned to me")))))))
+
 ;;; Save session
 
 ; (desktop-load-default)
@@ -1885,7 +1847,7 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
 ;;; Terraform
 
 (use-package terraform-mode
-  :straight t
+  :ensure t
   :hook ((terraform-mode . lsp-deferred))
   :config
   (setq lsp-terraform-server '("terraform-ls" "serve")))
@@ -1893,7 +1855,7 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
 ;;; Json
 
 (use-package json-mode
-  :straight t
+  :ensure t
   :config
   (setq json-mode-wi 2)
 
@@ -1929,7 +1891,7 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
 ;;; SQL
 
 ;; (use-package sql-mode
-;;   :straight t)
+;;   :ensure t)
 
 ;;; Customization
 
