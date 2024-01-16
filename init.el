@@ -658,7 +658,7 @@
   (defun configure-fonts (&optional frame)
     (when (memq window-system '(mac ns x))
       (cond
-       ((x-list-fonts "*-Inconsolata-*") (set-face-attribute 'default nil :font "Inconsolata-13"))
+       ((x-list-fonts "*-Inconsolata-*") (set-face-attribute 'default nil :font "Inconsolata-11"))
        ((x-list-fonts "*-Inconsolata Nerd Font-*") (set-face-attribute 'default nil :font "Inconsolata Nerd Font-9"))
        ((x-list-fonts "*-InconsolataG-*") (set-face-attribute 'default nil :font "InconsolataG-10")))))
 
