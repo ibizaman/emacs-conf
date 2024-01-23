@@ -1316,13 +1316,6 @@
   (add-hook 'go-mode-hook #'my/lsp-go-exclude-vendor-directory)
   (add-hook 'markdown-mode-hook #'my/lsp-go-exclude-vendor-directory)
 
-  (defun my/nix--lsp-go-wrapper (args)
-    (if-let ((sandbox (nix-current-sandbox)))
-        (apply 'nix-shell-command sandbox args)
-      args))
-  (setq lsp-go-server-path "gopls"
-        lsp-go-server-wrapper-function 'my/nix--lsp-go-wrapper)
-
   ; https://emacs-lsp.github.io/lsp-mode/page/lsp-gopls/#configuration
   (setq lsp-go-analyses '((shadow . t)
                           (nilness . t)
@@ -1342,7 +1335,7 @@
         (apply 'nix-shell-command sandbox args)
       args))
   (setq lsp-go-gopls-server-path "gopls"
-        lsp-go-gopls-server-wrapper-function 'my/nix--lsp-go-wrapper)
+        lsp-go-server-wrapper-function 'my/nix--lsp-go-wrapper)
   )
 
 ; Not sure I want this, takes a lot of RAM for not much.
