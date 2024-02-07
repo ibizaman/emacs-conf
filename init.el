@@ -288,7 +288,14 @@
   (global-undo-tree-mode)
   (setq undo-tree-enable-undo-in-region t
         undo-tree-visualizer-diff t
-        undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory "/undo-tree")))))
+        undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory "/undo-tree"))))
+
+  (defun my-undo-tree-save-history (undo-tree-save-history &rest args)
+    (let ((message-log-max nil)
+          (inhibit-message t))
+      (apply undo-tree-save-history args)))
+
+  (advice-add 'undo-tree-save-history :around 'my-undo-tree-save-history))
 
 (use-package autorevert
   :delight auto-revert-mode)
