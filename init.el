@@ -1734,10 +1734,19 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
   (make-directory (hakyll-blog--post-images-dir title))
   (insert (format "---\ntitle: %s\ntags: \nwip: true\n---\n\n![image example](/images/%s)\n\n" title (hakyll-blog--sluggify-post-title title))))
 
-(defun hakyll-blog--sluggify-post-title (title)
-  "Slug of post TITLE."
+(defun hakyll-blog-update-date (&optional date)
+  "Update blog's date to DATE or today's date."
+  (interactive)
+  (let* ((current-file (buffer-file-name (current-buffer)))
+         (current-title (substring (file-name-base current-file) 11)) ;; 11 for `YYYY-MM-DD-'
+         (new-file (hakyll-blog--file-format current-title)))
+    (rename-file current-file new-file)
+    (set-visited-file-name new-file)))
+
+(defun hakyll-blog--sluggify-post-title (title &optional time)
+  "Slug of post TITLE with optional TIME or today's date."
   (format "%s-%s"
-          (format-time-string hakyll-blog-file-time-format)
+          (format-time-string hakyll-blog-file-time-format time)
           (s-dashed-words title)))
 
 (defun hakyll-blog--file-format (title)
