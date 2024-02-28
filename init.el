@@ -556,6 +556,24 @@
   (setq eyebrowse-new-workspace t)
   (eyebrowse-mode 1))
 
+(use-package activities
+  :ensure t
+  :init
+  (activities-mode)
+  (activities-tabs-mode)
+  ;; Prevent `edebug' default bindings from interfering.
+  (setq edebug-inhibit-emacs-lisp-mode-bindings t)
+
+  :bind
+  (("C-x C-a C-n" . activities-new)
+   ("C-x C-a C-x" . activities-resume)
+   ("C-x C-a C-s" . activities-suspend)
+   ("C-x C-a C-k" . activities-kill)
+   ;; This binding mirrors, e.g. "C-x t RET".
+   ("C-x C-a RET" . activities-switch)
+   ("C-x C-a g" . activities-revert)
+   ("C-x C-a l" . activities-list)))
+
 (use-package dired
   :config
   (setq dired-dwim-target 'dired-dwim-target-recent))
