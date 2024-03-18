@@ -457,6 +457,21 @@
            (main-upstream (magit-get-upstream-branch main)))
     (magit-branch-reset main main-upstream)))
 
+  (setq my/magit-clone-root-dir "~/go/src")
+
+  (defun my/magit-clone-default-directory (remote)
+    (if-let ((split (split-string remote ":"))
+           (forge (car (last (split-string (nth 0 split) "@"))))
+           (repo-name (file-name-sans-extension (car (last split))))
+           (org (car (split-string repo-name "/")))
+           (full-path (concat (file-name-as-directory my/magit-clone-root-dir)
+                              (file-name-as-directory forge)
+                              (file-name-as-directory org))))
+      full-path
+      default-directory
+      ))
+  (setq magit-clone-default-directory 'my/magit-clone-default-directory)
+
   ;;; Transient
   (transient-append-suffix 'magit-reset "w" '("M" "main branch" magit-fetch-and-reset-main))
   )
