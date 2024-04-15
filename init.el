@@ -1135,7 +1135,7 @@
   (setq gc-cons-threshold 100000000
         read-process-output-max (* 1024 1024)) ;; 1mb
   (setq lsp-warn-no-matched-clients nil
-        lsp-disabled-clients '(semgrep-ls))
+        lsp-disabled-clients (add-to-list 'lsp-disabled-clients 'golangci-lint))
   (lsp-treemacs-sync-mode 1)
   (lsp-lens-mode nil))
 
@@ -1363,7 +1363,7 @@
                           (unusedwrite . t)
                           (unusedvariable . t)))
 
-  (setq flycheck-go-golint-executable "golangci-lint run")
+  ;; (setq flycheck-go-golint-executable "golangci-lint run")
   ;; (setq lsp-go-directory-filters '("-vendor"))
   ;; (setq lsp-go-directory-filters "[- +dataservices]"))
   ;; (setq lsp-go-directory-filters "[]")
