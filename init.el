@@ -269,6 +269,16 @@
 
 (add-hook 'server-after-make-frame-hook #'my/focus-new-client-frame)
 
+(progn
+  ;; Tell Tramp to use the value of "echo $PATH", which works better for
+  ;; NixOS machines using home-manager which does not set "getconf PATH"
+  ;; correctly.
+  (require 'tramp-sh)
+  (setq tramp-remote-path
+        (append tramp-remote-path
+                '(tramp-own-remote-path)))
+  )
+
 (use-package delight
   :ensure t
   :config
