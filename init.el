@@ -960,9 +960,8 @@
 (use-package csv-mode
   :ensure t)
 
-;; TODO: use ensure
-;; (use-package emacs-conflict
-;;   :straight (emacs-conflict :type git :host github :repo "ibizaman/emacs-conflict" :branch "master"))
+(use-package emacs-conflict
+  :ensure t)
 
 (use-package copy-as-format
   :ensure t)
@@ -1272,7 +1271,19 @@
 ;;;; ELM
 
 (use-package elm-mode
-  :ensure t)
+  :ensure t
+  :hook
+  (elm-mode . my/elm-mode-local-config)
+  :config
+  (defun my/nix--elm-wrapper (args)
+    (if-let ((sandbox (nix-current-sandbox)))
+        (apply 'nix-shell-command sandbox args)
+      args))
+
+  (defun my/elm-mode-local-config ()
+    (setq-local elm-compile-command (my/nix--elm-wrapper '("elm" "make"))))
+
+  )
 
 ;;;; Markdown
 
