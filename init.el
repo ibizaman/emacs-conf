@@ -1269,6 +1269,11 @@
   (unless length (setq length 64))
   (insert (shell-command-to-string (format "%s rand -hex %d" random-secret-openssl-executable length))))
 
+;;;; ELM
+
+(use-package elm-mode
+  :ensure t)
+
 ;;;; Markdown
 
 (use-package markdown-mode
