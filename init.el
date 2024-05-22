@@ -1273,17 +1273,55 @@
 (use-package elm-mode
   :ensure t
   :hook
-  (elm-mode . my/elm-mode-local-config)
+  ;; (elm-mode . my/elm-mode-local-config)
   :config
   (defun my/nix--elm-wrapper (args)
+    (if-let ((sandbox (nix-current-sandbox)))
+        (apply 'nix-shell-string sandbox args)
+      args))
+
+  (defun my/nix--elm-wrapper-list (args)
     (if-let ((sandbox (nix-current-sandbox)))
         (apply 'nix-shell-command sandbox args)
       args))
 
-  (defun my/elm-mode-local-config ()
-    (setq-local elm-compile-command (my/nix--elm-wrapper '("elm" "make"))))
+  (defun elm-compile--command (file &optional output json)
+    "Generate a command that will compile FILE into OUTPUT.
+When JSON is non-nil, JSON reporting will be enabled."
+    (let ((elm-compile-arguments
+           (if output
+               (append (cl-remove-if (apply-partially #'string-prefix-p "--output=") elm-compile-arguments)
+                       (list (concat "--output=" (expand-file-name output))))
+             elm-compile-arguments)))
+      (my/nix--elm-wrapper (append (elm--ensure-list elm-compile-command)
+                                   (append (list file)
+                                           elm-compile-arguments
+                                           (when json
+                                             (list "--report=json")))))))
 
+  (defun elm-reactor ()
+    "Run the Elm reactor process."
+    (interactive)
+    (let ((default-directory (elm--find-dependency-file-path))
+          (cmd (my/nix--elm-wrapper-list (elm--expand-args (append (elm--ensure-list elm-reactor-command) elm-reactor-arguments)))))
+      (with-current-buffer (get-buffer-create elm-reactor--buffer-name)
+        (comint-mode)
+        (ansi-color-for-comint-mode-on)
+        (let ((proc (get-buffer-process (current-buffer))))
+          (if (and proc (process-live-p proc))
+              (progn
+                (message "Restarting elm-reactor")
+                (delete-process proc))
+            (message "Starting elm-reactor")))
+
+        (let ((proc (apply #'start-process "elm reactor" elm-reactor--buffer-name
+                           (car cmd) (cdr cmd))))
+          (when proc
+            (set-process-filter proc 'comint-output-filter))))))
   )
+
+
+
 
 ;;;; Markdown
 
