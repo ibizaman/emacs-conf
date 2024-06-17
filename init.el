@@ -529,8 +529,8 @@
   :ensure t
   :delight ivy-mode
   :config
-  (evil-define-key 'normal 'global (kbd "C-s") 'swiper-thing-at-point)
-  (evil-define-key 'normal 'global (kbd "C-<return>") 'ivy-immediate-done)
+  (define-key ivy-mode-map 'global (kbd "C-s") 'swiper-thing-at-point)
+  (define-key ivy-mode-map (kbd "C-<return>") 'ivy-immediate-done)
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
   (setq ivy-count-format "(%d/%d) ")
