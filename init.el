@@ -2004,6 +2004,11 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
 ;; (use-package sql-mode
 ;;   :ensure t)
 
+;;; Cue
+
+(use-package cue-mode
+  :ensure t)
+
 ;;; Customization
 
 (put 'narrow-to-region 'disabled nil)
