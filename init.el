@@ -529,7 +529,7 @@
   :ensure t
   :delight ivy-mode
   :config
-  (define-key ivy-mode-map 'global (kbd "C-s") 'swiper-thing-at-point)
+  (define-key ivy-mode-map (kbd "C-s") 'swiper-thing-at-point)
   (define-key ivy-mode-map (kbd "C-<return>") 'ivy-immediate-done)
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
