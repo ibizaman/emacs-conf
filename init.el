@@ -1180,7 +1180,8 @@
 
 
 (use-package elisp-mode
-  :bind (("C-c C-c" . eval-point-region-and-deactivate)))
+  :config
+  (define-key lisp-mode-map (kbd "C-c C-c") #'eval-point-region-and-deactivate))
 
 (use-package dap-mode
   :ensure t)
