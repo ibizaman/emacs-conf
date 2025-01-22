@@ -419,6 +419,15 @@
         company-search-regexp-function 'company-search-words-in-any-order-regexp)
   (add-hook 'after-init-hook 'global-company-mode))
 
+(use-package tree-sitter
+  :ensure t
+  :config
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
+(use-package tree-sitter-langs
+  :ensure t)
+
 ;;; https://github.com/clojure-emacs/cider/issues/2908#issuecomment-709691997
 (with-eval-after-load 'company
   (add-hook 'evil-local-mode-hook
