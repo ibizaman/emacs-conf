@@ -1148,6 +1148,7 @@
 		 (sh-mode . lsp-deferred)
          ;; (before-save . my/lsp-format-buffer-silent)
          (lsp-mode . lsp-enable-which-key-integration)
+		 (nix-mode . lsp-deferred)
 		 (kotlin-mode . lsp-deferred)
 		 (python-mode . lsp-deferred))
   :config
