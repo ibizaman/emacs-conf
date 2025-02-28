@@ -895,8 +895,15 @@
 
 (use-package expand-region
   :ensure t
-  :bind (("C-c =" . (lambda () (interactive) (er--expand-region-1)))
-     ("C-c -" . (lambda () (interactive) (er/contract-region 1)))))
+  :config
+  (defun me/expand-region ()
+    (interactive)
+    (er--expand-region-1))
+  (defun me/contract-region ()
+    (interactive)
+    (er/contract-region 1))
+  (keymap-global-set "C-c C-=" #'me/expand-region)
+  (keymap-global-set "C-c C--" #'me/contract-region))
 
 (defun use-region-or-expand-region ()
   "Use region if active or expand region at point."
