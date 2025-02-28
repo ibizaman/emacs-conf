@@ -962,7 +962,8 @@
 (use-package hledger-mode
   :ensure t
   :config
-  (setq hledger-jfile "~/org/hledger.journal")
+  (setq hledger-jfile "~/Projects/hledger/hledger.journal")
+  (setenv "LEDGER_FILE" "~/Projects/hledger/hledger.journal")
   (add-to-list 'auto-mode-alist '("\\.journal\\'" . hledger-mode))
   (add-to-list 'company-backends 'hledger-company)
 
