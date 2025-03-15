@@ -316,7 +316,9 @@
   (advice-add 'undo-tree-save-history :around 'my-undo-tree-save-history))
 
 (use-package autorevert
-  :delight auto-revert-mode)
+  :delight auto-revert-mode
+  :config
+  (global-auto-revert-mode))
 
 (progn
  (setq backup-directory-alist
