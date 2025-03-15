@@ -979,6 +979,11 @@
   (evil-define-key 'normal hledger-view-mode-map (kbd "n") 'hledger-next-report)
   (evil-define-key 'normal hledger-view-mode-map (kbd "p") 'hledger-prev-report))
 
+(use-package flycheck-hledger
+  :ensure t
+  :after (flycheck hledger-mode)
+  :demand t)
+
 
 (use-package csv-mode
   :ensure t)
