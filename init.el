@@ -296,6 +296,9 @@
   (general-create-definer spc-leader
    :prefix "SPC"))
 
+(use-package multiple-cursors
+  :ensure t)
+
 (use-package undo-tree
   :ensure t
   :delight undo-tree-mode
