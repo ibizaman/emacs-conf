@@ -972,7 +972,8 @@
   (add-to-list 'auto-mode-alist '("\\.journal\\'" . hledger-mode))
   (add-to-list 'company-backends 'hledger-company)
 
-  (evil-define-key 'normal hledger-mode-map (kbd "B") 'hledger-balancesheet*)
+  ; B gets in the way too much
+  ; (evil-define-key 'normal hledger-mode-map (kbd "B") 'hledger-balancesheet*)
   (evil-define-key 'normal hledger-mode-map (kbd "D") 'hledger-reschedule)
   (evil-define-key 'normal hledger-view-mode-map (kbd "d") 'hledger-report-at-day)
   (evil-define-key 'normal hledger-view-mode-map (kbd "n") 'hledger-next-report)
