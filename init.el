@@ -479,6 +479,8 @@
   (evil-define-key 'normal magit-mode-map (kbd "o") 'magit-visit-thing)
   (evil-define-key 'normal magit-mode-map (kbd "O") 'magit-diff-visit-file-other-window)
 
+  (setq magit-save-repository-buffers t)
+
   (defun magit-fetch-and-reset-main ()
     "Fetch upstream and reset main branch to its upstream."
     (interactive)
@@ -504,6 +506,28 @@
   ;;; Transient
   (transient-append-suffix 'magit-reset "w" '("M" "main branch" magit-fetch-and-reset-main))
   )
+
+(eval-after-load 'magit
+  (progn
+    (dir-locals-set-class-variables
+     'huge-git-repository
+     '((nil
+        . ((magit-refresh-buffers . nil)
+           (magit-revision-insert-related-refs . nil)))
+       (magit-status-mode
+        . ((eval . (magit-disable-section-inserter 'magit-insert-tags-header))
+           (eval . (magit-disable-section-inserter 'magit-insert-recent-commits))
+           (eval . (magit-disable-section-inserter 'magit-insert-unpushed-to-pushremote))
+           (eval . (magit-disable-section-inserter 'magit-insert-unpushed-to-upstream-or-recent))
+           (eval . (magit-disable-section-inserter 'magit-insert-unpulled-from-pushremote))
+           (eval . (magit-disable-section-inserter 'magit-insert-unpulled-from-pushremote))
+           (eval . (magit-disable-section-inserter 'magit-insert-unpulled-from-upstream))
+           ))
+       ))
+
+    (dir-locals-set-directory-class
+     (expand-file-name "~/Projects/nixpkgs/") 'huge-git-repository)
+    ))
 
 (use-package forge
   :ensure t
