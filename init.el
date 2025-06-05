@@ -343,10 +343,7 @@
 
 (use-package evil-collection
   :ensure t
-  :after evil ;forge
-  :config
-  (evil-collection-init)
-  (evil-collection-unimpaired-mode -1))
+  :after evil)
 
 (eval-after-load 'treemacs
   '(progn
@@ -423,6 +420,7 @@
                             company-preview-if-just-one-frontend)
         company-search-regexp-function 'company-search-words-in-any-order-regexp)
   (add-hook 'after-init-hook 'global-company-mode))
+(with-eval-after-load 'company (evil-collection-company-setup))
 
 (use-package tree-sitter
   :ensure t
@@ -464,6 +462,7 @@
   :config
   (setq magit-display-buffer-function 'magit-display-buffer-fullcolumn-most-v1
         magit-published-branches nil)
+(with-eval-after-load 'forge (evil-collection-magit-setup))  ; Yes, after forge
 
   ;;; Sections
   (magit-add-section-hook 'magit-status-sections-hook 'magit-insert-local-branches nil t)
@@ -507,27 +506,24 @@
   (transient-append-suffix 'magit-reset "w" '("M" "main branch" magit-fetch-and-reset-main))
   )
 
-(eval-after-load 'magit
-  '(progn
-    (dir-locals-set-class-variables
-     'huge-git-repository
-     '((nil
-        . ((magit-refresh-buffers . nil)
-           (magit-revision-insert-related-refs . nil)))
-       (magit-status-mode
-        . ((eval . (magit-disable-section-inserter 'magit-insert-tags-header))
-           (eval . (magit-disable-section-inserter 'magit-insert-recent-commits))
-           (eval . (magit-disable-section-inserter 'magit-insert-unpushed-to-pushremote))
-           (eval . (magit-disable-section-inserter 'magit-insert-unpushed-to-upstream-or-recent))
-           (eval . (magit-disable-section-inserter 'magit-insert-unpulled-from-pushremote))
-           (eval . (magit-disable-section-inserter 'magit-insert-unpulled-from-pushremote))
-           (eval . (magit-disable-section-inserter 'magit-insert-unpulled-from-upstream))
-           ))
+(dir-locals-set-class-variables
+ 'huge-git-repository
+ '((nil
+    . ((magit-refresh-buffers . nil)
+       (magit-revision-insert-related-refs . nil)))
+   (magit-status-mode
+    . ((eval . (magit-disable-section-inserter 'magit-insert-tags-header))
+       (eval . (magit-disable-section-inserter 'magit-insert-recent-commits))
+       (eval . (magit-disable-section-inserter 'magit-insert-unpushed-to-pushremote))
+       (eval . (magit-disable-section-inserter 'magit-insert-unpushed-to-upstream-or-recent))
+       (eval . (magit-disable-section-inserter 'magit-insert-unpulled-from-pushremote))
+       (eval . (magit-disable-section-inserter 'magit-insert-unpulled-from-pushremote))
+       (eval . (magit-disable-section-inserter 'magit-insert-unpulled-from-upstream))
        ))
+   ))
 
-    (dir-locals-set-directory-class
-     (expand-file-name "~/Projects/nixpkgs/") 'huge-git-repository)
-    ))
+(dir-locals-set-directory-class
+ (expand-file-name "~/Projects/nixpkgs/") 'huge-git-repository)
 
 (use-package forge
   :ensure t
@@ -541,6 +537,7 @@
   ;; (remove-hook 'magit-status-sections-hook 'forge-insert-issues)
   (setq forge-alist (append '(("ibizaman.github.com" "api.github.com" "github.com" forge-github-repository)) forge-alist))
   )
+(with-eval-after-load 'forge (evil-collection-forge-setup))
 
 ;; Currently this fails, see: https://github.com/wandersoncferreira/code-review/issues/245
 ;; (use-package code-review
@@ -1387,6 +1384,7 @@ When JSON is non-nil, JSON reporting will be enabled."
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
+(with-eval-after-load 'markdown-mode (evil-collection-markdown-mode-setup))
 
 ;;;; Mermaid
 
