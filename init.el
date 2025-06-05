@@ -641,6 +641,7 @@
 (use-package dired
   :config
   (setq dired-dwim-target 'dired-dwim-target-recent))
+(with-eval-after-load 'dired (evil-collection-dired-setup))
 
 ;; (use-package dired-plus
 ;;   :ensure t)
@@ -945,6 +946,7 @@
   :config
   (global-set-key (kbd "C-h V") #'customize-variable)
   (global-set-key (kbd "C-h G") #'customize-group))
+(with-eval-after-load 'helpful (evil-collection-helpful-setup))
 
 
 (use-package ediff
