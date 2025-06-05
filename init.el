@@ -508,7 +508,7 @@
   )
 
 (eval-after-load 'magit
-  (progn
+  '(progn
     (dir-locals-set-class-variables
      'huge-git-repository
      '((nil
