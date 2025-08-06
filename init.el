@@ -510,7 +510,8 @@
  'huge-git-repository
  '((nil
     . ((magit-refresh-buffers . nil)
-       (magit-revision-insert-related-refs . nil)))
+       (magit-revision-insert-related-refs . nil)
+       (lsp-enable-file-watchers . nil)))
    (magit-status-mode
     . ((eval . (magit-disable-section-inserter 'magit-insert-tags-header))
        (eval . (magit-disable-section-inserter 'magit-insert-recent-commits))
