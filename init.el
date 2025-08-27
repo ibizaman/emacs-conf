@@ -747,7 +747,7 @@
 ;; window-setup-hook works in non-daemon mode.
 (progn
   (defun configure-fonts (&optional frame)
-    (when (memq window-system '(mac ns x))
+    (when (memq window-system '(mac ns x pgtk))
       (cond
        ((x-list-fonts "*-Inconsolata-*") (set-face-attribute 'default nil :font "Inconsolata-11"))
        ((x-list-fonts "*-Inconsolata Nerd Font-*") (set-face-attribute 'default nil :font "Inconsolata Nerd Font-9"))
