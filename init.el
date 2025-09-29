@@ -1299,6 +1299,8 @@
   :init
   (require 'nix-build)
   :config
+  (setq lsp-nix-nil-nix-binary "nix-ifd-wrapper"
+        lsp-nix-nil-autoArchive t)
   (defun nix-search-package (arg)
     (interactive "P")
     (let* ((package (thing-at-point 'filename t))
@@ -1308,6 +1310,27 @@
                               (not browse-url-new-window-flag)
                             browse-url-new-window-flag))
         (error "No URL found")))))
+
+;; (use-package lsp-nix
+;;   :ensure lsp-mode
+;;   :after (lsp-mode)
+;;   :demand t
+;;   :custom
+;;   (lsp-nix-nil-formatter ["nixfmt"]))
+
+(lsp-defcustom lsp-nix-nil-autoArchive t
+  "Auto Eval Inputs"
+  :type 'boolean
+  :group 'lsp-nix-nil
+  :lsp-path "nil.nix.flake.autoArchive"
+  :package-version '(lsp-mode . "9.0.0"))
+
+(lsp-defcustom lsp-nix-nil-nix-binary t
+  "Auto Eval Inputs"
+  :type 'boolean
+  :group 'lsp-nix-nil
+  :lsp-path "nil.nix.binary"
+  :package-version '(lsp-mode . "9.0.0"))
 
 ;;;; Sops
 
