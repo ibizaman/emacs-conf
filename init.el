@@ -957,6 +957,7 @@
   (setq ediff-merge-split-window-function 'split-window-horizontally
     ediff-split-window-function 'split-window-horizontally
     ediff-window-setup-function 'ediff-setup-windows-plain))
+(with-eval-after-load 'ediff (evil-collection-ediff-setup))
 
 
 (use-package ibuffer
