@@ -575,6 +575,7 @@
   (setq ivy-re-builders-alist
         '((t . ivy--regex-ignore-order)))
   (setq magit-completing-read-function 'ivy-completing-read))
+(with-eval-after-load 'ivy (evil-collection-ivy-setup))
 
 (use-package wgrep
   :ensure t)
