@@ -343,7 +343,9 @@
 
 (use-package evil-collection
   :ensure t
-  :after evil)
+  :after evil
+  :config
+  (setq evil-collection-setup-minibuffer t))
 
 (eval-after-load 'treemacs
   '(progn
