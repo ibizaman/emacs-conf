@@ -951,6 +951,7 @@
   (global-set-key (kbd "C-h G") #'customize-group))
 (with-eval-after-load 'helpful (evil-collection-helpful-setup))
 
+(with-eval-after-load 'calc (evil-collection-calc-setup))
 
 (use-package ediff
   :config
