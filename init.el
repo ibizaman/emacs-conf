@@ -2127,6 +2127,17 @@ _p_:   ... in _p_ackage   _N_:        ^^... in package   _d_: debug RUN
 (use-package cue-mode
   :ensure t)
 
+;;; Sops
+
+(use-package sops
+  :ensure (:type git :host github :repo "djgoku/sops")
+  :bind (("C-c C-c" . sops-save-file)
+         ("C-c C-k" . sops-cancel)
+         ("C-c C-d" . sops-edit-file))
+  :init
+  ; (setq sops-before-encrypt-decrypt-hook 'sops-setup-env)
+  (global-sops-mode 1))
+
 ;;; Customization
 
 (put 'narrow-to-region 'disabled nil)
