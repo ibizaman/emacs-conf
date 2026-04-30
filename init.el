@@ -559,9 +559,10 @@
 
 (use-package auth-source)
 
-(use-package auth-source-pass
+(use-package bitwarden
+  :ensure t
   :config
-  (auth-source-pass-enable))
+  (bitwarden-auth-source-enable))
 
 (use-package ivy
   :ensure t
