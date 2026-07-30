@@ -1306,7 +1306,7 @@
   (require 'nix-build)
   :config
   (setq lsp-nix-nil-nix-binary "nix-ifd-wrapper"
-        lsp-nix-nil-autoArchive t)
+        lsp-nix-nil-autoArchive nil)
   (defun nix-search-package (arg)
     (interactive "P")
     (let* ((package (thing-at-point 'filename t))
