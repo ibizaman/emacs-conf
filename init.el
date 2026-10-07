@@ -1209,7 +1209,9 @@
   (setq lsp-warn-no-matched-clients nil
         lsp-disabled-clients (add-to-list 'lsp-disabled-clients 'golangci-lint))
   (lsp-treemacs-sync-mode 1)
-  (lsp-lens-mode nil))
+  (lsp-lens-mode nil)
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.deploys\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.deploy-gc\\'"))
 
 (use-package lsp-ui
   :ensure t
